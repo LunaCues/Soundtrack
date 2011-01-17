@@ -15,6 +15,8 @@ local ST_MISC = "Misc"
 local ST_CUSTOM = "Custom"
 local ST_PLAYLISTS = "Playlists"
 
+local arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20
+
 Soundtrack.CombatLogDelayTime = 0
 Soundtrack.CombatLogUpdateTime = .1
 Soundtrack.ActionHouse = false
@@ -214,8 +216,8 @@ function Soundtrack.CustomEvents.Initialize(self)
 
 	
     -- Add fixed custom events 
-	-- Jump
-	Soundtrack.CustomEvents.RegisterUpdateScript(
+
+	Soundtrack.CustomEvents.RegisterUpdateScript(	-- Jump
 		self,
         SOUNDTRACK_JUMP, 
         ST_MISC,
@@ -226,8 +228,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		end,
 		true
 	);
-	-- Swimming
-    Soundtrack.CustomEvents.RegisterUpdateScript(
+    Soundtrack.CustomEvents.RegisterUpdateScript(	-- Swimming
 		self,
         SOUNDTRACK_SWIMMING, 
         ST_MISC,
@@ -248,8 +249,7 @@ function Soundtrack.CustomEvents.Initialize(self)
         end,
 		false
 	);
-	-- Auction House  
-	Soundtrack.CustomEvents.RegisterUpdateScript(
+	Soundtrack.CustomEvents.RegisterUpdateScript(	-- Auction House  
 		self,
         SOUNDTRACK_AUCTION_HOUSE, 
         ST_MISC,
@@ -270,8 +270,7 @@ function Soundtrack.CustomEvents.Initialize(self)
         end,
 		false
 	    );
-	-- Bank  
-	Soundtrack.CustomEvents.RegisterUpdateScript(
+	Soundtrack.CustomEvents.RegisterUpdateScript(	-- Bank  
 		self,
         SOUNDTRACK_BANK, 
         ST_MISC,
@@ -293,8 +292,7 @@ function Soundtrack.CustomEvents.Initialize(self)
         end,
 		false
 	    );
-	-- Merchant   
-	Soundtrack.CustomEvents.RegisterUpdateScript(
+	Soundtrack.CustomEvents.RegisterUpdateScript(	-- Merchant
 		self,
         SOUNDTRACK_MERCHANT, 
         ST_MISC,
@@ -315,8 +313,7 @@ function Soundtrack.CustomEvents.Initialize(self)
         end,
 		false
 	    );	    
-	-- Level Up
-	Soundtrack.CustomEvents.RegisterEventScript(
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Level Up
 		self,
 	    SOUNDTRACK_LEVEL_UP,
 	    ST_MISC,
@@ -328,8 +325,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	    );
-	-- Join Party
-	Soundtrack.CustomEvents.RegisterEventScript(
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Join Party
 		self,
 	    SOUNDTRACK_JOIN_PARTY,
 	    ST_MISC,
@@ -349,8 +345,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	    );
-	-- Join Raid  
-	Soundtrack.CustomEvents.RegisterEventScript(
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Join Raid
 		self,
 	    SOUNDTRACK_JOIN_RAID,
 	    ST_MISC,
@@ -370,9 +365,8 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	);
-	
-	-- Death Knight Change Presence
-	Soundtrack.CustomEvents.RegisterEventScript(
+
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Death Knight Change Presence
 		self,
 	    SOUNDTRACK_DK_CHANGE,
 	    ST_MISC,
@@ -389,8 +383,8 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	);
-	-- Druid Change Form
-	Soundtrack.CustomEvents.RegisterEventScript(
+
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Druid Change Form
 		self,
 	    SOUNDTRACK_DRUID_CHANGE,
 	    "Misc",
@@ -409,8 +403,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	);
-	-- Druid Prowl
-	Soundtrack.CustomEvents.RegisterUpdateScript(
+	Soundtrack.CustomEvents.RegisterUpdateScript(	-- Druid Prowl
 		self,
         SOUNDTRACK_DRUID_PROWL, 
         ST_MISC,
@@ -431,8 +424,8 @@ function Soundtrack.CustomEvents.Initialize(self)
         end,
 		false
 	);
-	-- Paladin Change Auras
-	Soundtrack.CustomEvents.RegisterEventScript(
+
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Paladin Change Auras
 		self,
 	    SOUNDTRACK_PALADIN_CHANGE,
 	    ST_MISC,
@@ -449,8 +442,8 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	);
-	-- Priest Change Shadowform
-	Soundtrack.CustomEvents.RegisterEventScript(
+
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Priest Change Shadowform
 		self,
 	    SOUNDTRACK_PRIEST_CHANGE,
 	    ST_MISC,
@@ -467,8 +460,8 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	);
-	-- Rogue Change Stealth
-	Soundtrack.CustomEvents.RegisterEventScript(
+
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Rogue Change Stealth
 		self,
 	    SOUNDTRACK_ROGUE_CHANGE,
 	    ST_MISC,
@@ -485,8 +478,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	);
-	-- Rogue Stealth
-	Soundtrack.CustomEvents.RegisterUpdateScript(
+	Soundtrack.CustomEvents.RegisterUpdateScript(	-- Rogue Stealth
 		self,
         SOUNDTRACK_ROGUE_STEALTH, 
         ST_MISC,
@@ -507,8 +499,8 @@ function Soundtrack.CustomEvents.Initialize(self)
         end,
 		false
 	);
-	-- Shaman Change Ghost Wolf
-	Soundtrack.CustomEvents.RegisterEventScript(
+
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Shaman Change Ghost Wolf
 		self,
 	    SOUNDTRACK_SHAMAN_CHANGE,
 	    ST_MISC,
@@ -525,8 +517,8 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	);
-	-- Warrior Change Stances
-	Soundtrack.CustomEvents.RegisterEventScript(
+
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Warrior Change Stances
 		self,
 	    SOUNDTRACK_WARRIOR_CHANGE,
 	    ST_MISC,
@@ -544,8 +536,8 @@ function Soundtrack.CustomEvents.Initialize(self)
 		true
 	);
 	
-	-- Duel Requested
-	Soundtrack.CustomEvents.RegisterEventScript(
+
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Duel Requested
 		self,
 	    SOUNDTRACK_DUEL_REQUESTED,
 	    ST_MISC,
@@ -557,8 +549,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	    );
-	-- Quest Complete
-	Soundtrack.CustomEvents.RegisterEventScript(
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Quest Complete
 		self,
 	    SOUNDTRACK_QUEST_COMPLETE,
 	    ST_MISC,
@@ -570,9 +561,9 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	);    
-	-- Stealthed
+
 	-- Thanks to zephus67 for the code!
-	Soundtrack.CustomEvents.RegisterUpdateScript(
+	Soundtrack.CustomEvents.RegisterUpdateScript(	-- Stealthed
 		self,
         SOUNDTRACK_STEALTHED, 
         ST_MISC,
@@ -614,9 +605,9 @@ function Soundtrack.CustomEvents.Initialize(self)
 
 --]]
 	
-	-- LFG Complete
+
 	-- Thanks to sgtrama!
-	Soundtrack.CustomEvents.RegisterEventScript(
+	Soundtrack.CustomEvents.RegisterEventScript(	-- LFG Complete
 		self,
 	    SOUNDTRACK_LFG_COMPLETE,
 	    ST_MISC,
@@ -628,8 +619,8 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	);
-	-- Achievement
-	Soundtrack.CustomEvents.RegisterEventScript(
+
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Achievement
 		self,
 	    SOUNDTRACK_ACHIEVEMENT,
 	    ST_MISC,
@@ -642,8 +633,8 @@ function Soundtrack.CustomEvents.Initialize(self)
 		true
 	);
 	
-	-- Swing
-	Soundtrack.CustomEvents.RegisterEventScript(
+	
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Swing Crit
 		self,
 	    SOUNDTRACK_SWING_CRIT,
 	    ST_MISC,
@@ -657,7 +648,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	);
-	Soundtrack.CustomEvents.RegisterEventScript(
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Swing
 		self,
 	    SOUNDTRACK_SWING_HIT,
 	    ST_MISC,
@@ -680,8 +671,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		true
 	);
 
-	-- Damage Spells
-	Soundtrack.CustomEvents.RegisterEventScript(
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Damage Spells Crit
 		self,
 	    SOUNDTRACK_SPELL_CRIT,
 	    ST_MISC,
@@ -695,7 +685,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	);
-	Soundtrack.CustomEvents.RegisterEventScript(
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Damage Spells
 		self,
 	    SOUNDTRACK_SPELL_HIT,
 	    ST_MISC,
@@ -718,8 +708,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		true
 	);
 	
-	-- DoTs
-	Soundtrack.CustomEvents.RegisterEventScript(
+	Soundtrack.CustomEvents.RegisterEventScript(	-- DoTs Crit
 		self,
 	    SOUNDTRACK_DOT_CRIT,
 	    ST_MISC,
@@ -733,7 +722,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	);
-	Soundtrack.CustomEvents.RegisterEventScript(
+	Soundtrack.CustomEvents.RegisterEventScript(	-- DoTs
 		self,
 	    SOUNDTRACK_DOT_HIT,
 	    ST_MISC,
@@ -756,8 +745,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		true
 	);
 	
-	-- Healing Spells
-	Soundtrack.CustomEvents.RegisterEventScript(
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Healing Spells Crit
 		self,
 	    SOUNDTRACK_HEAL_CRIT,
 	    ST_MISC,
@@ -771,7 +759,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	);
-	Soundtrack.CustomEvents.RegisterEventScript(
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Healing Spells
 		self,
 	    SOUNDTRACK_HEAL_HIT,
 	    ST_MISC,
@@ -794,8 +782,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		true
 	); 
     
-	-- HoTs
-	Soundtrack.CustomEvents.RegisterEventScript(
+	Soundtrack.CustomEvents.RegisterEventScript(	-- HoTs Crit
 		self,
 	    SOUNDTRACK_HOT_CRIT,
 	    ST_MISC,
@@ -809,7 +796,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	); 
-	Soundtrack.CustomEvents.RegisterEventScript(
+	Soundtrack.CustomEvents.RegisterEventScript(	-- HoTs
 		self,
 	    SOUNDTRACK_HOT_HIT,
 	    ST_MISC,
@@ -832,8 +819,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		true
 	); 
     
-	-- Range
-	Soundtrack.CustomEvents.RegisterEventScript(
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Range Crit
 		self,
 	    SOUNDTRACK_RANGE_CRIT,
 	    ST_MISC,
@@ -847,7 +833,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		true
 	);
-	Soundtrack.CustomEvents.RegisterEventScript(
+	Soundtrack.CustomEvents.RegisterEventScript(	-- Range
 		self,
 	    SOUNDTRACK_RANGE_HIT,
 	    ST_MISC,
@@ -892,8 +878,8 @@ function Soundtrack.CustomEvents.Initialize(self)
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID_BEAR, ST_MISC, "Interface\\Icons\\Ability_Racial_BearForm", 8, true, false)
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID_TRAVEL, ST_MISC, "Interface\\Icons\\Ability_Druid_TravelForm", 8, true, false)
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID_FLIGHT, ST_MISC, "Interface\\Icons\\Ability_Druid_FlightForm", 8, true, false)
-	-- Moonkin Form
-	Soundtrack.CustomEvents.RegisterUpdateScript(
+
+	Soundtrack.CustomEvents.RegisterUpdateScript(	-- Moonkin Form
 	    self, SOUNDTRACK_DRUID_MOONKIN, ST_MISC, 8, true,
 	    function()
 	        local class = UnitClass("player")
@@ -909,8 +895,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    end,
 		false
 	); 
-	-- Tree of Life Form
-	Soundtrack.CustomEvents.RegisterUpdateScript(
+	Soundtrack.CustomEvents.RegisterUpdateScript(	-- Tree of Life Form
 	    self, SOUNDTRACK_DRUID_TREE, ST_MISC, 8, true,
 	    function()
 	        local class = UnitClass("player")
@@ -1003,7 +988,7 @@ function Soundtrack.CustomEvents.OnUpdate(self, elapsed)
 end
 
 function Soundtrack.CustomEvents.OnEvent(self, event, ...)
-	local arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = ...
+	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = select(1, ...)
 	
 	-- All arguments are for Combat events, which can take up to 20 args.
     if event == "AUCTION_HOUSE_SHOW" then

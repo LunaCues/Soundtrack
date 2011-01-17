@@ -836,7 +836,7 @@ end
 
 
 function Soundtrack_OnEvent(self, event, ...)
-	local arg1, arg2 = ...
+
     if event == "VARIABLES_LOADED" then
         OnVariablesLoaded(self)
     end
