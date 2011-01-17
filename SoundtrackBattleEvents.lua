@@ -286,12 +286,15 @@ local hostileDeathCount = 0
 local currentBattleTypeIndex = 0 -- Used to determine battle priorities and escalations
 
 local function StartVictoryMusic()
-    currentBattleTypeIndex = 0 -- we are out of battle
-    Soundtrack.StopEventAtLevel(6)
     Soundtrack.StopEventAtLevel(7)
     if hostileDeathCount > 0 then
         -- Attempt to start victory music
         Soundtrack.PlayEvent(ST_MISC, SOUNDTRACK_VICTORY)
+		local victoryEvent = Soundtrack.GetEvent(ST_MISC, SOUNDTRACK_VICTORY)
+		if victoryEvent.soundEffect == true then
+			Soundtrack.TraceBattle("Victory = sound effect")
+			Soundtrack.StopEventAtLevel(6)
+		end
         hostileDeathCount = 0
     else
         Soundtrack.StopEvent(ST_MISC, SOUNDTRACK_VICTORY)
@@ -300,6 +303,7 @@ end
 
 local function StopCombatMusic()
     Soundtrack.TraceBattle("Stop Combat Music")
+    currentBattleTypeIndex = 0 -- we are out of battle
     StartVictoryMusic()
 end
 
@@ -358,7 +362,7 @@ function Soundtrack.BattleEvents.OnUpdate(self, elapsed)
 end
     
  function Soundtrack.BattleEvents.OnEvent(self, event, ...)
-    local arg1, arg2 = ...
+    local arg1, arg2 = select(1, ...)
 	
     if event == "PLAYER_REGEN_DISABLED" then
         if not Soundtrack.Settings.EnableBattleMusic then
