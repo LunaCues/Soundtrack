@@ -491,6 +491,7 @@ end
 function Soundtrack.StopEvent(tableName, eventName)    
     local event = Soundtrack.GetEvent(tableName, eventName)
     if event then
+		Soundtrack.TraceEvents("StopEvent("..tableName..", "..eventName..")")
         Soundtrack.StopEventAtLevel(event.priority)
     end
 end
