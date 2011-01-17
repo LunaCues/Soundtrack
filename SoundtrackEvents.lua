@@ -538,7 +538,6 @@ function Soundtrack.Events.OnLoad(self)
 end
 
 function Soundtrack.Events.OnEvent(self, event, ...) 
-	local arg1, arg2 = ...
     if event == "PLAYER_ENTERING_WORLD" or
 	   event == "PLAYER_ENTERING_BATTLEGROUND" then
 		if Soundtrack.Events.Paused == false then

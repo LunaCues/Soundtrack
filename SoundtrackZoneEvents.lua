@@ -259,7 +259,6 @@ function Soundtrack.ZoneEvents.OnLoad(self)
 end
     
 function Soundtrack.ZoneEvents.OnEvent(self, event, ...)
-	local arg1, arg2 = ...
     if not Soundtrack.Settings.EnableZoneMusic then
         return
     end
