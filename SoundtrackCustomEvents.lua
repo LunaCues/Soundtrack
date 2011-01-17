@@ -357,7 +357,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		false
 		);
 	
-	Soundtrack.CustomEvents.RegisterEventScript(	-- NPC Dungeon Emote
+	Soundtrack.CustomEvents.RegisterEventScript(	-- NPC Emote
 		self,
 		SOUNDTRACK_NPC_EMOTE,
 		ST_MISC,
@@ -369,7 +369,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		end,
 		true
 		);
-	Soundtrack.CustomEvents.RegisterEventScript(	-- NPC Dungeon Say
+	Soundtrack.CustomEvents.RegisterEventScript(	-- NPC Say
 		self,
 		SOUNDTRACK_NPC_SAY,
 		ST_MISC,
@@ -381,7 +381,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		end,
 		true
 		);
-	Soundtrack.CustomEvents.RegisterEventScript(	-- NPC Dungeon Whisper
+	Soundtrack.CustomEvents.RegisterEventScript(	-- NPC Whisper
 		self,
 		SOUNDTRACK_NPC_WHISPER,
 		ST_MISC,
@@ -393,7 +393,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		end,
 		true
 		);
-	Soundtrack.CustomEvents.RegisterEventScript(	-- NPC Dungeon Yell
+	Soundtrack.CustomEvents.RegisterEventScript(	-- NPC Yell
 		self,
 		SOUNDTRACK_NPC_YELL,
 		ST_MISC,
