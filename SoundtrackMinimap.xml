@@ -1,0 +1,111 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+    <Script file="SoundtrackMinimap.lua"/>
+
+    <Frame name="SoundtrackMinimap_IconDraggingFrame" parent="Minimap" hidden="true">
+        <Scripts>
+            <OnUpdate>
+                SoundtrackMinimap_IconDraggingFrame_OnUpdate(self,elapsed)
+            </OnUpdate>
+        </Scripts>
+    </Frame>
+
+    <!-- new and improved minimap button, can ItemRack_IconFrame_Icon:SetTexture any item texture to change the "inset" image -->
+    <Button name="SoundtrackMinimap_IconFrame" frameStrata="MEDIUM" parent="Minimap" enableMouse="true" movable="true" hidden="true">
+        <Size>
+            <AbsDimension x="33" y="33"/>
+        </Size>
+        <Anchors>
+            <Anchor point="TOPLEFT">
+                <Offset>
+                    <AbsDimension x="-15" y="0"/>
+                </Offset>
+            </Anchor>
+        </Anchors>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture name="SoundtrackMinimap_IconFrame_Icon" file="Interface\Icons\INV_Misc_Flute_01">
+                    <Size>
+                        <AbsDimension x="21" y="21"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="7" y="-6"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                    <TexCoords left="0.075" right="0.925" top="0.075" bottom="0.925"/>
+                </Texture>
+            </Layer>
+            <Layer level="OVERLAY">
+                <Texture file="Interface\Minimap\MiniMap-TrackingBorder">
+                    <Size>
+                        <AbsDimension x="56" y="56"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+        <HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight"/>
+        <Scripts>
+            <OnLoad>
+                self:RegisterForClicks("LeftButtonUp","RightButtonUp");
+                self:RegisterForDrag("LeftButton");
+                self:RegisterEvent("VARIABLES_LOADED");
+            </OnLoad>
+            <OnEvent>
+                SoundtrackMinimap_IconFrame_OnEvent(self, event, ...);
+            </OnEvent>
+            <OnEnter>
+                Soundtrack.ShowTip(self,SOUNDTRACK_TITLE, SOUNDTRACK_MINIMAP)
+            </OnEnter>
+            <OnLeave>
+                Soundtrack.HideTip()
+            </OnLeave>
+            <OnMouseDown>
+                SoundtrackMinimap_IconFrame_Icon:SetTexCoord(0,1,0,1)
+            </OnMouseDown>
+            <OnMouseUp>
+                SoundtrackMinimap_IconFrame_Icon:SetTexCoord(.075,.925,.075,.925)
+            </OnMouseUp>
+            <OnDragStart>
+                self:LockHighlight()
+                SoundtrackMinimap_IconDraggingFrame:Show()
+            </OnDragStart>
+            <OnDragStop>
+                SoundtrackMinimap_IconDraggingFrame:Hide()
+                self:UnlockHighlight()
+                SoundtrackMinimap_IconFrame_Icon:SetTexCoord(.075,.925,.075,.925)
+            </OnDragStop>
+            <OnClick>
+                SoundtrackMinimap_IconFrame_OnClick(self, button, down)
+                SoundtrackMinimap_IconFrame_Icon:SetTexCoord(.075,.925,.075,.925)
+            </OnClick>
+        </Scripts>
+    </Button>
+
+    <Frame name="SoundtrackMinimapMenu" inherits="UIDropDownMenuTemplate" id="1" hidden="false">
+        <Size>
+            <AbsDimension x="0" y="0"/>
+        </Size>
+        <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="SoundtrackMinimap_IconFrame" relativePoint="CENTER">
+                <Offset>
+                    <AbsDimension x="300" y="0"/>
+                </Offset>
+            </Anchor>
+        </Anchors>
+        <Scripts>
+            <OnLoad>
+                self:SetFrameLevel(0);
+                UIDropDownMenu_SetWidth(self, 180);
+            </OnLoad>
+            <OnShow>
+                UIDropDownMenu_Initialize(self, SoundtrackMinimapMenu_Initialize, "MENU");
+            </OnShow>
+        </Scripts>
+    </Frame>
+</Ui>

@@ -1,0 +1,250 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<Script>
+		function ST_Report(title, artist, album, channel, extra)
+			if channel == "WHISPER" or channel == "CHANNEL" then
+				SendChatMessage("Soundtrack:  \""..title.."\"  -  \'"..artist.."\'  -  \'"..album.."\'", channel, nil, extra)
+			else
+				SendChatMessage("Soundtrack:  \""..title.."\"  -  \'"..artist.."\'  -  \'"..album.."\'", channel, nil, nil)
+			end
+		end
+    </Script>	
+	
+	<Frame name="SoundtrackReportFrame" toplevel="true" parent="UIParent" movable="true" enableMouse="true" hidden="true">
+        <Size>
+            <AbsDimension x="160" y="260"/>
+        </Size>
+        <TitleRegion setAllPoints="true"/>
+
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+            <BackgroundInsets>
+                <AbsInset left="11" right="12" top="12" bottom="11"/>
+            </BackgroundInsets>
+            <TileSize>
+                <AbsValue val="32"/>
+            </TileSize>
+            <EdgeSize>
+                <AbsValue val="32"/>
+            </EdgeSize>
+        </Backdrop>
+        <HitRectInsets>
+            <AbsInset left="0" right="30" top="0" bottom="45"/>
+        </HitRectInsets>
+
+		<Layers>
+            <Layer level="OVERLAY">
+                <FontString name="$parentTitleText" inherits="GameFontNormal" text="Soundtrack"> <!--SOUNDTRACK_TITLE-->
+                    <Anchors>
+                        <Anchor point="TOP">
+                            <Offset>
+                                <AbsDimension x="0" y="-20"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+		
+		
+		<Frames>
+		<Button name="SoundtrackReportFrame_Say" inherits="UIPanelButtonTemplate" text="Say">
+            <Size>
+                <AbsDimension x="120" y="22"/>
+            </Size>
+            <Anchors>
+                <Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+                    <Offset>
+                        <AbsDimension x="20" y="-40"/>
+                    </Offset>
+                </Anchor>
+            </Anchors>
+            <Scripts>
+                <OnEnter>
+                    Soundtrack.ShowTip(self, "Say", "Report current track to say.")
+                </OnEnter>
+                <OnLeave>
+					Soundtrack.HideTip()
+                </OnLeave>
+                <OnClick>
+					local currentTrackName = Soundtrack.Library.CurrentlyPlayingTrack
+					if currentTrackName ~= nil and currentTrackName ~= "None" then
+						local track = Soundtrack_Tracks[currentTrackName] 
+						ST_Report(track.title, track.artist, track.album, "SAY")
+					end
+					SoundtrackReportFrame:Hide()
+                </OnClick>
+            </Scripts>
+        </Button>
+		<Button name="SoundtrackReportFrame_Party" inherits="UIPanelButtonTemplate" text="Party/Raid">
+            <Size>
+                <AbsDimension x="120" y="22"/>
+            </Size>
+            <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="SoundtrackReportFrame_Say" relativePoint="BOTTOMLEFT">
+                    <Offset>
+                        <AbsDimension x="0" y="-1"/>
+                    </Offset>
+                </Anchor>
+            </Anchors>
+            <Scripts>
+                <OnEnter>
+                    Soundtrack.ShowTip(self, "Party/Raid", "Report current track to party or raid.")
+                </OnEnter>
+                <OnLeave>
+					Soundtrack.HideTip()
+                </OnLeave>
+                <OnClick>
+					local currentTrackName = Soundtrack.Library.CurrentlyPlayingTrack
+					if currentTrackName ~= nil and currentTrackName ~= "None" then
+						local track = Soundtrack_Tracks[currentTrackName] 
+						if GetNumRaidMembers() > 1 then
+							ST_Report(track.title, track.artist, track.album, "RAID")
+						else
+							ST_Report(track.title, track.artist, track.album, "PARTY")
+						end
+					end
+					SoundtrackReportFrame:Hide()
+                </OnClick>
+            </Scripts>
+        </Button>
+		<Button name="SoundtrackReportFrame_Guild" inherits="UIPanelButtonTemplate" text="Guild">
+            <Size>
+                <AbsDimension x="120" y="22"/>
+            </Size>
+            <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="SoundtrackReportFrame_Party" relativePoint="BOTTOMLEFT">
+                    <Offset>
+                        <AbsDimension x="0" y="-1"/>
+                    </Offset>
+                </Anchor>
+            </Anchors>
+            <Scripts>
+                <OnEnter>
+                    Soundtrack.ShowTip(self, "Guild", "Report current track to guild.")
+                </OnEnter>
+                <OnLeave>
+					Soundtrack.HideTip()
+                </OnLeave>
+                <OnClick>
+					local currentTrackName = Soundtrack.Library.CurrentlyPlayingTrack
+					if currentTrackName ~= nil and currentTrackName ~= "None" then
+						local track = Soundtrack_Tracks[currentTrackName] 
+						ST_Report(track.title, track.artist, track.album, "GUILD")
+					end
+					SoundtrackReportFrame:Hide()
+                </OnClick>
+            </Scripts>
+		</Button>
+		<Button name="SoundtrackReportFrame_Whisper" inherits="UIPanelButtonTemplate" text="Whisper">
+            <Size>
+                <AbsDimension x="120" y="22"/>
+            </Size>
+            <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="SoundtrackReportFrame_Guild" relativePoint="BOTTOMLEFT">
+                    <Offset>
+                        <AbsDimension x="0" y="-1"/>
+                    </Offset>
+                </Anchor>
+            </Anchors>
+            <Scripts>
+                <OnEnter>
+                    Soundtrack.ShowTip(self, "Whisper", "Report current track in a whisper to the player in the edit box below.")
+                </OnEnter>
+                <OnLeave>
+					Soundtrack.HideTip()
+                </OnLeave>
+                <OnClick>
+					local wTarget = SoundtrackReportFrame_WhisperEditBox:GetText()
+					local currentTrackName = Soundtrack.Library.CurrentlyPlayingTrack
+					if currentTrackName ~= nil and currentTrackName ~= "None" and wTarget ~= "" then
+						local track = Soundtrack_Tracks[currentTrackName] 
+						ST_Report(track.title, track.artist, track.album, "WHISPER", wTarget)
+					end
+					if wTarget ~= "" then
+						SoundtrackReportFrame:Hide()
+					end
+                </OnClick>
+            </Scripts>
+		</Button>
+        <EditBox name="SoundtrackReportFrame_WhisperEditBox" inherits="SoundtrackFrame_EditBoxTemplate">
+			<Size>
+				<AbsDimension x="100" y="20"/>
+			</Size>
+            <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="SoundtrackReportFrame_Whisper" relativePoint="BOTTOMLEFT">
+                    <Offset>
+                        <AbsDimension x="12" y="-1"/>
+                    </Offset>
+                </Anchor>
+            </Anchors>
+        </EditBox>
+		
+		<Button name="SoundtrackReportFrame_Channel" inherits="UIPanelButtonTemplate" text="Channel">
+            <Size>
+                <AbsDimension x="120" y="22"/>
+            </Size>
+            <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="SoundtrackReportFrame_Whisper" relativePoint="BOTTOMLEFT">
+                    <Offset>
+                        <AbsDimension x="0" y="-26"/>
+                    </Offset>
+                </Anchor>
+            </Anchors>
+            <Scripts>
+                <OnEnter>
+                    Soundtrack.ShowTip(self, "Channel", "Report current track to the channel in the edit box below.")
+                </OnEnter>
+                <OnLeave>
+					Soundtrack.HideTip()
+                </OnLeave>
+                <OnClick>
+					local channel = SoundtrackReportFrame_ChannelEditBox:GetText()
+					local currentTrackName = Soundtrack.Library.CurrentlyPlayingTrack
+					if currentTrackName ~= nil and currentTrackName ~= "None" and channel ~= "" then
+						local track = Soundtrack_Tracks[currentTrackName] 
+						ST_Report(track.title, track.artist, track.album, "CHANNEL", channel)
+					end
+					if channel ~= "" then
+						SoundtrackReportFrame:Hide()
+					end
+                </OnClick>
+            </Scripts>
+		</Button>
+        <EditBox name="SoundtrackReportFrame_ChannelEditBox" inherits="SoundtrackFrame_EditBoxTemplate">
+			<Size>
+				<AbsDimension x="100" y="20"/>
+			</Size>
+            <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="SoundtrackReportFrame_Channel" relativePoint="BOTTOMLEFT">
+                    <Offset>
+                        <AbsDimension x="13" y="-1"/>
+                    </Offset>
+                </Anchor>
+            </Anchors>
+        </EditBox>
+		
+		<Button name="SoundtrackReportFrame_Cancel" inherits="UIPanelButtonTemplate" text="Cancel">
+            <Size>
+                <AbsDimension x="100" y="20"/>
+            </Size>
+            <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="SoundtrackReportFrame_Channel" relativePoint="BOTTOMLEFT">
+                    <Offset>
+                        <AbsDimension x="10" y="-35"/>
+                    </Offset>
+                </Anchor>
+            </Anchors>
+            <Scripts>
+                <OnEnter>
+                    Soundtrack.ShowTip(self, "Cancel", "Cancel reporting.")
+                </OnEnter>
+                <OnLeave>
+					Soundtrack.HideTip()
+                </OnLeave>
+                <OnClick>
+					SoundtrackReportFrame:Hide()
+                </OnClick>
+            </Scripts>
+		</Button>
+		</Frames>
+	</Frame>
+</Ui>

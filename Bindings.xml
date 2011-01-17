@@ -1,0 +1,14 @@
+<Bindings>
+    <Binding name="Toggle soundtrack window" description="Opens the main Soundtrack window." header="Soundtrack">
+        SoundtrackFrame_Toggle();
+    </Binding>
+    <Binding name="Next track" description="Next track">
+        Soundtrack.Events.PlaybackNext();
+    </Binding>
+    <Binding name="Previous track" description="Previous track">
+        Soundtrack.Events.PlaybackPrevious();
+    </Binding>
+    <Binding name="Play/Stop" description="Play/Stop">
+        Soundtrack.Events.PlaybackPlayStop();
+    </Binding>
+</Bindings>

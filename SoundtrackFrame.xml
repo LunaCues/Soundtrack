@@ -1,0 +1,3092 @@
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+    <Script file="SoundtrackFrame.lua"/>
+
+    <!-- Templates -->
+    <!-- Event list item -->
+    <Button name="SoundtrackFrameEventButtonTemplate" inherits="QuestLogTitleButtonTemplate" hidden="false" virtual="true">
+		<Size>
+            <AbsDimension x="165" y="16"/>
+        </Size>
+        <Layers>
+            <Layer level="ARTWORK">
+                <Texture name="$parentIcon" file="Interface\AddOns\Soundtrack\Images\PlayingIcon">
+                    <Size>
+                        <AbsDimension x="32" y="16"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="-10" y="0"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+		
+		<Frames>
+            <Frame name="$parentButtonText" setAllPoints="true">
+                <Layers>
+                    <Layer level="BORDER">
+                        <FontString name="$parentAssigned" justifyH="LEFT" inherits="GameFontHighlightSmall" text="(1)">
+                            <Anchors>
+                                <Anchor point="TOPRIGHT">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-3"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Frame>
+        </Frames>
+		
+		<Scripts>
+		    <OnLoad>
+                self:RegisterForClicks("LeftButtonUp","RightButtonUp");
+            </OnLoad>
+			<OnClick>
+				SoundtrackFrameEventButton_OnClick(self, button, down);
+			</OnClick>
+		</Scripts>
+	   <HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+	</Button>
+
+    <!-- Track list item -->
+    <Button name="SoundtrackFrameTrackButtonTemplate" virtual="true">
+        <Size>
+            <AbsDimension x="525" y="16"/>
+        </Size>
+        <Layers>
+            <Layer level="ARTWORK">
+                <Texture name="$parentIcon" file="Interface\AddOns\Soundtrack\Images\PlayingIcon">
+                    <Size>
+                        <AbsDimension x="32" y="16"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Frames>
+            <Frame name="$parentButtonText" setAllPoints="true">
+                <Layers>
+                    <Layer level="BORDER">
+                        <FontString name="$parentName" justifyH="LEFT" inherits="GameFontHighlightSmall">
+                            <Size>
+                                <AbsDimension x="200" y="10"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="31" y="-3"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                        <FontString name="$parentArtist" justifyH="LEFT" inherits="GameFontHighlightSmall">
+                            <Size>
+                                <AbsDimension x="100" y="10"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="231" y="-3"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                        <FontString name="$parentAlbum" justifyH="LEFT" inherits="GameFontHighlightSmall">
+                            <Size>
+                                <AbsDimension x="175" y="10"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="331" y="-3"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                        <FontString name="$parentDuration" inherits="GameFontHighlightSmall" text="0:00">
+                            <Size>
+                                <AbsDimension x="40" y="10" />
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-3"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Frame>
+            <CheckButton name="$parentCheckBox" inherits="OptionsCheckButtonTemplate">
+                <Size>
+                    <AbsDimension x="16" y="16" />
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset>
+                            <AbsDimension x="16" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        SoundtrackFrameTrackCheckBox_OnClick(self, button, down);
+                    </OnClick>
+                </Scripts>
+            </CheckButton>
+        </Frames>
+        <Scripts>
+            <OnLoad>
+                self:RegisterForClicks("LeftButtonUp","RightButtonUp");
+            </OnLoad>
+            <OnClick>
+                SoundtrackFrameTrackButton_OnClick(self, button, down);
+            </OnClick>
+        </Scripts>
+        <HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+    </Button>
+    
+    <Button name="SoundtrackFrameAssignedTrackButtonTemplate" virtual="true">
+        <Size>
+            <AbsDimension x="525" y="16"/>
+        </Size>
+        <Layers>
+            <Layer level="ARTWORK">
+                <Texture name="$parentIcon" file="Interface\AddOns\Soundtrack\Images\PlayingIcon">
+                    <Size>
+                        <AbsDimension x="32" y="16"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Frames>
+            <Frame name="$parentButtonText" setAllPoints="true">
+                <Layers>
+                    <Layer level="BORDER">
+                        <FontString name="$parentName" justifyH="LEFT" inherits="GameFontHighlightSmall">
+                            <Size>
+                                <AbsDimension x="200" y="10"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="31" y="-3"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                        <FontString name="$parentArtist" justifyH="LEFT" inherits="GameFontHighlightSmall">
+                            <Size>
+                                <AbsDimension x="100" y="10"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="231" y="-3"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                        <FontString name="$parentAlbum" justifyH="LEFT" inherits="GameFontHighlightSmall">
+                            <Size>
+                                <AbsDimension x="175" y="10"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="331" y="-3"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                        <FontString name="$parentDuration" inherits="GameFontHighlightSmall" text="0:00">
+                            <Anchors>
+                                <Anchor point="TOPRIGHT">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-3"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Frame>
+            <CheckButton name="$parentCheckBox" inherits="OptionsCheckButtonTemplate">
+                <Size>
+                    <AbsDimension x="16" y="16" />
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset>
+                            <AbsDimension x="16" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        SoundtrackFrameAssignedTrackCheckBox_OnClick(self, button, down);
+                    </OnClick>
+                </Scripts>
+            </CheckButton>
+        </Frames>
+        <Scripts>
+            <OnLoad>
+                self:RegisterForClicks("LeftButtonUp","RightButtonUp");
+            </OnLoad>
+            <OnClick>
+                SoundtrackFrameAssignedTrackButton_OnClick(self, button, down);
+            </OnClick>
+        </Scripts>
+        <HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+    </Button>
+
+    <Button name="SoundtrackFrameColumnHeaderTemplate" virtual="true">
+        <Layers>
+        </Layers>
+        <Scripts>
+            <OnClick>
+                Soundtrack.Util.DebugPrint("Column header clicked!")
+                if ( self.sortType ) then
+                    Soundtrack.SortTracks(self.sortType);
+                end
+				-- Edited by Lunaqua
+                PlaySound("igMainMenuOptionCheckBoxOn");
+            </OnClick>
+        </Scripts>
+        <NormalFont style="GameFontNormal"/>
+        <HighlightTexture name="$parentHighlightTexture" file="Interface\PaperDollInfoFrame\UI-Character-Tab-Highlight" alphaMode="ADD">
+            <Size>
+                <RelDimension x="1" y="1.2"/>
+            </Size>
+        </HighlightTexture>
+    </Button>
+
+    <Button name="SoundtrackFrameColumnHeaderTemplate2" virtual="true">
+        <Scripts>
+            <OnClick>
+            </OnClick>
+        </Scripts>
+        <NormalFont style="GameFontNormal"/>
+        <HighlightTexture name="$parentHighlightTexture" file="Interface\PaperDollInfoFrame\UI-Character-Tab-Highlight" alphaMode="ADD">
+            <Size>
+                <RelDimension x="1" y="1.2"/>
+            </Size>
+        </HighlightTexture>
+    </Button>
+    
+    <!-- Tab button -->
+    <Button name="SoundtrackFrameTabTemplate" inherits="CharacterFrameTabButtonTemplate" virtual="true">
+        <Scripts>
+            <OnClick>
+                PanelTemplates_Tab_OnClick(self, SoundtrackFrame);
+                SoundtrackFrameTab_OnClick();
+            </OnClick>
+        </Scripts>
+    </Button>
+
+    <EditBox name="SoundtrackFrame_EditBoxTemplate" historyLines="0" enableMouse="true" autoFocus="false" letters="256" virtual="true">
+        <Size>
+            <AbsDimension x="260" y="20"/>
+        </Size>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture name="$parentLeft" file="Interface\ClassTrainerFrame\UI-ClassTrainer-FilterBorder">
+                    <Size>
+                        <AbsDimension x="12" y="29"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="-11" y="2"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                    <TexCoords left="0" right="0.09375" top="0" bottom="1.0"/>
+                </Texture>
+                <Texture name="$parentRight" file="Interface\ClassTrainerFrame\UI-ClassTrainer-FilterBorder">
+                    <Size>
+                        <AbsDimension x="12" y="29"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPRIGHT">
+                            <Offset>
+                                <AbsDimension x="4" y="2"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                    <TexCoords left="0.90625" right="1.0" top="0" bottom="1.0"/>
+                </Texture>
+                <Texture file="Interface\ClassTrainerFrame\UI-ClassTrainer-FilterBorder">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentLeft" relativePoint="TOPRIGHT"/>
+                        <Anchor point="BOTTOMRIGHT" relativeTo="$parentRight" relativePoint="BOTTOMLEFT"/>
+                    </Anchors>
+                    <TexCoords left="0.09375" right="0.90625" top="0" bottom="1.0"/>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnEnter>
+                --ItemRack_Opt_OnEnter()
+            </OnEnter>
+            <OnLeave>
+                Soundtrack.HideTip()
+            </OnLeave>
+            <OnEscapePressed>
+                self:ClearFocus()
+            </OnEscapePressed>
+            <OnEnterPressed>
+                self:ClearFocus()
+            </OnEnterPressed>
+        </Scripts>
+        <FontString inherits="GameFontHighlightSmall"/>
+    </EditBox>
+
+    <StatusBar name="SoundtrackFrame_StatusBarTemplate" virtual="true" drawLayer="BACKGROUND" minValue="0" maxValue="1" defaultValue="5">
+        <Size>
+            <AbsDimension x="250" y="16"/>
+        </Size>
+        <Layers>
+            <Layer level="ARTWORK">
+                <FontString name="$parentText1" inherits="GameFontNormalSmall" text="Event Name">
+                    <Anchors>
+                        <Anchor point="LEFT">
+                            <Offset>
+                                <AbsDimension x="3" y="1"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentText2" inherits="GameFontHighlightSmall" text="1/8">
+                    <Size>
+                        <AbsDimension x="" y="0"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="RIGHT" relativeTo="$parent" relativePoint="RIGHT">
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+            <Layer level="BORDER">
+                <Texture name="$parentFillBar">
+                    <Size>
+                        <AbsDimension x="0" y="14"/>
+                    </Size>
+                    <Color r="1.0" g="1.0" b="1.0" a="0.5"/>
+                </Texture>
+            </Layer>
+            <Layer level="BACKGROUND">
+                <Texture name="$parentBackground">
+                    <Color r="0" g="0" b="0.1" a="1"/>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Frames>
+            <Button name="$parentBorder">
+                <Size>
+                    <AbsDimension x="263" y="34"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT">
+                        <Offset>
+                            <AbsDimension x="-5" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <HitRectInsets>
+                    <AbsInset left="0" right="0" top="7" bottom="7"/>
+                </HitRectInsets>
+                <Scripts>
+                    <OnClick>
+                        SoundtrackFrame_StatusBar_OnClick(self, button, down)
+                    </OnClick>
+                </Scripts>
+                <NormalTexture name="$parentNormal" file="Interface\PaperDollInfoFrame\UI-Character-Skills-BarBorder"/>
+                <HighlightTexture name="$parentHighlight" file="Interface\PaperDollInfoFrame\UI-Character-Skills-BarBorderHighlight"/>
+            </Button>
+        </Frames>
+        <BarTexture name="$parentBar" file="Interface\PaperDollInfoFrame\UI-Character-Skills-Bar"/>
+        <BarColor r="0.25" g="0.25" b="0.75"/>
+    </StatusBar>
+
+    <Texture name="Soundtrack_PreviousTexture" file="Interface\AddOns\Soundtrack\Images\PlaybackControls" virtual="true">
+        <TexCoords left="0" right="0.14453125" top="0" bottom="0.359375"/>
+    </Texture>
+    <Texture name="Soundtrack_PreviousDisabledTexture" file="Interface\AddOns\Soundtrack\Images\PlaybackControls" virtual="true">
+        <TexCoords left="0" right="0.14453125" top="0.359375" bottom="0.71875"/>
+    </Texture>
+    <Texture name="Soundtrack_PlayTexture" file="Interface\AddOns\Soundtrack\Images\PlaybackControls" virtual="true">
+        <TexCoords left="0.14453125" right="0.3125" top="0" bottom="0.35375"/>
+    </Texture>
+    <Texture name="Soundtrack_PauseTexture" file="Interface\AddOns\Soundtrack\Images\PlaybackControls" virtual="true">
+        <TexCoords left="0.14453125" right="0.3125" top="0.359375" bottom="0.71875"/>
+    </Texture>
+    <Texture name="Soundtrack_NextTexture" file="Interface\AddOns\Soundtrack\Images\PlaybackControls" virtual="true">
+        <TexCoords left="0.3125" right="0.45703125" top="0" bottom="0.35375"/>
+    </Texture>
+    <Texture name="Soundtrack_NextDisabledTexture" file="Interface\AddOns\Soundtrack\Images\PlaybackControls" virtual="true">
+        <TexCoords left="0.3125" right="0.45703125" top="0.359375" bottom="0.71875"/>
+    </Texture>
+    <Texture name="Soundtrack_ShuffleTexture" file="Interface\AddOns\Soundtrack\Images\PlaybackControls" virtual="true">
+        <TexCoords left="0.45703125" right="0.63671875" top="0" bottom="0.1796875"/>
+    </Texture>
+    <Texture name="Soundtrack_ShuffleDisabledTexture" file="Interface\AddOns\Soundtrack\Images\PlaybackControls" virtual="true">
+        <TexCoords left="0.45703125" right="0.63671875" top="0.1796875" bottom="0.359375"/>
+    </Texture>
+    <Texture name="Soundtrack_LoopTexture" file="Interface\AddOns\Soundtrack\Images\PlaybackControls" virtual="true">
+        <TexCoords left="0.45703125" right="0.63671875" top="0.359375" bottom="0.5390625"/>
+    </Texture>
+    <Texture name="Soundtrack_LoopDisabledTexture" file="Interface\AddOns\Soundtrack\Images\PlaybackControls" virtual="true">
+        <TexCoords left="0.45703125" right="0.63671875" top="0.5390625" bottom="0.71875"/>
+    </Texture>
+	<Texture name="Soundtrack_StopTexture" file="Interface\AddOns\Soundtrack\Images\PlaybackControls" virtual="true">
+        <TexCoords left="0.63671875" right="0.8046875" top="0" bottom="0.35375"/>
+    </Texture>
+	<Texture name="Soundtrack_InfoTexture" file="Interface\AddOns\Soundtrack\Images\PlaybackControls" virtual="true">
+		<TexCoords left="0.63671875" right="0.8046875" top="0.359375" bottom="0.71875"/>
+	</Texture>
+	<Texture name="Soundtrack_ReportTexture" file="Interface\AddOns\Soundtrack\Images\PlaybackControls" virtual="true">
+		<TexCoords left="0.8046875" right="0.96484375" top="0.359375" bottom="0.71875"/>
+	</Texture>
+
+    <Button name="Soundtrack_PreviousButton" virtual="true">
+        <Size>
+            <!--AbsDimension x="24" y="30"/-->
+            <AbsDimension x="21" y="26"/>
+        </Size>
+        <NormalTexture inherits="Soundtrack_PreviousTexture"/>
+        <DisabledTexture inherits="Soundtrack_PreviousTexture"/>
+    </Button>
+    <Button name="Soundtrack_PreviousDisabledButton" virtual="true">
+        <Size>
+            <AbsDimension x="24" y="30"/>
+        </Size>
+        <NormalTexture inherits="Soundtrack_PreviousDisabledTexture"/>
+        <DisabledTexture inherits="Soundtrack_PreviousDisabledTexture"/>
+    </Button>
+    <Button name="Soundtrack_PlayButton" virtual="true">
+        <Size>
+            <!--AbsDimension x="28" y="30"/-->
+            <AbsDimension x="24" y="26"/>
+        </Size>
+        <NormalTexture inherits="Soundtrack_PlayTexture"/>
+        <DisabledTexture inherits="Soundtrack_PlayTexture"/>
+    </Button>
+    <Button name="Soundtrack_StopButton" virtual="true">
+        <Size>
+            <!--AbsDimension x="28" y="30"/-->
+            <AbsDimension x="24" y="26"/>
+        </Size>
+        <NormalTexture inherits="Soundtrack_PauseTexture"/>
+        <DisabledTexture inherits="Soundtrack_PauseTexture"/>
+    </Button>
+    <Button name="Soundtrack_NextButton" virtual="true">
+        <Size>
+            <!--AbsDimension x="24" y="30"/-->
+            <AbsDimension x="21" y="26"/>
+        </Size>
+        <NormalTexture inherits="Soundtrack_NextTexture"/>
+        <DisabledTexture inherits="Soundtrack_NextTexture"/>
+    </Button>
+    <Button name="Soundtrack_NextDisabledButton" virtual="true">
+        <Size>
+            <AbsDimension x="24" y="30"/>
+        </Size>
+        <NormalTexture inherits="Soundtrack_NextDisabledTexture"/>
+        <DisabledTexture inherits="Soundtrack_NextDisabledTexture"/>
+    </Button>
+    <Button name="Soundtrack_TrueStopButton" virtual="true">
+        <Size>
+            <AbsDimension x="21" y="22"/>
+        </Size>
+        <NormalTexture inherits="Soundtrack_StopTexture"/>
+        <DisabledTexture inherits="Soundtrack_StopTexture"/>
+    </Button>
+	<Button name="Soundtrack_InfoButton" virtual="true">
+        <Size>
+            <AbsDimension x="21" y="22"/>
+        </Size>
+        <NormalTexture inherits="Soundtrack_InfoTexture"/>
+        <DisabledTexture inherits="Soundtrack_InfoTexture"/>
+    </Button>
+	<Button name="Soundtrack_ReportButton" virtual="true">
+        <Size>
+            <AbsDimension x="21" y="22"/>
+        </Size>
+        <NormalTexture inherits="Soundtrack_ReportTexture"/>
+        <DisabledTexture inherits="Soundtrack_ReportTexture"/>
+    </Button>
+	
+    <!--Main frame-->
+    <Frame name="SoundtrackFrame" toplevel="true" parent="UIParent" movable="true" enableMouse="true" hidden="true">
+        <Size>
+            <AbsDimension x="800" y="525"/>
+        </Size>
+        <Anchors>
+            <Anchor point="TOPLEFT">
+                <Offset>
+                    <AbsDimension x="0" y="-104"/>
+                </Offset>
+            </Anchor>
+        </Anchors>
+        <TitleRegion setAllPoints="true"/>
+
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+            <BackgroundInsets>
+                <AbsInset left="11" right="12" top="12" bottom="11"/>
+            </BackgroundInsets>
+            <TileSize>
+                <AbsValue val="32"/>
+            </TileSize>
+            <EdgeSize>
+                <AbsValue val="32"/>
+            </EdgeSize>
+        </Backdrop>
+
+        <HitRectInsets>
+            <AbsInset left="0" right="30" top="0" bottom="45"/>
+        </HitRectInsets>
+        <Layers>
+            <Layer level="OVERLAY">
+                <FontString name="$parentTitleText" inherits="GameFontNormal" text="Soundtrack"> <!--SOUNDTRACK_TITLE-->
+                    <Anchors>
+                        <Anchor point="TOP">
+                            <Offset>
+                                <AbsDimension x="0" y="-18"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+
+
+
+            <Button name="SoundtrackFrame_CloseButton" inherits="UIPanelButtonTemplate" text="Close">
+                <Size>
+                    <AbsDimension x="100" y="22"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="BOTTOMRIGHT" relativeTo="SoundtrackFrame" relativePoint="BOTTOMRIGHT">
+                        <Offset>
+                            <AbsDimension x="-5" y="12"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnEnter>
+                        Soundtrack.ShowTip(self, SOUNDTRACK_CLOSE, SOUNDTRACK_CLOSE_TIP)
+                    </OnEnter>
+                    <OnLeave>
+						Soundtrack.HideTip()
+                    </OnLeave>
+                    <OnClick>
+                        SoundtrackFrame:Hide()
+                    </OnClick>
+                </Scripts>
+            </Button>
+            <Button name="SoundtrackFrame_TopCloseButton" inherits="UIPanelCloseButton">
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-5" y="-5"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnEnter>
+                        Soundtrack.ShowTip(self, SOUNDTRACK_CLOSE, SOUNDTRACK_CLOSE_TIP)
+                    </OnEnter>
+                    <OnLeave>
+                        Soundtrack.HideTip()
+                    </OnLeave>
+                </Scripts>
+            </Button>
+
+            <!-- Tabs -->
+            <Button name="SoundtrackFrameTab1" inherits="SoundtrackFrameTabTemplate" id="1" text="Battle">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="15" y="8"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="SoundtrackFrameTab2" inherits="SoundtrackFrameTabTemplate" id="2" text="Bosses">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrameTab1" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-8" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="SoundtrackFrameTab3" inherits="SoundtrackFrameTabTemplate" id="3" text="Zones">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrameTab2" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-8" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="SoundtrackFrameTab4" inherits="SoundtrackFrameTabTemplate" id="4" text="Dances">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrameTab3" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-8" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="SoundtrackFrameTab5" inherits="SoundtrackFrameTabTemplate" id="5" text="Misc">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrameTab4" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-8" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <!--Button name="SoundtrackFrameTab6" inherits="SoundtrackFrameTabTemplate" id="6" text="Custom">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrameTab5" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-8" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button-->
+            <Button name="SoundtrackFrameTab6" inherits="SoundtrackFrameTabTemplate" id="6" text="Playlists">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrameTab5" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-8" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="SoundtrackFrameTab7" inherits="SoundtrackFrameTabTemplate" id="7" text="Options">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrameTab6" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-8" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+
+
+            <StatusBar name="SoundtrackFrame_StatusBarEvent" inherits="SoundtrackFrame_StatusBarTemplate" minValue="0" maxValue="8" defaultValue="1" id="1">
+                <Anchors>
+                    <Anchor point="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="13" y="10"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </StatusBar>
+            <StatusBar name="SoundtrackFrame_StatusBarTrack" inherits="SoundtrackFrame_StatusBarTemplate" minValue="0" maxValue="244" defaultValue="23" id="2">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="SoundtrackFrame_StatusBarEvent" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="5" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </StatusBar>
+
+            <Button name="SoundtrackFrame_PreviousButton" inherits="Soundtrack_PreviousButton" >
+                <Size>
+                    <AbsDimension x="12" y="15"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SoundtrackFrame_StatusBarTrack">
+                        <Offset>
+                            <AbsDimension  x="5" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        Soundtrack.Events.PlaybackPrevious();
+                    </OnClick>
+                    <OnEnter>
+                        Soundtrack.ShowTip(self, SOUNDTRACK_PREVIOUS, SOUNDTRACK_PREVIOUS_TIP)
+                    </OnEnter>
+                    <OnLeave>
+                        Soundtrack.HideTip()
+                    </OnLeave>
+                </Scripts>
+            </Button>
+            <!--Button name="SoundtrackControlFrame_PreviousDisabledButton" inherits="Soundtrack_PreviousDisabledButton" >
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SoundtrackControlFrame_PreviousButton"/>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        Soundtrack.Events.PlaybackPrevious();
+                    </OnClick>
+                    <OnEnter>
+                        Soundtrack.ShowTip(self, SOUNDTRACK_PREVIOUS, SOUNDTRACK_PREVIOUS_TIP)
+                    </OnEnter>
+                    <OnLeave>
+                        Soundtrack.HideTip();
+                    </OnLeave>
+                </Scripts>
+            </Button-->
+            <Button name="SoundtrackFrame_PlayButton" inherits="Soundtrack_PlayButton">
+                <Size>
+                    <AbsDimension x="14" y="15"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SoundtrackFrame_PreviousButton"/>
+                </Anchors>
+                <Scripts>
+                    <OnLoad>
+                        SoundtrackFrame_RefreshPlaybackControls()
+                    </OnLoad>
+                    <OnClick>
+                        Soundtrack.Events.PlaybackPlayStop();
+                    </OnClick>
+                    <OnEnter>
+                        Soundtrack.ShowTip(self, SOUNDTRACK_PLAY, SOUNDTRACK_PLAY_TIP);
+                    </OnEnter>
+                    <OnLeave>
+                        Soundtrack.HideTip()
+                    </OnLeave>
+                </Scripts>
+            </Button>
+            <Button name="SoundtrackFrame_StopButton" inherits="Soundtrack_StopButton">
+                <Size>
+                    <AbsDimension x="14" y="15"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SoundtrackFrame_PlayButton"/>
+                </Anchors>
+                <Scripts>
+                    <OnLoad>
+                        SoundtrackFrame_RefreshPlaybackControls()
+                    </OnLoad>
+                    <OnClick>
+                        Soundtrack.Events.PlaybackPlayStop();
+                    </OnClick>
+                    <OnEnter>
+                        Soundtrack.ShowTip(self, SOUNDTRACK_PAUSE, SOUNDTRACK_PAUSE_TIP);
+                    </OnEnter>
+                    <OnLeave>
+                        Soundtrack.HideTip()
+                    </OnLeave>
+                </Scripts>
+            </Button>
+            <Button name="SoundtrackFrame_NextButton" inherits="Soundtrack_NextButton">
+                <Size>
+                    <AbsDimension x="12" y="15"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SoundtrackFrame_PlayButton"/>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        Soundtrack.Events.PlaybackNext();
+                    </OnClick>
+                    <OnEnter>
+                        Soundtrack.ShowTip(self, SOUNDTRACK_NEXT, SOUNDTRACK_NEXT_TIP);
+                    </OnEnter>
+                    <OnLeave>
+						Soundtrack.HideTip()
+                    </OnLeave>
+                </Scripts>
+            </Button>
+            <!--Button name="SoundtrackControlFrame_NextDisabledButton" inherits="Soundtrack_NextDisabledButton">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SoundtrackControlFrame_NextButton"/>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        Soundtrack.Events.PlaybackNext();
+                    </OnClick>
+                    <OnEnter>
+                        Soundtrack.ShowTip(self, SOUNDTRACK_NEXT, SOUNDTRACK_NEXT_TIP);
+                    </OnEnter>
+                    <OnLeave>
+                        Soundtrack.HideTip();
+                    </OnLeave>
+                </Scripts>
+            </Button-->
+            <Button name="SoundtrackFrame_TrueStopButton" inherits="Soundtrack_TrueStopButton">
+                <Size>
+                    <AbsDimension x="14" y="15"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SoundtrackFrame_NextButton"/>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        Soundtrack.StopEventAtLevel(Soundtrack.Events.GetCurrentStackLevel());
+                    </OnClick>
+                    <OnEnter>
+                        Soundtrack.ShowTip(self, SOUNDTRACK_STOP, SOUNDTRACK_STOP_TIP);
+                    </OnEnter>
+                    <OnLeave>
+						Soundtrack.HideTip()
+                    </OnLeave>
+                </Scripts>
+            </Button>
+			
+            <Frame name="SoundtrackFrameEventFrame" setAllPoints="true">
+                <Frames>
+                    <!-- Event list -->
+                    <Frame name="SoundtrackFrameEventList">
+                        <Size>
+                            <AbsDimension x="200" y="355"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame" relativePoint="TOPLEFT">
+                                <Offset>
+                                    <AbsDimension x="16" y="-40" />
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Backdrop bgFile="Interface/ChatFrame/ChatFrameBackground" edgeFile="Interface/Buttons/UI-SliderBar-Border" tile="true">
+                            <BackgroundInsets>
+                                <AbsInset left="3" right="3" top="6" bottom="6" />
+                            </BackgroundInsets>
+                            <TileSize>
+                                <AbsValue val="16" />
+                            </TileSize>
+                            <EdgeSize>
+                                <AbsValue val="9" />
+                            </EdgeSize>
+                        </Backdrop>
+                        <Layers>
+                            <Layer level="ARTWORK">
+                                <FontString inherits="GameFontNormal" text="Events">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT">
+                                            <Offset>
+                                                <AbsDimension x="8" y="-10"/>
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Frames>
+                            <ScrollFrame name="SoundtrackFrameEventScrollFrame" inherits="FauxScrollFrameTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT">
+                                        <Offset>
+                                            <AbsDimension x="0" y="-7"/>
+                                        </Offset>
+                                    </Anchor>
+                                    <Anchor point="BOTTOMRIGHT">
+                                        <Offset>
+                                            <AbsDimension x="-28" y="7" />
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                                <Layers>
+                                    <Layer level="ARTWORK">
+                                        <Texture hidden="true" name="$parentScrollBarTop" file="Interface\PaperDollInfoFrame\UI-Character-ScrollBar">
+                                            <Size>
+                                                <AbsDimension x="31" y="256"/>
+                                            </Size>
+                                            <TexCoords left="0" right="0.484375" top="0" bottom="1.0"/>
+                                        </Texture>
+                                        <Texture hidden="true" file="Interface\PaperDollInfoFrame\UI-Character-ScrollBar">
+                                            <Size>
+                                                <AbsDimension x="31" y="106"/>
+                                            </Size>
+                                            <TexCoords left="0.515625" right="1.0" top="0" bottom="0.4140625"/>
+                                        </Texture>
+                                    </Layer>
+                                </Layers>
+                                <Scripts>
+                                    <OnVerticalScroll>
+                                        FauxScrollFrame_OnVerticalScroll(self, offset, EVENTS_ITEM_HEIGHT, SoundtrackFrame_RefreshEvents);
+                                    </OnVerticalScroll>
+                                </Scripts>
+                            </ScrollFrame>
+                            <Button name="SoundtrackFrameEventButton1" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT">
+                                        <Offset>
+                                            <AbsDimension x="10" y="-25"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton2" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton1" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton3" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton2" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton4" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton3" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton5" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton4" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton6" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton5" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton7" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton6" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton8" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton7" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton9" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton8" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton10" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton9" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton11" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton10" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton12" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton11" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton13" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton12" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton14" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton13" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton15" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton14" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton16" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton15" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton17" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton16" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton18" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton17" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton19" inherits="SoundtrackFrameEventButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton18" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton20" inherits="SoundtrackFrameEventButtonTemplate" hidden="true">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton19" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton21" inherits="SoundtrackFrameEventButtonTemplate" hidden="true">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton20" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton22" inherits="SoundtrackFrameEventButtonTemplate" hidden="true">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton21" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton23" inherits="SoundtrackFrameEventButtonTemplate" hidden="true">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton22" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton24" inherits="SoundtrackFrameEventButtonTemplate" hidden="true">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton23" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton25" inherits="SoundtrackFrameEventButtonTemplate" hidden="true">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton24" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton26" inherits="SoundtrackFrameEventButtonTemplate" hidden="true">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton25" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton27" inherits="SoundtrackFrameEventButtonTemplate" hidden="true">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton26" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton28" inherits="SoundtrackFrameEventButtonTemplate" hidden="true">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton27" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton29" inherits="SoundtrackFrameEventButtonTemplate" hidden="true">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton28" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                            <Button name="SoundtrackFrameEventButton30" inherits="SoundtrackFrameEventButtonTemplate" hidden="true">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeTo="SoundtrackFrameEventButton29" relativePoint="BOTTOM">
+                                        <Offset>
+                                            <AbsDimension x="0" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Button>
+                        </Frames>
+                        <Scripts>
+                            <OnLoad>self:SetBackdropColor(.1,.1,.1,0.7)</OnLoad>
+                        </Scripts>
+                    </Frame>
+                    <Frame name="SoundtrackFrameEventMenu" inherits="UIDropDownMenuTemplate" id="1" hidden="false">
+                        <Size>
+                            <AbsDimension x="0" y="0"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrameEventFrame" relativePoint="CENTER">
+                                <Offset>
+                                    <AbsDimension x="300" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                self:SetFrameLevel(0);
+                                UIDropDownMenu_SetWidth(self, 180);
+                            </OnLoad>
+                            <OnShow>
+                                UIDropDownMenu_Initialize(self, SoundtrackFrameEventMenu_Initialize, "MENU");
+                            </OnShow>
+                        </Scripts>
+                    </Frame>
+                    <Button name="SoundtrackFrameAddPlaylistButton" inherits="UIPanelButtonTemplate" text="Add">
+                        <Size>
+                            <AbsDimension x="50" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="SoundtrackFrameEventList">
+                                <Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+							<OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ADD_BUTTON);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrameAddPlaylistButton_OnClick();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_ADD_PLAYLIST, SOUNDTRACK_ADD_PLAYLIST_TIP);
+							</OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <!--> <Button name="SoundtrackFrameRenamePlaylistButton" inherits="UIPanelButtonTemplate" text="Rename">
+                        <Size>
+                            <AbsDimension x="70" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeTo="SoundtrackFrameAddPlaylistButton" relativePoint="LEFT">
+								<Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+							<OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_RENAME_BUTTON);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrameRenamePlaylistButton_OnClick();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_RENAME_PLAYLIST, SOUNDTRACK_RENAME_PLAYLIST_TIP);
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </Button> <--> 
+					<Button name="SoundtrackFrameDeletePlaylistButton" inherits="UIPanelButtonTemplate" text="Remove">
+                        <Size>
+                            <AbsDimension x="75" y="22"/>
+                        </Size>
+                        <Anchors>
+							<!--><Anchor point="RIGHT" relativeTo="SoundtrackFrameRenamePlaylistButton" relativePoint="LEFT"><-->
+							<Anchor point="RIGHT" relativeTo="SoundtrackFrameAddPlaylistButton" relativePoint="LEFT">
+								<Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+							<OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_REMOVE_BUTTON);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrameDeletePlaylistButton_OnClick();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_REMOVE_PLAYLIST, SOUNDTRACK_REMOVE_PLAYLIST_TIP);
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </Button>                    
+                    <Button name="SoundtrackFrameAddZoneButton" inherits="UIPanelButtonTemplate" text="Add">
+                        <Size>
+                            <AbsDimension x="50" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="SoundtrackFrameEventList">
+                                <Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+							<OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ADD_BUTTON);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrameAddZoneButton_OnClick();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_ADD_ZONE, SOUNDTRACK_ADD_ZONE_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+					<Button name="SoundtrackFrameRemoveZoneButton" inherits="UIPanelButtonTemplate" text="Remove">
+                        <Size>
+                            <AbsDimension x="75" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeTo="SoundtrackFrameAddZoneButton" relativePoint="LEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+							<OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_REMOVE_BUTTON);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrameRemoveZoneButton_OnClick();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_REMOVE_ZONE, SOUNDTRACK_REMOVE_ZONE_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="SoundtrackFrameAddTargetButton" inherits="UIPanelButtonTemplate" text="Add Target">
+                        <Size>
+                            <AbsDimension x="50" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="SoundtrackFrameEventList">
+                                <Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+							<OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ADD_BUTTON);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrameAddTargetButton_OnClick();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_ADD_TARGET, SOUNDTRACK_ADD_TARGET_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="SoundtrackFrameDeleteTargetButton" inherits="UIPanelButtonTemplate" text="Delete">
+                        <Size>
+                            <AbsDimension x="75" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeTo="SoundtrackFrameAddTargetButton" relativePoint="LEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+							<OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_REMOVE_BUTTON);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrameDeleteTargetButton_OnClick();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_REMOVE_TARGET, SOUNDTRACK_REMOVE_TARGET_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="SoundtrackFrameAddCustomEventButton" inherits="UIPanelButtonTemplate" text="Add">
+                        <Size>
+                            <AbsDimension x="50" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="SoundtrackFrameEventList">
+                                <Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+							<OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ADD_BUTTON);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrameAddCustomEventButton_OnClick();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_ADD_CUSTOM, SOUNDTRACK_ADD_CUSTOM_TIP);
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="SoundtrackFrameEditCustomEventButton" inherits="UIPanelButtonTemplate" text="Edit">
+                        <Size>
+                            <AbsDimension x="70" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeTo="SoundtrackFrameAddCustomEventButton" relativePoint="LEFT">
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+							<OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_EDIT_BUTTON);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrameEditCustomEventButton_OnClick();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_EDIT_CUSTOM, SOUNDTRACK_EDIT_CUSTROM_TIP);
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="SoundtrackFrameDeleteCustomEventButton" inherits="UIPanelButtonTemplate" text="Delete">
+                        <Size>
+                            <AbsDimension x="75" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeTo="SoundtrackFrameEditCustomEventButton" relativePoint="LEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+							<OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_REMOVE_BUTTON);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrameDeleteCustomEventButton_OnClick();
+                                _G["SoundtrackFrameRightPanelEditEvent"]:Hide();
+                                _G["SoundtrackFrameRightPanelTracks"]:Show();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_REMOVE_CUSTOM, SOUNDTRACK_REMOVE_CUSTOM_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip()
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    
+
+                    <Frame name="SoundtrackFrameRightPanelTracks">
+                        <Frames>
+                            <!-- Track list -->
+                            <Frame name="SoundtrackFrameTrackList">
+                                <Size>
+                                    <AbsDimension x="560" y="300"/>
+                                </Size>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame" relativePoint="TOPLEFT">
+                                        <Offset>
+                                            <AbsDimension x="225" y="-40" />
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                                <Backdrop bgFile="Interface/ChatFrame/ChatFrameBackground" edgeFile="Interface/Buttons/UI-SliderBar-Border" tile="true">
+                                    <BackgroundInsets>
+                                        <AbsInset left="3" right="3" top="6" bottom="6" />
+                                    </BackgroundInsets>
+                                    <TileSize>
+                                        <AbsValue val="16" />
+                                    </TileSize>
+                                    <EdgeSize>
+                                        <AbsValue val="9" />
+                                    </EdgeSize>
+                                </Backdrop>
+                                <Layers>
+                                    <Layer level="ARTWORK">
+                                        <FontString inherits="GameFontNormal" text="Track Library">
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT">
+                                                    <Offset>
+                                                        <AbsDimension x="20" y="-10"/>
+                                                    </Offset>
+                                                </Anchor>
+                                            </Anchors>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+                                <Frames>
+                                    <EditBox name="SoundtrackFrame_TrackFilter" inherits="SoundtrackFrame_EditBoxTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPRIGHT" relativeTo="SoundtrackFrameTrackList" relativePoint="TOPRIGHT">
+                                                <Offset>
+                                                    <AbsDimension x="-5" y="-6"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnTabPressed>
+                                                --ItemRack_EventDelay:SetFocus()
+                                            </OnTabPressed>
+                                            <OnTextChanged>
+                                                SoundtrackFrame_OnFilterChanged()
+                                            </OnTextChanged>
+                                            <OnEnter>
+                                                Soundtrack.ShowTip(self, SOUNDTRACK_TRACK_FILTER, SOUNDTRACK_TRACK_FILTER_TIP)
+                                            </OnEnter>
+                                            <OnLeave>
+                                                Soundtrack.HideTip()
+                                            </OnLeave>
+                                        </Scripts>
+                                    </EditBox>
+                                    <Button name="SoundtrackFrame_ColumnHeaderName" inherits="SoundtrackFrameColumnHeaderTemplate">
+                                        <Size>
+                                            <AbsDimension x="200" y="10"/>
+                                        </Size>
+                                        <Anchors>
+                                            <Anchor point="BOTTOMLEFT" relativeTo="SoundtrackFrameTrackList" relativePoint="TOPLEFT">
+                                                <Offset>
+                                                    <AbsDimension x="35" y="-35"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Frames>
+                                            <Frame name="SoundtrackFrame_ColumnHeaderNameDropDown" inherits="UIDropDownMenuTemplate" id="1">
+                                                <Anchors>
+                                                    <Anchor point="TOPLEFT">
+                                                        <Offset>
+                                                            <AbsDimension x="-15" y="0"/>
+                                                        </Offset>
+                                                    </Anchor>
+                                                </Anchors>
+                                                <Layers>
+                                                    <Layer level="OVERLAY">
+                                                        <Texture name="SoundtrackFrame_ColumnHeaderNameHighlightTexture" file="Interface\PaperDollInfoFrame\UI-Character-Tab-Highlight" alphaMode="ADD" hidden="true">
+                                                            <Anchors>
+                                                                <Anchor point="TOPLEFT">
+                                                                    <Offset>
+                                                                        <AbsDimension x="15" y="3"/>
+                                                                    </Offset>
+                                                                </Anchor>
+                                                                <Anchor point="BOTTOMRIGHT">
+                                                                    <Offset>
+                                                                        <AbsDimension x="-30" y="-2"/>
+                                                                    </Offset>
+                                                                </Anchor>
+                                                            </Anchors>
+                                                        </Texture>
+                                                    </Layer>
+                                                </Layers>
+                                                <Scripts>
+                                                    <OnLoad>
+                                                      UIDropDownMenu_Initialize(self, SoundtrackFrame_ColumnHeaderNameDropDown_Initialize);
+                                                      UIDropDownMenu_SetWidth(self, 80);
+                                                      UIDropDownMenu_SetButtonWidth(self, 24);
+                                                      UIDropDownMenu_JustifyText(self, "LEFT")
+                                                    </OnLoad>
+                                                    <OnShow>
+                                                        UIDropDownMenu_Initialize(self, SoundtrackFrame_ColumnHeaderNameDropDown_Initialize);
+                                                        UIDropDownMenu_SetSelectedID(SoundtrackFrame_ColumnHeaderNameDropDown, 1);
+                                                    </OnShow>
+                                                    <OnEvent>
+                                                        --WhoFrameDropDown_OnEvent()
+                                                    </OnEvent>
+                                                    <OnEnter>
+                                                        SoundtrackFrame_ColumnHeaderNameHighlightTexture:Show();
+                                                    </OnEnter>
+                                                    <OnLeave>
+                                                        SoundtrackFrame_ColumnHeaderNameHighlightTexture:Hide();
+                                                    </OnLeave>
+                                                    <OnMouseUp>
+                                                        Soundtrack.Util.DebugPrint("Column header clicked!")
+                                                        SoundtrackFrame.nameHeaderType = SOUNDTRACKFRAME_COLUMNHEADERNAME_LIST[UIDropDownMenu_GetSelectedID(SoundtrackFrame_ColumnHeaderNameDropDown)].type
+                                                        Soundtrack.SortTracks(SoundtrackFrame.nameHeaderType);
+                                                    </OnMouseUp>
+                                                </Scripts>
+                                            </Frame>
+                                        </Frames>
+                                        <Scripts>
+                                            <OnLoad>
+                                                --WhoFrameColumn_SetWidth(105);
+                                            </OnLoad>
+                                        </Scripts>
+                                    </Button>
+                                    <Button name="SoundtrackFrameColumnHeaderArtist" inherits="SoundtrackFrameColumnHeaderTemplate" text="Artist">
+                                        <Size>
+                                            <AbsDimension x="100" y="25"/>
+                                        </Size>
+                                        <Anchors>
+                                            <Anchor point="LEFT" relativeTo="SoundtrackFrame_ColumnHeaderName" relativePoint="RIGHT">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="-10"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                self.sortType = "artist";
+                                            </OnLoad>
+                                        </Scripts>
+                                    </Button>
+                                    <Button name="SoundtrackFrameColumnHeaderAlbum" inherits="SoundtrackFrameColumnHeaderTemplate" text="Album">
+                                        <Size>
+                                            <AbsDimension x="175" y="25"/>
+                                        </Size>
+                                        <Anchors>
+                                            <Anchor point="LEFT" relativeTo="SoundtrackFrameColumnHeaderArtist" relativePoint="RIGHT"/>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                self.sortType = "album";
+                                            </OnLoad>
+                                        </Scripts>
+                                    </Button>
+
+                                    <ScrollFrame name="SoundtrackFrameTrackScrollFrame" inherits="FauxScrollFrameTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="-27"/>
+                                                </Offset>
+                                            </Anchor>
+                                            <Anchor point="BOTTOMRIGHT">
+                                                <Offset>
+                                                    <AbsDimension x="-28" y="7" />
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Layers>
+                                            <Layer level="ARTWORK">
+                                                <Texture hidden="true" name="$parentScrollBarTop" file="Interface\PaperDollInfoFrame\UI-Character-ScrollBar">
+                                                    <Size>
+                                                        <AbsDimension x="31" y="256"/>
+                                                    </Size>
+                                                    <TexCoords left="0" right="0.484375" top="0" bottom="1.0"/>
+                                                </Texture>
+                                                <Texture hidden="true" file="Interface\PaperDollInfoFrame\UI-Character-ScrollBar">
+                                                    <Size>
+                                                        <AbsDimension x="31" y="106"/>
+                                                    </Size>
+                                                    <TexCoords left="0.515625" right="1.0" top="0" bottom="0.4140625"/>
+                                                </Texture>
+                                            </Layer>
+                                        </Layers>
+                                        <Scripts>
+                                            <OnVerticalScroll>
+                                                FauxScrollFrame_OnVerticalScroll(self, offset, EVENTS_ITEM_HEIGHT, SoundtrackFrame_RefreshTracks);
+                                            </OnVerticalScroll>
+                                        </Scripts>
+                                    </ScrollFrame>
+                                    <Button name="SoundtrackFrameTrackButton1" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SoundtrackFrame_ColumnHeaderName">
+                                                <Offset>
+                                                    <AbsDimension x="-25" y="-15"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton2" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton1" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton3" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton2" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton4" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton3" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton5" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton4" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton6" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton5" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton7" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton6" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton8" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton7" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton9" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton8" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton10" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton9" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton11" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton10" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton12" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton11" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton13" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton12" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton14" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton13" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton15" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton14" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton16" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton15" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <!--Button name="SoundtrackFrameTrackButton17" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton16" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton18" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton17" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton19" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton18" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button>
+                                    <Button name="SoundtrackFrameTrackButton20" inherits="SoundtrackFrameTrackButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOP" relativeTo="SoundtrackFrameTrackButton19" relativePoint="BOTTOM">
+                                                <Offset>
+                                                    <AbsDimension x="0" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                    </Button-->
+                                </Frames>
+                                <Scripts>
+                                    <OnLoad>self:SetBackdropColor(.1,.1,.1,0.7)</OnLoad>
+                                </Scripts>
+                            </Frame>
+                            
+                            <!-- Context menus -->
+                            <Frame name="SoundtrackFrameTrackMenu" inherits="UIDropDownMenuTemplate" id="1" hidden="false">
+                                <Size>
+                                    <AbsDimension x="0" y="0"/>
+                                </Size>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrameEventFrame" relativePoint="CENTER">
+                                        <Offset>
+                                            <AbsDimension x="300" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                                <Scripts>
+                                    <OnLoad>
+                                        self:SetFrameLevel(0);
+                                        UIDropDownMenu_SetWidth(self, 180);
+                                    </OnLoad>
+                                    <OnShow>
+                                        UIDropDownMenu_Initialize(self, SoundtrackFrameTrackMenu_Initialize, "MENU");
+                                    </OnShow>
+                                </Scripts>
+                            </Frame>
+
+
+                            <Frame name="SoundtrackFrame_AssignedFrame">
+                                <Size>
+                                    <AbsDimension x="560" y="155"/>
+                                </Size>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrameTrackList" relativePoint="BOTTOMLEFT">
+                                    </Anchor>
+                                </Anchors>
+                                <Backdrop bgFile="Interface/ChatFrame/ChatFrameBackground" edgeFile="Interface/Buttons/UI-SliderBar-Border" tile="true">
+                                    <BackgroundInsets>
+                                        <AbsInset left="3" right="3" top="6" bottom="6" />
+                                    </BackgroundInsets>
+                                    <TileSize>
+                                        <AbsValue val="16" />
+                                    </TileSize>
+                                    <EdgeSize>
+                                        <AbsValue val="9" />
+                                    </EdgeSize>
+                                </Backdrop>
+                                <Frames>
+                                    <Button name="SoundtrackFrameColumnHeaderAssignedTracks" inherits="SoundtrackFrameColumnHeaderTemplate2" text="Assigned Tracks">
+                                        <Size>
+                                            <AbsDimension x="120" y="25"/>
+                                        </Size>
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_AssignedFrame" relativePoint="TOPLEFT">
+                                                <Offset>
+                                                    <AbsDimension x="15" y="0"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnClick>
+                                                SoundtrackFrame.showAssignedFrame = true
+                                                SoundtrackFrame_OnSelectedEventTabChanged()
+                                            </OnClick>
+                                        </Scripts>
+                                    </Button>
+                                    <Button name="SoundtrackFrameColumnHeaderEventSettings" inherits="SoundtrackFrameColumnHeaderTemplate2" text="Event Settings">
+                                        <Size>
+                                            <AbsDimension x="120" y="25"/>
+                                        </Size>
+                                        <Anchors>
+                                            <Anchor point="LEFT" relativeTo="SoundtrackFrameColumnHeaderAssignedTracks" relativePoint="RIGHT"/>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnClick>
+                                                SoundtrackFrame.showAssignedFrame = false
+                                                SoundtrackFrame_OnSelectedEventTabChanged()
+                                            </OnClick>
+                                            <OnEnter>
+                                                Soundtrack.ShowTip(self, SOUNDTRACK_EVENT_SETTINGS, SOUNDTRACK_EVENT_SETTINGS_TIP)
+                                            </OnEnter>
+                                            <OnLeave>
+                                                Soundtrack.HideTip()
+                                            </OnLeave>
+                                        </Scripts>
+                                    </Button>
+                                    
+                                    <Frame name="SoundtrackFrameAssignedTracks">
+                                        <Frames>
+                                            <ScrollFrame name="SoundtrackFrameAssignedTracksScrollFrame" inherits="FauxScrollFrameTemplate">
+                                                <Anchors>
+                                                    <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SoundtrackFrame_AssignedFrame">
+                                                        <Offset>
+                                                            <AbsDimension x="0" y="-7"/>
+                                                        </Offset>
+                                                    </Anchor>
+                                                    <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="SoundtrackFrame_AssignedFrame">
+                                                        <Offset>
+                                                            <AbsDimension x="-28" y="7" />
+                                                        </Offset>
+                                                    </Anchor>
+                                                </Anchors>
+                                                <Layers>
+                                                    <Layer level="ARTWORK">
+                                                        <Texture hidden="true" name="$parentScrollBarTop" file="Interface\PaperDollInfoFrame\UI-Character-ScrollBar">
+                                                            <Size>
+                                                                <AbsDimension x="31" y="256"/>
+                                                            </Size>
+                                                            <TexCoords left="0" right="0.484375" top="0" bottom="1.0"/>
+                                                        </Texture>
+                                                        <Texture hidden="true" file="Interface\PaperDollInfoFrame\UI-Character-ScrollBar">
+                                                            <Size>
+                                                                <AbsDimension x="31" y="106"/>
+                                                            </Size>
+                                                            <TexCoords left="0.515625" right="1.0" top="0" bottom="0.4140625"/>
+                                                        </Texture>
+                                                    </Layer>
+                                                </Layers>
+                                                <Scripts>
+                                                    <OnVerticalScroll>
+                                                        FauxScrollFrame_OnVerticalScroll(self, offset, EVENTS_ITEM_HEIGHT, SoundtrackFrame_RefreshAssignedTracks);
+                                                    </OnVerticalScroll>
+                                                </Scripts>
+                                            </ScrollFrame>
+                                            <Button name="SoundtrackAssignedTrackButton1" inherits="SoundtrackFrameAssignedTrackButtonTemplate">
+                                                <Anchors>
+                                                    <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SoundtrackFrameColumnHeaderAssignedTracks">
+                                                        <Offset>
+                                                            <AbsDimension x="-4" y="0"/>
+                                                        </Offset>
+                                                    </Anchor>
+                                                </Anchors>
+                                            </Button>
+                                            <Button name="SoundtrackAssignedTrackButton2" inherits="SoundtrackFrameAssignedTrackButtonTemplate">
+                                                <Anchors>
+                                                    <Anchor point="TOP" relativeTo="SoundtrackAssignedTrackButton1" relativePoint="BOTTOM">
+                                                        <Offset>
+                                                            <AbsDimension x="0" y="0"/>
+                                                        </Offset>
+                                                    </Anchor>
+                                                </Anchors>
+                                            </Button>
+                                            <Button name="SoundtrackAssignedTrackButton3" inherits="SoundtrackFrameAssignedTrackButtonTemplate">
+                                                <Anchors>
+                                                    <Anchor point="TOP" relativeTo="SoundtrackAssignedTrackButton2" relativePoint="BOTTOM">
+                                                        <Offset>
+                                                            <AbsDimension x="0" y="0"/>
+                                                        </Offset>
+                                                    </Anchor>
+                                                </Anchors>
+                                            </Button>
+                                            <Button name="SoundtrackAssignedTrackButton4" inherits="SoundtrackFrameAssignedTrackButtonTemplate">
+                                                <Anchors>
+                                                    <Anchor point="TOP" relativeTo="SoundtrackAssignedTrackButton3" relativePoint="BOTTOM">
+                                                        <Offset>
+                                                            <AbsDimension x="0" y="0"/>
+                                                        </Offset>
+                                                    </Anchor>
+                                                </Anchors>
+                                            </Button>
+                                            <Button name="SoundtrackAssignedTrackButton5" inherits="SoundtrackFrameAssignedTrackButtonTemplate">
+                                                <Anchors>
+                                                    <Anchor point="TOP" relativeTo="SoundtrackAssignedTrackButton4" relativePoint="BOTTOM">
+                                                        <Offset>
+                                                            <AbsDimension x="0" y="0"/>
+                                                        </Offset>
+                                                    </Anchor>
+                                                </Anchors>
+                                            </Button>
+                                            <Button name="SoundtrackAssignedTrackButton6" inherits="SoundtrackFrameAssignedTrackButtonTemplate">
+                                                <Anchors>
+                                                    <Anchor point="TOP" relativeTo="SoundtrackAssignedTrackButton5" relativePoint="BOTTOM">
+                                                        <Offset>
+                                                            <AbsDimension x="0" y="0"/>
+                                                        </Offset>
+                                                    </Anchor>
+                                                </Anchors>
+                                            </Button>
+                                            <Button name="SoundtrackAssignedTrackButton7" inherits="SoundtrackFrameAssignedTrackButtonTemplate">
+                                                <Anchors>
+                                                    <Anchor point="TOP" relativeTo="SoundtrackAssignedTrackButton6" relativePoint="BOTTOM">
+                                                        <Offset>
+                                                            <AbsDimension x="0" y="0"/>
+                                                        </Offset>
+                                                    </Anchor>
+                                                </Anchors>
+                                            </Button>
+                                            <!--Button name="SoundtrackAssignedTrackButton8" inherits="SoundtrackFrameAssignedTrackButtonTemplate">
+                                                <Anchors>
+                                                    <Anchor point="TOP" relativeTo="SoundtrackAssignedTrackButton7" relativePoint="BOTTOM">
+                                                        <Offset>
+                                                            <AbsDimension x="0" y="0"/>
+                                                        </Offset>
+                                                    </Anchor>
+                                                </Anchors>
+                                            </Button-->
+                                            <Button name="SoundtrackFrameAllButton" inherits="UIPanelButtonTemplate" text="All">
+                                                <Size>
+                                                    <AbsDimension x="45" y="15"/>
+                                                </Size>
+                                                <Anchors>
+                                                    <Anchor point="BOTTOMRIGHT" relativeTo="SoundtrackFrame_AssignedFrame" relativePoint="BOTTOMRIGHT">
+                                                        <Offset>
+                                                            <AbsDimension x="-25" y="8"/>
+                                                        </Offset>
+                                                    </Anchor>
+                                                </Anchors>
+                                                <Scripts>
+                                                    <OnClick>
+                                                        SoundtrackFrameAllButton_OnClick();
+                                                    </OnClick>
+                                                    <OnEnter>
+                                                        Soundtrack.ShowTip(self, SOUNDTRACK_ALL, SOUNDTRACK_ALL_TIP);
+                                                    </OnEnter>
+                                                    <OnLeave>
+                                                        Soundtrack.HideTip();
+                                                    </OnLeave>
+                                                </Scripts>
+                                            </Button>
+                                            <Button name="SoundtrackFrameClearButton" inherits="UIPanelButtonTemplate" text="Clear">
+                                                <Size>
+                                                    <AbsDimension x="45" y="15"/>
+                                                </Size>
+                                                <Anchors>
+                                                    <Anchor point="RIGHT" relativeTo="SoundtrackFrameAllButton" relativePoint="LEFT">
+                                                    </Anchor>
+                                                </Anchors>
+                                                <Scripts>
+                                                    <OnClick>
+                                                        SoundtrackFrameClearButton_OnClick();
+                                                    </OnClick>
+                                                    <OnEnter>
+                                                        Soundtrack.ShowTip(self, SOUNDTRACK_CLEAR, SOUNDTRACK_CLEAR_TIP);
+                                                    </OnEnter>
+                                                    <OnLeave>
+                                                        Soundtrack.HideTip();
+                                                    </OnLeave>
+                                                </Scripts>
+                                            </Button>
+                                            <Button name="SoundtrackFrameMoveDown" inherits="UIPanelButtonTemplate" text="Down">
+                                                <Size>
+                                                    <AbsDimension x="45" y="15"/>
+                                                </Size>
+                                                <Anchors>
+                                                    <Anchor point="RIGHT" relativeTo="SoundtrackFrameClearButton" relativePoint="LEFT">
+                                                        <Offset>
+                                                            <AbsDimension x="-15" y="0"/>
+                                                        </Offset>
+                                                    </Anchor>
+                                                </Anchors>
+                                                <Scripts>
+                                                    <OnClick>
+                                                        SoundtrackFrame_MoveAssignedTrack(1);
+                                                    </OnClick>
+                                                    <OnEnter>
+                                                        Soundtrack.ShowTip(self, SOUNDTRACK_DOWN, SOUNDTRACK_DOWN_TIP);
+                                                    </OnEnter>
+                                                    <OnLeave>
+                                                        Soundtrack.HideTip();
+                                                    </OnLeave>
+                                                </Scripts>
+                                            </Button>
+                                            <Button name="SoundtrackFrameMoveUp" inherits="UIPanelButtonTemplate" text="Up">
+                                                <Size>
+                                                    <AbsDimension x="45" y="15"/>
+                                                </Size>
+                                                <Anchors>
+                                                    <Anchor point="RIGHT" relativeTo="SoundtrackFrameMoveDown" relativePoint="LEFT">
+                                                    </Anchor>
+                                                </Anchors>
+                                                <Scripts>
+                                                    <OnClick>
+                                                        SoundtrackFrame_MoveAssignedTrack(-1);
+                                                    </OnClick>
+                                                    <OnEnter>
+                                                        Soundtrack.ShowTip(self, SOUNDTRACK_UP, SOUNDTRACK_UP_TIP);
+                                                    </OnEnter>
+                                                    <OnLeave>
+                                                        Soundtrack.HideTip();
+                                                    </OnLeave>
+                                                </Scripts>
+                                            </Button>
+
+                                        </Frames>
+                                    </Frame>
+                                    <Frame name="SoundtrackFrame_EventSettings">
+                                        <Layers>
+                                            <Layer level="BACKGROUND">
+                                                <FontString name="SoundtrackFrame_FontStringName" inherits="GameFontHighlightSmall" text="Name"> 
+                                                    <Anchors>
+                                                        <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_AssignedFrame" relativePoint="TOPLEFT">
+                                                            <Offset>
+                                                                <AbsDimension x="15" y="-35"/>
+                                                            </Offset>
+                                                        </Anchor>
+                                                    </Anchors>
+                                                </FontString>
+                                            </Layer>
+                                        </Layers>
+                                        <Frames>
+                                            <EditBox name="SoundtrackFrame_EventName" inherits="SoundtrackFrame_EditBoxTemplate">
+                                                <Anchors>
+                                                    <Anchor point="LEFT" relativeTo="SoundtrackFrame_FontStringName" relativePoint="RIGHT">
+                                                        <Offset>
+                                                            <AbsDimension x="15" y="0"/>
+                                                        </Offset>
+                                                    </Anchor>
+                                                </Anchors>
+                                                <Scripts>
+                                                    <OnTabPressed>
+                                                        SoundtrackFrame_EventTrigger:SetFocus()
+                                                    </OnTabPressed>
+                                                    <OnEnterPressed>
+                                                        SoundtrackFrame_RenameEvent()
+                                                    </OnEnterPressed>
+                                                    <OnEnter>
+                                                        Soundtrack.ShowTip(self, SOUNDTRACK_NAME, SOUNDTRACK_NAME_TIP)
+                                                    </OnEnter>
+                                                    <OnLeave>
+                                                        Soundtrack.HideTip()
+                                                    </OnLeave>
+                                                </Scripts>
+                                            </EditBox>
+
+                                            <CheckButton name="SoundtrackFrame_RandomCheckButton" inherits="OptionsCheckButtonTemplate">
+                                                <Anchors>
+                                                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringName" relativePoint="BOTTOMLEFT">
+														<Offset>
+															<AbsDimension x="0" y="-5" />
+														</Offset>
+                                                    </Anchor>
+                                                </Anchors>
+                                                <Scripts>
+                                                    <OnLoad>
+                                                        _G[self:GetName().."Text"]:SetText(SOUNDTRACK_RANDOM);
+                                                    </OnLoad>
+                                                    <OnClick>
+                                                        SoundtrackFrame_ToggleRandomMusic();
+                                                    </OnClick>
+                                                    <OnEnter>
+                                                        Soundtrack.ShowTip(self, SOUNDTRACK_RANDOM, SOUNDTRACK_RANDOM_TIP)
+                                                    </OnEnter>
+                                                    <OnLeave>
+                                                        Soundtrack.HideTip();
+                                                    </OnLeave>
+                                                </Scripts>
+                                            </CheckButton>
+
+                                            <CheckButton name="SoundtrackFrame_SoundEffectCheckBox" inherits="OptionsCheckButtonTemplate">
+                                                <Anchors>
+                                                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_RandomCheckButton" relativePoint="BOTTOMLEFT">
+                                                    </Anchor>
+                                                </Anchors>
+                                                <Scripts>
+                                                    <OnLoad>
+                                                        _G[self:GetName().."Text"]:SetText(SOUNDTRACK_SOUND_EFFECT);
+                                                    </OnLoad>
+                                                    <OnClick>
+                                                        SoundtrackFrame_ToggleSoundEffect();
+                                                    </OnClick>
+                                                    <OnEnter>
+                                                        Soundtrack.ShowTip(self, SOUNDTRACK_SOUND_EFFECT, SOUNDTRACK_SOUND_EFFECT_TIP)
+                                                    </OnEnter>
+                                                    <OnLeave>
+                                                        Soundtrack.HideTip();
+                                                    </OnLeave>
+                                                </Scripts>
+                                            </CheckButton>
+
+                                            <CheckButton name="SoundtrackFrame_ContinuousCheckBox" inherits="OptionsCheckButtonTemplate">
+                                                <Anchors>
+                                                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_SoundEffectCheckBox" relativePoint="BOTTOMLEFT">
+                                                    </Anchor>
+                                                </Anchors>
+                                                <Scripts>
+                                                    <OnLoad>
+                                                        _G[self:GetName().."Text"]:SetText(SOUNDTRACK_CONTINUOUS);
+                                                    </OnLoad>
+                                                    <OnClick>
+                                                        SoundtrackFrame_ToggleContinuousMusic();
+                                                    </OnClick>
+                                                    <OnEnter>
+                                                        Soundtrack.ShowTip(self, SOUNDTRACK_CONTINUOUS, SOUNDTRACK_CONTINUOUS_TIP)
+                                                    </OnEnter>
+                                                    <OnLeave>
+                                                        Soundtrack.HideTip();
+                                                    </OnLeave>
+                                                </Scripts>
+                                            </CheckButton>
+                                        </Frames>
+                                    </Frame>
+                                </Frames>
+                                <Scripts>
+                                    <OnLoad>self:SetBackdropColor(.1,.1,.1,0.7)</OnLoad>
+                                </Scripts>
+                            </Frame>
+
+
+                            
+                            
+                        </Frames>
+                    </Frame>
+                    <Frame name="SoundtrackFrameRightPanelEditEvent" hidden="true">
+                        <Layers>
+                            <Layer level="BACKGROUND">
+                                <FontString name="SoundtrackFrame_FontStringType" inherits="GameFontHighlightSmall" text="Event Type">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame" relativePoint="TOPLEFT">
+                                            <Offset>
+                                                <AbsDimension x="300" y="-50"/>
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </FontString>
+
+                                <FontString name="SoundtrackFrame_FontStringTrigger" inherits="GameFontHighlightSmall" text="Trigger">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringType" relativePoint="BOTTOMLEFT">
+                                            <Offset>
+                                                <AbsDimension x="0" y="-16"/>
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </FontString>
+
+                                <FontString name="SoundtrackFrame_FontStringPriority" inherits="GameFontHighlightSmall" text="Priority">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringTrigger" relativePoint="BOTTOMLEFT">
+                                            <Offset>
+                                                <AbsDimension x="0" y="-16"/>
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </FontString>
+
+                                <FontString name="SoundtrackFrame_FontStringScript" inherits="GameFontHighlightSmall" text="Script">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringPriority" relativePoint="BOTTOMLEFT">
+                                            <Offset>
+                                                <AbsDimension x="0" y="-16"/>
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Frames>
+                            <Frame name="SoundtrackFrame_EventTypeDropDown" inherits="UIDropDownMenuTemplate">
+                                <Anchors>
+                                    <Anchor point="LEFT" relativeTo="SoundtrackFrame_FontStringType" relativePoint="RIGHT">
+                                    </Anchor>
+                                </Anchors>
+                                <Scripts>
+                                    <OnLoad>
+                                        SoundtrackFrame_EventTypeDropDown_OnLoad(self);
+                                    </OnLoad>
+                                    <OnEnter>
+                                        Soundtrack.ShowTip(self, SOUNDTRACK_EVENT_TYPE, SOUNDTRACK_EVENT_TYPE_TIP)
+                                    </OnEnter>
+                                    <OnLeave>
+                                        Soundtrack.HideTip();
+                                    </OnLeave>
+                                </Scripts>
+                            </Frame>
+                            <EditBox name="SoundtrackFrame_EventTrigger" inherits="SoundtrackFrame_EditBoxTemplate">
+                                <Anchors>
+                                    <Anchor point="LEFT" relativeTo="SoundtrackFrame_FontStringTrigger" relativePoint="RIGHT">
+                                        <Offset>
+                                            <AbsDimension x="16" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                                <Scripts>
+                                    <OnTabPressed>
+                                        --ItemRack_EventDelay:SetFocus()
+                                    </OnTabPressed>
+                                </Scripts>
+                            </EditBox>
+
+                            <EditBox name="SoundtrackFrame_Priority" inherits="SoundtrackFrame_EditBoxTemplate">
+                                <Size>
+                                    <AbsDimension x ="50" y="20"/>
+                                </Size>
+                                <Anchors>
+                                    <Anchor point="LEFT" relativeTo="SoundtrackFrame_FontStringPriority" relativePoint="RIGHT">
+                                        <Offset>
+                                            <AbsDimension x="16" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                                <Scripts>
+                                    <OnTabPressed>
+                                        --ItemRack_EventDelay:SetFocus()
+                                    </OnTabPressed>
+                                </Scripts>
+                            </EditBox>
+                            <CheckButton name="SoundtrackFrame_CustomContinuous" inherits="OptionsCheckButtonTemplate">
+                                <Anchors>
+                                    <Anchor point="LEFT" relativeTo="SoundtrackFrame_Priority" relativePoint="RIGHT">
+                                        <Offset>
+                                            <AbsDimension x="16" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                                <Scripts>
+                                    <OnLoad>
+                                        _G[self:GetName().."Text"]:SetText(SOUNDTRACK_CUSTOM_CONTINUOUS);
+                                    </OnLoad>
+                                    <OnClick>
+                                    </OnClick>
+                                    <OnEnter>
+                                        Soundtrack.ShowTip(self, SOUNDTRACK_CUSTOM_CONTINUOUS, SOUNDTRACK_CUSTOM_CONTINUOUS_TIP)
+                                    </OnEnter>
+                                    <OnLeave>
+                                        Soundtrack.HideTip()
+                                    </OnLeave>
+                                </Scripts>
+                            </CheckButton>
+
+                            <Frame name="SoundtrackFrame_ScriptEditFrame">
+                                <Size>
+                                    <AbsDimension x="500" y="400"/>
+                                </Size>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringScript" relativePoint="BOTTOMLEFT">
+                                        <Offset>
+                                            <AbsDimension x="0" y="-5"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                                <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground" edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
+                                    <BackgroundInsets>
+                                        <AbsInset left="3" right="3" top="6" bottom="6" />
+                                    </BackgroundInsets>
+                                    <TileSize>
+                                        <AbsValue val="16" />
+                                    </TileSize>
+                                    <EdgeSize>
+                                        <AbsValue val="9" />
+                                    </EdgeSize>
+                                </Backdrop>
+
+                                <Frames>
+
+                                    <ScrollFrame name="SoundtrackFrame_EventEditScrollFrame" inherits="UIPanelScrollFrameTemplate">
+                                        <Size>
+                                            <AbsDimension x="466" y="384"/>
+                                        </Size>
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT">
+                                                <Offset>
+                                                    <AbsDimension x="6" y="-8"/>
+                                                </Offset>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Layers>
+                                            <Layer level="BORDER">
+                                                <Texture file="Interface\ChatFrame\ChatFrameBackground">
+                                                    <Anchors>
+                                                        <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_EventEditScrollFrame" relativePoint="TOPRIGHT">
+                                                            <Offset>
+                                                                <AbsDimension x="0" y="0"/>
+                                                            </Offset>
+                                                        </Anchor>
+                                                        <Anchor point="BOTTOMRIGHT" relativeTo="SoundtrackFrame_EventEditScrollFrame" relativePoint="BOTTOMRIGHT">
+                                                            <Offset>
+                                                                <AbsDimension x="26" y="0"/>
+                                                            </Offset>
+                                                        </Anchor>
+                                                    </Anchors>
+                                                    <Gradient>
+                                                        <MinColor r="0.1" g="0.1" b="0.1"/>
+                                                        <MaxColor r="0" g="0" b="0"/>
+                                                    </Gradient>
+                                                </Texture>
+                                            </Layer>
+                                        </Layers>
+
+                                        <ScrollChild>
+                                            <EditBox name="SoundtrackFrame_EventScript" multiLine="true" letters="4096" autoFocus="false">
+                                                <Size>
+                                                    <AbsDimension x="500" y="400"/>
+                                                </Size>
+                                                <Scripts>
+                                                    <OnTextChanged>
+                                                        local scrollBar = _G[self:GetName().."ScrollBar"]
+                                                        self:UpdateScrollChildRect();
+                                                        local min;
+                                                        local max;
+                                                        min, max = scrollBar:GetMinMaxValues();
+                                                        if ( max > 0 and (self.max ~= max) ) then
+                                                        self.max = max;
+                                                        scrollBar:SetValue(max);
+                                                        end
+                                                    </OnTextChanged>
+                                                    <OnEscapePressed>
+                                                        self:ClearFocus();
+                                                    </OnEscapePressed>
+                                                    <OnTabPressed>
+                                                        SoundtrackFrame_EventName:SetFocus()
+                                                    </OnTabPressed>
+                                                    
+                                                </Scripts>
+                                                <FontString inherits="GameFontHighlightSmall"/>
+                                            </EditBox>
+                                        </ScrollChild>
+                                    </ScrollFrame>
+                                </Frames>
+                                <Scripts>
+                                    <OnLoad>
+                                        self:SetBackdropColor(.1,.1,.1,1)
+                                    </OnLoad>
+                                </Scripts>
+                            </Frame>
+                            <Button name="SoundtrackFrameSaveEvent" inherits="UIPanelButtonTemplate" text="Save">
+                                <Size>
+                                    <AbsDimension x="100" y="22"/>
+                                </Size>
+                                <Anchors>
+                                    <Anchor point="BOTTOMRIGHT" relativeTo="SoundtrackFrame" relativePoint="BOTTOMRIGHT">
+                                        <Offset>
+                                            <AbsDimension x="-30" y="20"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                                <Scripts>
+                                    <OnClick>
+                                        SoundtrackFrameSaveCustomEventButton_OnClick();
+                                    </OnClick>
+                                </Scripts>
+                            </Button>
+                            
+                        </Frames>
+                    </Frame>
+                    
+
+
+                </Frames>
+            </Frame>
+            <Frame name="SoundtrackFrameOptionsFrame" hidden="true">
+                <Size>
+                    <RelDimension x="0.5" y="0.8"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOP" relativeTo="SoundtrackFrame" relativePoint="TOP">
+                    </Anchor>
+                </Anchors>
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <FontString name="SoundtrackFrame_FontStringUIOptions" inherits="GameFontNormal" text="User Interface Options"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="50" y="-50"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                        <FontString name="SoundtrackFrame_FontStringEventOptions" inherits="GameFontNormal" text="Event Options"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="300" y="-50"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+						<FontString name="SoundtrackFrame_FontStringEnableEventsOptions" inherits="GameFontNormal" text="Enable Events"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="550" y="-50"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                        <FontString name="SoundtrackFrame_FontStringDebugOptions" inherits="GameFontNormal" text="Debugging Options"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="550" y="-250"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <!-- Options -->
+                    <CheckButton name="SoundtrackFrame_EnableMinimapButton" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringUIOptions" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-10"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_SHOW_MINIMAP_BUTTON);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrame_ToggleMinimapButton();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_SHOW_MINIMAP_BUTTON, SOUNDTRACK_SHOW_MINIMAP_BUTTON_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip()
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+                    <CheckButton name="SoundtrackFrame_ShowPlaybackControls" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_EnableMinimapButton" relativePoint="BOTTOMLEFT">
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_SHOW_PLAYBACK_CONTROLS);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrame_ToggleShowPlaybackControls();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_SHOW_PLAYBACK_CONTROLS, SOUNDTRACK_SHOW_PLAYBACK_CONTROLS_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+					<CheckButton name="SoundtrackFrame_LockPlaybackControls" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_ShowPlaybackControls" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<Absdimension x="10" y="0"/>
+								</Offset>
+							</Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_LOCK_PLAYBACK_CONTROLS);
+                            </OnLoad>
+                            <OnClick>
+								SoundtrackControlFrame:EnableMouse(Soundtrack.Settings.LockPlaybackControls)
+                                Soundtrack.Settings.LockPlaybackControls = not Soundtrack.Settings.LockPlaybackControls
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_LOCK_PLAYBACK_CONTROLS, SOUNDTRACK_LOCK_PLAYBACK_CONTROLS_TIP);
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+                    <CheckButton name="SoundtrackFrame_ShowTrackInformation" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_LockPlaybackControls" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<Absdimension x="-10" y="0"/>
+								</Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_SHOW_TRACK_INFO);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrame_ToggleShowTrackInformation();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_SHOW_TRACK_INFO, SOUNDTRACK_SHOW_TRACK_INFO_TIP );
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+					<CheckButton name="SoundtrackFrame_LockNowPlayingFrame" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_ShowTrackInformation" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<Absdimension x="10" y="0"/>
+								</Offset>
+							</Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_LOCK_NOW_PLAYING);
+                            </OnLoad>
+                            <OnClick>
+								NowPlayingTextFrame:EnableMouse(Soundtrack.Settings.LockNowPlayingFrame)
+                                Soundtrack.Settings.LockNowPlayingFrame = not Soundtrack.Settings.LockNowPlayingFrame
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_LOCK_NOW_PLAYING, SOUNDTRACK_LOCK_NOW_PLAYING_TIP);
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+                    <CheckButton name="SoundtrackFrame_ShowDefaultMusic" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_LockNowPlayingFrame" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<Absdimension x="-10" y="0"/>
+								</Offset>
+							</Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_SHOW_DEFAULT_MUSIC);
+                            </OnLoad>
+                            <OnClick>
+                                Soundtrack.Settings.ShowDefaultMusic = not Soundtrack.Settings.ShowDefaultMusic
+                                SoundtrackFrame_RefreshTracks();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_SHOW_DEFAULT_MUSIC, SOUNDTRACK_SHOW_DEFAULT_MUSIC_TIP);
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+                    <CheckButton name="SoundtrackFrame_HidePlaybackButtons" inherits="OptionsCheckButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_ShowDefaultMusic" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								_G[self:GetName().."Text"]:SetText("Hide Playback Buttons");
+							</OnLoad>
+							<OnClick>
+								Soundtrack.Settings.HideControlButtons = not Soundtrack.Settings.HideControlButtons 
+								SoundtrackFrame_RefreshPlaybackControls()
+							</OnClick>
+							<OnEnter>
+								Soundtrack.ShowTip(self, "Hide Playback Controls Buttons", "Hides the Playback Controls buttons, leaving the event and track bars.");
+							</OnEnter>
+							<OnLeave>
+								Soundtrack.HideTip();
+							</OnLeave>
+						</Scripts>
+					</CheckButton>
+					<Frame name="SoundtrackFrame_PlaybackButtonsLocationDropDown" inherits="UIDropDownMenuTemplate" enableMouse="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_HidePlaybackButtons" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-21" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+                        <Layers>
+                            <Layer level="BACKGROUND">
+                                <FontString name="$parentLabel" inherits="GameFontHighlightSmall" text="Playback Controls Buttons">
+                                    <Anchors>
+                                        <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+                                            <Offset>
+                                                <AbsDimension x="21" y="0"/>
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+						<Scripts>
+							<OnLoad>
+								_G[self:GetName().."Label"]:SetText("Playback Controls Buttons")
+								SoundtrackFrame_PlaybackButtonsLocationDropDown_OnLoad(self)
+							</OnLoad>
+							<OnShow>
+								SoundtrackFrame_PlaybackButtonsLocationDropDown_OnLoad(self);
+							</OnShow>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, "Playback Controls Buttons", "Determines the location of the Playback Controls buttons relative to the Playback Controls frame.")
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+						</Scripts>
+					</Frame>
+			   
+                    <CheckButton name="SoundtrackFrame_AutoAddZones" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringEventOptions" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-10"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_AUTO_ADD_ZONES)
+                            </OnLoad>
+                            <OnClick>
+                                Soundtrack.Settings.AutoAddZones = not Soundtrack.Settings.AutoAddZones
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_AUTO_ADD_ZONES, SOUNDTRACK_AUTO_ADD_ZONES_TIP);
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+
+                    <CheckButton name="SoundtrackFrame_AutoEscalateBattleMusic" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_AutoAddZones" relativePoint="BOTTOMLEFT">
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ESCALATE_BATTLE)
+                            </OnLoad>
+                            <OnClick>
+                                Soundtrack.Settings.EscalateBattleMusic = not Soundtrack.Settings.EscalateBattleMusic
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_ESCALATE_BATTLE, SOUNDTRACK_ESCALATE_BATTLE_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+                    <Frame name="SoundtrackFrame_BattleCooldownDropDown" inherits="UIDropDownMenuTemplate" enableMouse="true">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_AutoEscalateBattleMusic" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-21"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Layers>
+                            <Layer level="BACKGROUND">
+                                <FontString name="$parentLabel" inherits="GameFontHighlightSmall" text="Combat Cooldown">
+                                    <Anchors>
+                                        <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+                                            <Offset>
+                                                <AbsDimension x="21" y="0"/>
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Scripts>
+                            <OnLoad>
+								_G[self:GetName().."Label"]:SetText(SOUNDTRACK_BATTLE_CD);
+                                SoundtrackFrame_BattleCooldownDropDown_OnLoad(self);
+                            </OnLoad>
+                            <OnShow>
+                                SoundtrackFrame_BattleCooldownDropDown_OnLoad(self);
+                            </OnShow>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_BATTLE_CD, SOUNDTRACK_BATTLE_CD_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </Frame>
+
+                    <CheckButton name="SoundtrackFrame_LoopMusic" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_BattleCooldownDropDown" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-10"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_LOOP_MUSIC);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrame_ToggleLoopMusic()
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_LOOP_MUSIC, SOUNDTRACK_LOOP_MUSIC_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+                    <Frame name="SoundtrackFrame_SilenceDropDown" inherits="UIDropDownMenuTemplate" enableMouse="true">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_LoopMusic" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-21"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Layers>
+                            <Layer level="BACKGROUND">
+                                <FontString name="$parentLabel" inherits="GameFontHighlightSmall" text="Maximum Silence">
+                                    <Anchors>
+                                        <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+                                            <Offset>
+                                                <AbsDimension x="21" y="0"/>
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Scripts>
+                            <OnLoad>
+								_G[self:GetName().."Label"]:SetText(SOUNDTRACK_MAX_SILENCE);
+                                SoundtrackFrame_SilenceDropDown_OnLoad();
+                            </OnLoad>
+                            <OnShow>
+                                SoundtrackFrame_SilenceDropDown_OnLoad();
+                            </OnShow>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_MAX_SILENCE, SOUNDTRACK_MAX_SILENCE_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </Frame>
+
+					<CheckButton name="SoundtrackFrame_EnableDebugMode" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringDebugOptions" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-10"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_SHOW_DEBUG);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrame_ToggleDebugMode();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_SHOW_DEBUG, SOUNDTRACK_SHOW_DEBUG_TIP);
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+                    <CheckButton name="SoundtrackFrame_ShowEventStack" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_EnableDebugMode" relativePoint="BOTTOMLEFT" />
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_SHOW_EVENT_STACK);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrame_ToggleShowEventStack();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_SHOW_EVENT_STACK, SOUNDTRACK_SHOW_EVENT_STACK_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+     
+					
+                    <CheckButton name="SoundtrackFrame_EnableMusic" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringEnableEventsOptions" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-10"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ENABLE_MUSIC);
+                            </OnLoad>
+                            <OnClick>
+                                --Soundtrack.Settings.AutoAddZones = not Soundtrack.Settings.AutoAddZones;
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_ENABLE_MUSIC, SOUNDTRACK_ENABLE_MUSIC_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+                    <CheckButton name="SoundtrackFrame_EnableZoneMusic" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_EnableMusic" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ENABLE_ZONE_MUSIC);
+                            </OnLoad>
+                            <OnClick>
+                                Soundtrack.Settings.EnableZoneMusic = not Soundtrack.Settings.EnableZoneMusic
+                                if Soundtrack.Settings.EnableZoneMusic == true then
+                                    Soundtrack.Util.DebugPrint("Zone Music ON")
+                                else
+                                    Soundtrack.Util.DebugPrint("Zone Music OFF")
+                                end
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_ENABLE_ZONE_MUSIC, SOUNDTRACK_ENABLE_ZONE_MUSIC_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+                    <CheckButton name="SoundtrackFrame_EnableBattleMusic" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_EnableZoneMusic" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ENABLE_BATTLE_MUSIC);
+                            </OnLoad>
+                            <OnClick>
+                                Soundtrack.Settings.EnableBattleMusic = not Soundtrack.Settings.EnableBattleMusic
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_ENABLE_BATTLE_MUSIC, SOUNDTRACK_ENABLE_BATTLE_MUSIC_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+                    <CheckButton name="SoundtrackFrame_EnableMiscMusic" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_EnableBattleMusic" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ENABLE_MISC_MUSIC);
+                            </OnLoad>
+                            <OnClick>
+                                Soundtrack.Settings.EnableMiscMusic = not Soundtrack.Settings.EnableMiscMusic
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_ENABLE_MISC_MUSIC, SOUNDTRACK_ENABLE_MISC_MUSIC_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+                    <CheckButton name="SoundtrackFrame_EnableCustomMusic" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_EnableMiscMusic" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ENABLE_CUSTOM_MUSIC);
+                            </OnLoad>
+                            <OnClick>
+                                Soundtrack.Settings.EnableCustomMusic = not Soundtrack.Settings.EnableCustomMusic
+                            </OnClick>
+                            <OnEnter>
+								Soundtrack.ShowTip(self, SOUNDTRACK_ENABLE_CUSTOM_MUSIC, SOUNDTRACK_ENABLE_CUSTOM_MUSIC_TIP);
+                            </OnEnter>
+                            <OnLeave>
+								Soundtrack.HideTip()
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+                    
+                </Frames>
+				
+				
+                <Scripts>
+                    <OnLoad>
+                        self:SetBackdropColor(.1,.1,.1,0.7);
+                    </OnLoad>
+                    <OnShow>
+                        SoundtrackFrame_RefreshOptionsFrame();
+                    </OnShow>
+                </Scripts>
+			</Frame>
+		</Frames>
+        <Scripts>
+            <OnLoad>
+                SoundtrackFrame_OnLoad(self);
+            </OnLoad>
+            <OnShow>
+                SoundtrackFrame_OnShow();
+            </OnShow>
+            <OnHide>
+                SoundtrackFrame_OnHide();
+            </OnHide>
+            <OnEvent>
+                SoundtrackFrame_OnEvent(self, event, ...);
+            </OnEvent>
+            <OnMouseWheel>
+                return;
+            </OnMouseWheel>
+        </Scripts>
+    </Frame>
+</Ui>

@@ -1,0 +1,315 @@
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+    
+
+
+    <!-- These frames are shown when the current track changes -->
+    <Frame name="SoundtrackControlFrame" toplevel="true" parent="UIParent" movable="true" enableMouse="true" hidden="true">
+        <Size>
+            <AbsDimension x="274" y="53"/>
+        </Size>
+        <Anchors>
+            <Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
+                <Offset>
+                    <AbsDimension x="-75" y="-200"/>
+                </Offset>
+            </Anchor>
+        </Anchors>
+        <TitleRegion setAllPoints="true"/>
+
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+            <BackgroundInsets>
+                <AbsInset left="11" right="12" top="12" bottom="11"/>
+            </BackgroundInsets>
+            <TileSize>
+                <AbsValue val="32"/>
+            </TileSize>
+            <EdgeSize>
+                <AbsValue val="32"/>
+            </EdgeSize>
+        </Backdrop>
+
+        <Layers>
+            <Layer level="ARTWORK">
+                <FontString name="$parentStackTitle" inherits="GameFontNormal" text="EVENT STACK:">
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="15" y="-55"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentStack1" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentStackTitle" relativePoint="BOTTOMLEFT" />
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentStack2" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentStack1" relativePoint="BOTTOMLEFT" />
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentStack3" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentStack2" relativePoint="BOTTOMLEFT" />
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentStack4" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentStack3" relativePoint="BOTTOMLEFT" />
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentStack5" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentStack4" relativePoint="BOTTOMLEFT" />
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentStack6" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentStack5" relativePoint="BOTTOMLEFT" />
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentStack7" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentStack6" relativePoint="BOTTOMLEFT" />
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentStack8" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentStack7" relativePoint="BOTTOMLEFT" />
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentStack9" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentStack8" relativePoint="BOTTOMLEFT" />
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentStack10" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentStack9" relativePoint="BOTTOMLEFT" />
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+
+
+            <StatusBar name="SoundtrackControlFrame_StatusBarEvent" inherits="SoundtrackFrame_StatusBarTemplate" minValue="0" maxValue="8" defaultValue="1" id="1">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+                        <Offset>
+                            <AbsDimension x="10" y="-11"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </StatusBar>
+            <StatusBar name="SoundtrackControlFrame_StatusBarTrack" inherits="SoundtrackFrame_StatusBarTemplate" minValue="0" maxValue="1" defaultValue="23" id="1">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="SoundtrackControlFrame_StatusBarEvent" relativePoint="BOTTOMLEFT">
+						<Offset>
+                            <AbsDimension x="0" y="-1"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </StatusBar>
+
+			<Button name="SoundtrackControlFrame_NextButton" inherits="Soundtrack_NextButton" alpha="0.6">
+                <Anchors>
+                    <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" relativeTo="SoundtrackControlFrame_StatusBarEvent">
+						<Offset>
+							<AbsDimension x="-12" y="-1" />
+						</Offset>
+					</Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        Soundtrack.Events.PlaybackNext();
+                    </OnClick>
+                    <OnEnter>
+                        Soundtrack.ShowTip(self, SOUNDTRACK_NEXT, SOUNDTRACK_NEXT_TIP);
+						SoundtrackControlFrame_NextButton:SetAlpha("1.0")
+                    </OnEnter>
+                    <OnLeave>
+                        Soundtrack.HideTip();
+						SoundtrackControlFrame_NextButton:SetAlpha(".6")
+                    </OnLeave>
+                </Scripts>
+            </Button>
+			<Button name="SoundtrackControlFrame_StopButton" inherits="Soundtrack_StopButton" alpha="0.6">
+                <Anchors>
+                    <Anchor point="TOPRIGHT" relativePoint="TOPLEFT" relativeTo="SoundtrackControlFrame_NextButton"/>
+                </Anchors>
+                <Scripts>
+                    <OnLoad>
+                        SoundtrackFrame_RefreshPlaybackControls()
+                    </OnLoad>
+                    <OnClick>
+                        Soundtrack.Events.PlaybackPlayStop();
+                    </OnClick>
+                    <OnEnter>
+                        Soundtrack.ShowTip(self, SOUNDTRACK_PAUSE, SOUNDTRACK_PAUSE_TIP);
+						SoundtrackControlFrame_StopButton:SetAlpha("1.0")
+                    </OnEnter>
+                    <OnLeave>
+                        Soundtrack.HideTip();
+						SoundtrackControlFrame_StopButton:SetAlpha(".6")
+                    </OnLeave>
+                </Scripts>
+            </Button>
+			<Button name="SoundtrackControlFrame_PlayButton" inherits="Soundtrack_PlayButton" alpha="0.6">
+                <Anchors>
+                    <Anchor point="TOPRIGHT" relativePoint="TOPLEFT" relativeTo="SoundtrackControlFrame_NextButton"/>
+                </Anchors>
+                <Scripts>
+                    <OnLoad>
+                        SoundtrackFrame_RefreshPlaybackControls()
+                    </OnLoad>
+                    <OnClick>
+                        Soundtrack.Events.PlaybackPlayStop();
+                    </OnClick>
+                    <OnEnter>
+                        Soundtrack.ShowTip(self, SOUNDTRACK_PLAY, SOUNDTRACK_PLAY_TIP);
+						SoundtrackControlFrame_PlayButton:SetAlpha("1.0")
+                    </OnEnter>
+                    <OnLeave>
+                        Soundtrack.HideTip();
+						SoundtrackControlFrame_PlayButton:SetAlpha(".6")
+                    </OnLeave>
+                </Scripts>
+            </Button>			
+            <Button name="SoundtrackControlFrame_PreviousButton" inherits="Soundtrack_PreviousButton" alpha="0.6">
+                <Anchors>
+                    <Anchor point="TOPRIGHT" relativePoint="TOPLEFT" relativeTo="SoundtrackControlFrame_PlayButton">
+					</Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        Soundtrack.Events.PlaybackPrevious();
+                    </OnClick>
+                    <OnEnter>
+                        Soundtrack.ShowTip(self, SOUNDTRACK_PREVIOUS, SOUNDTRACK_PREVIOUS_TIP)
+						SoundtrackControlFrame_PreviousButton:SetAlpha("1.0");
+                    </OnEnter>
+                    <OnLeave>
+                        Soundtrack.HideTip();
+						SoundtrackControlFrame_PreviousButton:SetAlpha(".6");
+                    </OnLeave>
+                </Scripts>
+            </Button>
+			<Button name="SoundtrackControlFrame_TrueStopButton" inherits="Soundtrack_TrueStopButton" alpha="0.6">
+                <Anchors>
+                    <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="SoundtrackControlFrame_PlayButton">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+                </Anchors>
+                <Scripts>
+					<OnLoad>
+                        SoundtrackFrame_RefreshPlaybackControls()
+                    </OnLoad>
+                    <OnClick>
+						Soundtrack.Events.PlaybackTrueStop();
+						--Soundtrack.StopEventAtLevel(Soundtrack.Events.GetCurrentStackLevel());
+                    </OnClick>
+                    <OnEnter>
+                        Soundtrack.ShowTip(self, SOUNDTRACK_STOP, SOUNDTRACK_STOP_TIP);
+						SoundtrackControlFrame_TrueStopButton:SetAlpha("1.0")
+                    </OnEnter>
+                    <OnLeave>
+                        Soundtrack.HideTip();
+						SoundtrackControlFrame_TrueStopButton:SetAlpha(".6")
+                    </OnLeave>
+                </Scripts>
+            </Button>
+			<Button name="SoundtrackControlFrame_ReportButton" inherits="Soundtrack_ReportButton" alpha="0.6">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="SoundtrackControlFrame_TrueStopButton"/>
+				</Anchors>
+                <Scripts>
+					<OnLoad>
+                        SoundtrackFrame_RefreshPlaybackControls()
+                    </OnLoad>
+                    <OnClick>
+						SoundtrackReportFrame:SetPoint("CENTER",UIParent,"CENTER",0,0)
+						SoundtrackReportFrame:Show()
+                    </OnClick>
+                    <OnEnter>
+						SoundtrackControlFrame_ReportButton:SetAlpha("1.0")
+						Soundtrack.ShowTip(self, SOUNDTRACK_REPORT, SOUNDTRACK_REPORT_TIP)
+                    </OnEnter>
+                    <OnLeave>
+                        Soundtrack.HideTip();
+						SoundtrackControlFrame_ReportButton:SetAlpha(".6")
+                    </OnLeave>
+                </Scripts>
+            </Button>
+			<Button name="SoundtrackControlFrame_InfoButton" inherits="Soundtrack_InfoButton" alpha="0.6">
+                <Anchors>
+                    <Anchor point="TOPRIGHT" relativePoint="TOPLEFT" relativeTo="SoundtrackControlFrame_TrueStopButton"/>
+				</Anchors>
+                <Scripts>
+					<OnLoad>
+                        SoundtrackFrame_RefreshPlaybackControls()
+                    </OnLoad>
+                    <OnClick>
+						local currentTrackName = Soundtrack.Library.CurrentlyPlayingTrack
+						if currentTrackName ~= nil and
+						   currentTrackName ~= "None" then
+							local track = Soundtrack_Tracks[currentTrackName] 
+							-- SoundtrackNowPlayingFrame.lua
+							SetNowPlayingText(track.title, track.artist, track.album)
+						end
+                    </OnClick>
+                    <OnEnter>
+						SoundtrackControlFrame_InfoButton:SetAlpha("1.0")
+                        local currentTrackName = Soundtrack.Library.CurrentlyPlayingTrack
+						if currentTrackName ~= nil and
+						   currentTrackName ~= "None" then
+							local track = Soundtrack_Tracks[currentTrackName] 
+							Soundtrack.ShowTip(self, track.title, nil, track.artist, track.album)
+						else
+							Soundtrack.ShowTip(self, SOUNDTRACK_INFO, SOUNDTRACK_INFO_TIP)
+						end
+                    </OnEnter>
+                    <OnLeave>
+                        Soundtrack.HideTip();
+						SoundtrackControlFrame_InfoButton:SetAlpha(".6")
+                    </OnLeave>
+                </Scripts>
+            </Button>
+			
+
+            <Frame name="SoundtrackControlFrame_PlaylistMenu" inherits="UIDropDownMenuTemplate" id="1" hidden="false">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="SoundtrackControlFrame_StatusBarEvent" relativePoint="TOPLEFT">
+                        <Offset>
+							<AbsDimension x="0" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnLoad>
+                        self:SetFrameLevel(0);
+                        UIDropDownMenu_SetWidth(self, 180);
+                    </OnLoad>
+                    <OnShow>
+                        UIDropDownMenu_Initialize(self, SoundtrackControlFrame_PlaylistMenu_Initialize, "MENU");
+                    </OnShow>
+                </Scripts>
+            </Frame>
+        </Frames>
+
+        <Scripts>
+            <OnLoad>
+                SoundtrackFrame_RefreshPlaybackControls();
+            </OnLoad>
+            <OnEvent>
+                if (event=="VARIABLES_LOADED") then
+                    SoundtrackFrame_RefreshPlaybackControls();
+                end
+            </OnEvent>
+        </Scripts>
+    </Frame>
+</Ui>

@@ -1,0 +1,19 @@
+## Interface: 40000
+## Title: Soundtrack
+## Version: 1.27
+## Author: Anthony Brien, Katherine Beegle, FluffyBearLina, csciguy
+## Notes: Music customization system.
+## OptionalDeps: myAddOns
+## RequiredDeps: 
+## SavedVariables: Soundtrack_Settings, Soundtrack_CustomEvents, Soundtrack_Events
+localization.lua
+localization.fr.lua
+localization.de.lua
+localization.es.lua
+localization.default.lua
+Soundtrack.xml
+SoundtrackFrame.xml
+SoundtrackMinimap.xml
+SoundtrackNowPlayingFrame.xml
+SoundtrackControlFrame.xml
+SoundtrackReportFrame.xml
