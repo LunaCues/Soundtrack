@@ -1,0 +1,18 @@
+Soundtrack
+
+If something is not functional, please leave a comment at
+http://wow.curse.com/downloads/wow-addons/details/soundtrack.aspx
+
+v1.29:
+Misc. events enabled
+Added option to move Playback Controls buttons.
+Added option to hide Playback Controls buttons.
+Added Cataclysm music, fresh from the MPQ.
+Added GenerateMyLibraryWindows in the Music Manager folder. Not fully tested.
+Fixed Add Zone button. Not fully tested.
+
+b:
+Added Misc. events: Barbershop, Cinematics, NPC/Emote, NPC/Say, NPC/Whisper, NPC/Yell
+Fixed Misc. Combat events.
+Fixed event settings being reset to default.
+Fixed Victory/Zone music error.
