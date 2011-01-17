@@ -357,6 +357,56 @@ function Soundtrack.CustomEvents.Initialize(self)
 		false
 		);
 	
+	Soundtrack.CustomEvents.RegisterEventScript(	-- NPC Dungeon Emote
+		self,
+		SOUNDTRACK_NPC_EMOTE,
+		ST_MISC,
+		"CHAT_MSG_MONSTER_EMOTE",
+		8,
+		false,
+		function()
+			Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_NPC_EMOTE)
+		end,
+		true
+		);
+	Soundtrack.CustomEvents.RegisterEventScript(	-- NPC Dungeon Say
+		self,
+		SOUNDTRACK_NPC_SAY,
+		ST_MISC,
+		"CHAT_MSG_MONSTER_SAY",
+		8,
+		false,
+		function()
+			Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_NPC_SAY)
+		end,
+		true
+		);
+	Soundtrack.CustomEvents.RegisterEventScript(	-- NPC Dungeon Whisper
+		self,
+		SOUNDTRACK_NPC_WHISPER,
+		ST_MISC,
+		"CHAT_MSG_MONSTER_WHISPER",
+		8,
+		false,
+		function()
+			Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_NPC_WHISPER)
+		end,
+		true
+		);
+	Soundtrack.CustomEvents.RegisterEventScript(	-- NPC Dungeon Yell
+		self,
+		SOUNDTRACK_NPC_YELL,
+		ST_MISC,
+		"CHAT_MSG_MONSTER_YELL",
+		8,
+		false,
+		function()
+			Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_NPC_YELL)
+		end,
+		true
+		);
+	
+	
 	Soundtrack.CustomEvents.RegisterEventScript(	-- Level Up
 		self,
 	    SOUNDTRACK_LEVEL_UP,
