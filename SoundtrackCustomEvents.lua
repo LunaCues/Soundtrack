@@ -22,6 +22,7 @@ Soundtrack.CombatLogUpdateTime = .1
 Soundtrack.ActionHouse = false
 Soundtrack.Bank = false
 Soundtrack.Merchant = false
+Soundtrack.Barbershop = false
 
 Soundtrack.CurrentStance = 0;
 Soundtrack.TreeForm = false;
@@ -308,11 +309,54 @@ function Soundtrack.CustomEvents.Initialize(self)
                 SNDCUSTOM_Merchant = false
             elseif not SNDCUSTOM_Merchant and Soundtrack.Merchant then
                 Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_MERCHANT)
-                SNDCUSTOM_Merchant = true;
+                SNDCUSTOM_Merchant = true
             end
         end,
 		false
 	    );	    
+	Soundtrack.CustomEvents.RegisterUpdateScript(	-- Barbershop
+		self,
+		SOUNDTRACK_BARBERSHOP,
+		ST_MISC,
+		5,
+		true,
+		function()
+			if SNDCUSTOM_Barbershop == nil then
+				SNDCUSTOM_Barbershop = false
+			end
+			
+			if SNDCUSTOM_Barbershop and not Soundtrack.Barbershop then
+				Soundtrack_Custom_StopEvent(ST_MISC, SOUNDTRACK_BARBERSHOP)
+				SNDCUSTOM_Barbershop = false
+			elseif not SNDCUSTOM_Barbershop and Soundtrack.Barbershop then
+				Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_BARBERSHOP)
+				SNDCUSTOM_Barbershop = true
+			end
+		end,
+		false
+		);
+	Soundtrack.CustomEvents.RegisterUpdateScript(	-- Cinematic
+		self,
+		SOUNDTRACK_CINEMATIC,
+		ST_MISC,
+		5,
+		true,
+		function()
+			if SNDCUSTOM_Cinematic == nil then
+				SNDCUSTOM_Cinematic = false
+			end
+			
+			if SNDCUSTOM_Cinematic and not Soundtrack.Cinematic then
+				Soundtrack_Custom_StopEvent(ST_MISC, SOUNDTRACK_CINEMATIC)
+				SNDCUSTOM_Cinematic = false
+			elseif not SNDCUSTOM_Cinematic and Soundtrack.Cinematic then
+				Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_CINEMATIC)
+				SNDCUSTOM_Cinematic = true
+			end
+		end,
+		false
+		);
+	
 	Soundtrack.CustomEvents.RegisterEventScript(	-- Level Up
 		self,
 	    SOUNDTRACK_LEVEL_UP,
@@ -1003,7 +1047,16 @@ function Soundtrack.CustomEvents.OnEvent(self, event, ...)
         Soundtrack.Merchant = true
     elseif event == "MERCHANT_CLOSED" then
         Soundtrack.Merchant = false
-    
+	elseif event == "BARBERSHOP_SHOW" then
+		Soundtrack.Barbershop = true
+	elseif event == "BARBERSHOP_CLOSED" then
+		Soundtrack.Barbershop = false
+    elseif event == "CINEMATIC_START" then
+		Soundtrack.Cinematic = true
+	elseif event == "CINEMATIC_STOP" then
+		Soundtrack.Cinematic = false
+		
+	
     -- Handle custom buff events
     elseif event == "UNIT_AURA" then 
 		if arg1 == "player" then
