@@ -477,14 +477,14 @@ function Soundtrack.StopEventAtLevel(stackLevel)
        not stackLevel then
         return
     else
-    
-		Soundtrack.TraceEvents("StopEvent("..stackLevel..")")
-    
-		-- Remove the event from the stack.
-		Soundtrack.Events.Stack[stackLevel].eventName = nil
-		Soundtrack.Events.Stack[stackLevel].tableName = nil
-		Soundtrack.Events.Stack[stackLevel].offset = 0
-		Soundtrack.Events.OnStackChanged()
+		if Soundtrack.Events.Stack[stackLevel].eventName ~= nil then
+			Soundtrack.TraceEvents("StopEvent("..stackLevel..")")
+			-- Remove the event from the stack.
+			Soundtrack.Events.Stack[stackLevel].eventName = nil
+			Soundtrack.Events.Stack[stackLevel].tableName = nil
+			Soundtrack.Events.Stack[stackLevel].offset = 0
+			Soundtrack.Events.OnStackChanged()
+		end
 	end
 end
 
