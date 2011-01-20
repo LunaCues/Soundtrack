@@ -488,7 +488,7 @@ public class GenerateMyLibraryWindowsView extends FrameView {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void GenMyLibErrorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenMyLibErrorsActionPerformed
-        soundtrack.getGenMyLibErrors();
+        soundtrack.getGenLibErrors();
     }//GEN-LAST:event_GenMyLibErrorsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

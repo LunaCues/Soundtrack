@@ -27,36 +27,30 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Component id="appTitleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="appDescLabel" alignment="1" pref="520" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="versionLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="vendorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="vendorLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="appTitleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="appDescLabel" alignment="1" pref="520" max="32767" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="versionLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="vendorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="vendorLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="appVendorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="appVersionLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="appVendorLabel2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="appHomepageLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="appVendorLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="appHomepageLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="homepageLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="vendorLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="appVendorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="appVersionLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="appVendorLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="appHomepageLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="appVendorLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="appHomepageLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="471" max="32767" attributes="0"/>
-                      <Component id="closeButton" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="homepageLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="vendorLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="closeButton" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
