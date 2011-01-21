@@ -20,12 +20,6 @@ function Soundtrack.DanceEvents.OnLoad(self)
     self:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
 end
 
-hooksecurefunc("JumpOrAscendStart",
-	function()	
-		Soundtrack.StopEventAtLevel(5)
-	end
-);
-
 
 function Soundtrack.DanceEvents.OnEvent(self, event, ...)
 	local arg1, arg2 = ...
