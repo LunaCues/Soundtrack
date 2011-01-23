@@ -64,6 +64,8 @@ SOUNDTRACK_MINIMAP = "Assign your own music to various events in the game or pla
 SOUNDTRACK_UNKNOWN_BATTLE = "Unknown Battle"
 SOUNDTRACK_NORMAL_MOB = "Normal Mob"
 SOUNDTRACK_ELITE_MOB = "Elite Mob"
+-- Added 1/22/2010
+SOUNDTRACK_CRITTER = "Critter"
 
 SOUNDTRACK_RARE = "Rare"
 SOUNDTRACK_BOSS_BATTLE = "Boss Battle"
