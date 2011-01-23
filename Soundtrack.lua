@@ -780,8 +780,6 @@ local updateTime = .1
 -- Helps keep open sound ports by playing an empty sound.
 -- Thanks to Yarko's addon RangeColors for the idea!
 function Soundtrack_OpenSoundPorts()
-	PlaySound("GAMEHIGHLIGHTFRIENDLYUNIT") 
-	PlaySound("GAMEHIGHLIGHTFRIENDLYUNIT")
 	PlaySound("GAMEHIGHLIGHTFRIENDLYUNIT")
 	PlaySound("GAMEHIGHLIGHTFRIENDLYUNIT")
 	PlaySound("GAMEHIGHLIGHTFRIENDLYUNIT")
