@@ -214,6 +214,8 @@ function Soundtrack.CustomEvents.Initialize(self)
     self:RegisterEvent("BANKFRAME_OPENED")
     self:RegisterEvent("MERCHANT_CLOSED")
     self:RegisterEvent("MERCHANT_SHOW")
+    self:RegisterEvent("BARBER_SHOP_OPEN")
+    self:RegisterEvent("BARBER_SHOP_CLOSE")
 
 	
     -- Add fixed custom events 
@@ -1086,22 +1088,27 @@ function Soundtrack.CustomEvents.OnEvent(self, event, ...)
 	
 	-- All arguments are for Combat events, which can take up to 20 args.
     if event == "AUCTION_HOUSE_SHOW" then
+		debug("AUCTION_HOUSE_SHOW")
         Soundtrack.AuctionHouse = true
     elseif event == "AUCTION_HOUSE_CLOSED" then
         Soundtrack.AuctionHouse = false
     elseif event == "BANKFRAME_OPENED" then
+		debug("BANKFRAME_OPENED")
         Soundtrack.Bank = true
     elseif event == "BANKFRAME_CLOSED" then
         Soundtrack.Bank = false
     elseif event == "MERCHANT_SHOW" then
+		debug("MERCHANT_SHOW")
         Soundtrack.Merchant = true
     elseif event == "MERCHANT_CLOSED" then
         Soundtrack.Merchant = false
-	elseif event == "BARBERSHOP_SHOW" then
+	elseif event == "BARBER_SHOP_OPEN" then
+		debug("BARBER_SHOP_OPEN")
 		Soundtrack.Barbershop = true
-	elseif event == "BARBERSHOP_CLOSED" then
+	elseif event == "BARBER_SHOP_CLOSE" then
 		Soundtrack.Barbershop = false
     elseif event == "CINEMATIC_START" then
+		debug("CINEMATIC_START")
 		Soundtrack.Cinematic = true
 	elseif event == "CINEMATIC_STOP" then
 		Soundtrack.Cinematic = false
