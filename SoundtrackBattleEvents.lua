@@ -16,6 +16,7 @@ local ST_PLAYLISTS = "Playlists"
 -- Classifications for mobs
 local classifications = 
 {
+	"Critter",
     "normal",
     "rare",
     "elite",
@@ -38,6 +39,8 @@ local difficulties =
 local battleEvents = {
 	SOUNDTRACK_UNKNOWN_BATTLE,
 
+	SOUNDTRACK_CRITTER,
+	
 	SOUNDTRACK_NORMAL_MOB,
 	SOUNDTRACK_NORMAL_MOB .."/1 Trivial", 	-- Gray
 	SOUNDTRACK_NORMAL_MOB .."/2 Easy",	 	-- Green
@@ -200,9 +203,10 @@ function GetGroupEnemyLevel()
             end
             
             -- If we find at least one target, we set the minimum to trivial instead of unknown.
-            if highestDifficulty == 1 then
-                highestDifficulty = 2
-            end
+			-- 1.29: This would set it to Critter, so we'll leave as unknown
+            --[[ if highestDifficulty == 1 then
+                highestDifficulty = 3
+            end	--]]
             
             -- Check for pvp
             if not pvpEnabled then
@@ -221,7 +225,11 @@ function GetGroupEnemyLevel()
             end
             
             -- Get the target classification
-            local classificationLevel = GetClassificationLevel(UnitClassification(target))
+			local unitClass = UnitCreatureType(target)
+			if unitClass ~= "Critter" then
+				unitClass = UnitClassification(target)
+			end
+            local classificationLevel = GetClassificationLevel(unitClass)
             if classificationLevel > highestClassification then
                 highestClassification = classificationLevel
             end
@@ -254,19 +262,19 @@ local function GetBattleType()
 		end
         local eventName = classification
         if classification == "worldboss" then
-            return SOUNDTRACK_WORLD_BOSS_BATTLE  -- "WorldBossBattle"
+            return SOUNDTRACK_WORLD_BOSS_BATTLE  -- "World Boss Battle"
         elseif classification == "rareelite" or
                classification == "rare" then
-            return SOUNDTRACK_RARE  --SOUNDTRACK_BOSS_BATTLE -- "BossBattle"
+            return SOUNDTRACK_RARE  -- "Rare"
         elseif classification == "elite" then
 			local EliteMobDifficulty = "Elite Mob/"..difficulty
 			local eventTable = Soundtrack.Events.GetTable(ST_BATTLE)
 			if table.getn(eventTable[EliteMobDifficulty].tracks) ~= 0 then
 				return EliteMobDifficulty
 			else
-				return SOUNDTRACK_ELITE_MOB		-- "EliteBattle"
+				return SOUNDTRACK_ELITE_MOB		-- "Elite Battle"
 			end
-        else
+        elseif classification == "normal" then
 			local NormalMobDifficulty = "Normal Mob/"..difficulty
 			local eventTable = Soundtrack.Events.GetTable(ST_BATTLE)
 			if table.getn(eventTable[NormalMobDifficulty].tracks) ~= 0 then
@@ -274,6 +282,8 @@ local function GetBattleType()
 			else
 				return SOUNDTRACK_NORMAL_MOB
 			end
+		elseif classification == "Critter" then
+			return SOUNDTRACK_CRITTER
         end
     end
     
@@ -354,11 +364,19 @@ function Soundtrack.BattleEvents.OnLoad(self)
     self:RegisterEvent("UNIT_AURA")
     self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 end
-    
+
+local delayTime = 0
+local updateTime = .2
+
 function Soundtrack.BattleEvents.OnUpdate(self, elapsed)
-    if currentBattleTypeIndex > 0 then
-        AnalyzeBattleSituation()
-    end
+	local currentTime = GetTime()
+	
+	if currentTime > delayTime then
+		delayTime = currentTime + updateTime
+		if currentBattleTypeIndex > 0 then
+			AnalyzeBattleSituation()
+		end
+	end
 end
     
  function Soundtrack.BattleEvents.OnEvent(self, event, ...)
@@ -415,8 +433,9 @@ end
 function Soundtrack.BattleEvents.Initialize()
     Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_UNKNOWN_BATTLE, 6, true)
 
-	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB, 6, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_CRITTER, 6, true)
 	
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB, 6, true)
 	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB .."/1 Trivial", 6, true)
 	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB .."/2 Easy", 6, true)
 	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB .."/3 Normal", 6, true)
