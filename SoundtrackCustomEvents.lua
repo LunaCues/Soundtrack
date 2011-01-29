@@ -972,7 +972,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_NPC_EVENTS, ST_MISC, "null", 8, false, false);
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_STATUS_EVENTS, ST_MISC, "null", 8, false, false);
 
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_HUNTER_CAMO, ST_MISC, "Interface\\Icons\\ability_hunter_camouflage", 8, true, false)
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_HUNTER_CAMO, ST_MISC, "Interface\\Icons\\ability_hunter_displacement", 8, true, false)
 	
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_ROGUE_SPRINT, ST_MISC, "Interface\\Icons\\Ability_Rogue_Sprint", 8, true, false)
 	
