@@ -166,24 +166,30 @@ end
 function Soundtrack_Custom_PlayEvent(tableName, eventName)
 	local eventTable = Soundtrack.Events.GetTable(tableName)
 	local currentEvent = Soundtrack.Events.Stack[eventTable[eventName].priority].eventName
-	if eventName == currentEvent then return end -- Don't do anything.  Event already playing.
-	
-	if eventTable[eventName].trigger == "COMBAT_LOG_EVENT_UNFILTERED" then
-		local currentTime = GetTime()
-		if currentTime >= Soundtrack.CombatLogDelayTime then
-			Soundtrack.CombatLogDelayTime = currentTime + Soundtrack.CombatLogUpdateTime
+	if eventName == currentEvent then
+		return	 	-- Don't do anything.  Event already playing.
+	else
+		if eventTable[eventName].trigger == "COMBAT_LOG_EVENT_UNFILTERED" then
+			local currentTime = GetTime()
+			if currentTime >= Soundtrack.CombatLogDelayTime then
+				Soundtrack.CombatLogDelayTime = currentTime + Soundtrack.CombatLogUpdateTime
+				Soundtrack.PlayEvent(tableName, eventName);
+			end
+		else
 			Soundtrack.PlayEvent(tableName, eventName);
 		end
-	else
-		Soundtrack.PlayEvent(tableName, eventName);
 	end
 end
+
 function Soundtrack_Custom_StopEvent(tableName, eventName)
 	local eventTable = Soundtrack.Events.GetTable(tableName)
 	local currentEvent = Soundtrack.Events.Stack[eventTable[eventName].priority].eventName
-	if eventName ~= currentEvent then return end -- Don't do anything.  Event not playing.
 	
-	Soundtrack.StopEvent(tableName, eventName);
+	if eventName ~= currentEvent then 
+		return 		-- Don't do anything.  Event not playing.
+	else
+		Soundtrack.StopEvent(tableName, eventName);
+	end
 end
 
 local jumpDelayTime = 0;
@@ -959,13 +965,15 @@ function Soundtrack.CustomEvents.Initialize(self)
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_ROGUE, ST_MISC, "null", 8, false, false);
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_SHAMAN, ST_MISC, "null", 8, false, false);
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_WARRIOR, ST_MISC, "null", 8, false, false);
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_HUNTER, ST_MISC, "null", 8, false, false);
 	
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_COMBAT_EVENTS, ST_MISC, "null", 8, false, false);
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_GROUP_EVENTS, ST_MISC, "null", 8, false, false);
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_NPC_EVENTS, ST_MISC, "null", 8, false, false);
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_STATUS_EVENTS, ST_MISC, "null", 8, false, false);
 
-    -- Ability_Rogue_Sprint
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_HUNTER_CAMO, ST_MISC, "Interface\\Icons\\ability_hunter_camouflage", 8, true, false)
+	
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_ROGUE_SPRINT, ST_MISC, "Interface\\Icons\\Ability_Rogue_Sprint", 8, true, false)
 	
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID_DASH, ST_MISC, "Interface\\Icons\\Ability_Druid_Dash", 8, true, false)

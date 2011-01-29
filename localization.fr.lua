@@ -159,6 +159,9 @@ SOUNDTRACK_DRUID_PROWL = "Druide/Prowl"
 SOUNDTRACK_DRUID_TRAVEL = "Druide/Forme de voyage"
 SOUNDTRACK_DRUID_TREE = "Druide/Forme de Tree of Life"
 
+SOUNDTRACK_HUNTER = "Hunter"
+SOUNDTRACK_HUNTER_CAMO = "Hunter/Camoufler"
+
 SOUNDTRACK_PALADIN = "Paladin"
 SOUNDTRACK_PALADIN_CHANGE = "Paladin/Change Aura"
 
@@ -168,6 +171,7 @@ SOUNDTRACK_PRIEST_CHANGE = "Priest/Change Form"
 SOUNDTRACK_ROGUE = "Rogue"
 SOUNDTRACK_ROGUE_CHANGE = "Rogue/Change Stealth"
 SOUNDTRACK_ROGUE_SPRINT = "Rogue/Sprint"
+SOUNDTRACK_ROGUE_STEALTH = "Rogue/Stealth"
 
 SOUNDTRACK_SHAMAN = "Shaman"
 SOUNDTRACK_SHAMAN_CHANGE = "Shaman/Change Form"

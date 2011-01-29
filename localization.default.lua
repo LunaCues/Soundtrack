@@ -160,6 +160,9 @@ SOUNDTRACK_DRUID_PROWL = "Druid/Prowl"
 SOUNDTRACK_DRUID_TRAVEL = "Druid/Travel Form"
 SOUNDTRACK_DRUID_TREE = "Druid/Tree of Life Form"
 
+SOUNDTRACK_HUNTER = "Hunter"
+SOUNDTRACK_HUNTER_CAMO = "Hunter/Camouflage"
+
 SOUNDTRACK_PALADIN = "Paladin"
 SOUNDTRACK_PALADIN_CHANGE = "Paladin/Change Aura"
 
