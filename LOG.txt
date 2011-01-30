@@ -16,3 +16,10 @@ Added Misc. events: Barbershop, Cinematics, NPC/Emote, NPC/Say, NPC/Whisper, NPC
 Fixed Misc. Combat events.
 Fixed event settings being reset to default.
 Fixed Victory/Zone music error.
+
+c:
+Added Battle events: Critter
+Added Misc. events: Hunter Camouflage
+Fixed Barbershop event.
+Fixed mount and swimming checks.
+
