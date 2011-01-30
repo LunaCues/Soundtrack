@@ -18,6 +18,10 @@ Fixed event settings being reset to default.
 Fixed Victory/Zone music error.
 
 c:
+Fixed issue with GenerateMyLibraryWindows that would not escape double quotes (") properly.
+Modified GenerateMyLibraryWindows to better handle titles, artists, and album that are null or empty.
+
+d:
 Added Battle events: Critter
 Added Misc. events: Hunter Camouflage
 Fixed Barbershop event.
