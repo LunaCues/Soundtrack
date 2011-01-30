@@ -42,7 +42,8 @@ local function Soundtrack_MountEvents_PlayIfTracksAvailable(tableName, eventName
 end
 local function Soundtrack_MountEvents_StopIfTracksAvailable(tableName, eventName)
 	local eventTable = Soundtrack.Events.GetTable(tableName)
-	if eventTable[eventName] then
+	local stackEvent = Soundtrack.Events.Stack[5].eventName
+	if eventTable[eventName] and eventName == stackEvent then
 		local trackList = eventTable[eventName].tracks
 		if trackList then
 			local numTracks = table.getn(trackList)
