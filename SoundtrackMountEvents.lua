@@ -20,8 +20,6 @@ end
 Soundtrack.MountEvents.InFlight = false
 Soundtrack.MountEvents.IsMounted = false
 
-function Soundtrack.MountEvents.OnLoad(self)
-end
 
 local function Soundtrack_MountEvents_PlayIfTracksAvailable(tableName, eventName)
 	local stackTable = Soundtrack.Events.Stack[5].tableName
@@ -54,62 +52,77 @@ local function Soundtrack_MountEvents_StopIfTracksAvailable(tableName, eventName
 	end
 end
 
+function Soundtrack.MountEvents.OnLoad(self)
+    self:RegisterEvent("VARIABLES_LOADED")
+end
+
+local delayTime = 0
+local updateTime = .1
 
 function Soundtrack.MountEvents.OnUpdate(self, deltaT)
-
-    if not Soundtrack.Settings.EnableMiscMusic then
-        return
-    end
-	
-	if IsSwimming() and SoundtrackEvents_EventHasTracks(ST_MISC, SOUNDTRACK_SWIMMING) then
-		return
-	end
-	
-	if (Soundtrack.Merchant and SoundtrackEvents_EventHasTracks(ST_MISC, SOUNDTRACK_MERCHANT)) or
-	   (Soundtrack.Bank and SoundtrackEvents_EventHasTracks(ST_MISC, SOUNDTRACK_BANK)) or 
-	   (Soundtrack.AuctionHouse and SoundtrackEvents_EventHasTracks(ST_MISC, SOUNDTRACK_AUCTION_HOUSE)) then
-		return
-	end
-	
-	
-    -- Really inefficient way to detect taxis...
-    local unitOnTaxi = UnitOnTaxi("player")
-    
-    if Soundtrack.MountEvents.InFlight and unitOnTaxi == nil then
-        Soundtrack.MountEvents.InFlight = false
-        debugEvents("UnitOnTaxi and in Flight! Stop flight")
-        Soundtrack_MountEvents_StopIfTracksAvailable(ST_MISC, SOUNDTRACK_FLIGHT)
-    elseif not Soundtrack.MountEvents.InFlight and unitOnTaxi == 1 then 
-        debugEvents("UnitOnTaxi and not in Flight! Start flight")
-        Soundtrack.MountEvents.InFlight = true
-        Soundtrack_MountEvents_PlayIfTracksAvailable(ST_MISC, SOUNDTRACK_FLIGHT)
-    end
-    
-    if not unitOnTaxi then
-        local isFlying = IsFlying()
-        local isMounted = IsMounted()
+    local currentTime = GetTime()
+    if currentTime >= delayTime then
+	    delayTime = currentTime + updateTime
+		if not Soundtrack.Settings.EnableMiscMusic then
+			return
+		end
 		
-        -- TODO would be nicer to deal with each mount event separately and just use the priorities to avoid 
-        -- these complicated conditions:
-        if not Soundtrack.MountEvents.IsFlying and isFlying then
-            Soundtrack.MountEvents.IsFlying = true
-			Soundtrack_MountEvents_PlayIfTracksAvailable(ST_MISC, SOUNDTRACK_MOUNT_FLYING)
-        elseif (not Soundtrack.MountEvents.IsMounted or not Soundtrack.MountEvents.IsFlying) and isMounted then
-            Soundtrack.MountEvents.IsMounted = true
-			Soundtrack_MountEvents_PlayIfTracksAvailable(ST_MISC, SOUNDTRACK_MOUNT_GROUND)
-        elseif Soundtrack.MountEvents.IsMounted and not isMounted then
-            debugEvents("IsMounted and and IsMounted! Stop mount")
-            Soundtrack.MountEvents.IsMounted = false
-            Soundtrack_MountEvents_StopIfTracksAvailable(ST_MISC, SOUNDTRACK_MOUNT_GROUND)
-			Soundtrack_OnUpdate()
-        elseif Soundtrack.MountEvents.IsFlying and not isFlying then
-            Soundtrack.MountEvents.IsFlying = false
-            Soundtrack_MountEvents_StopIfTracksAvailable(ST_MISC, SOUNDTRACK_MOUNT_FLYING)
-        end
+		if IsSwimming() and SoundtrackEvents_EventHasTracks(ST_MISC, SOUNDTRACK_SWIMMING) then
+			return
+		end
+		
+		if (Soundtrack.Merchant and SoundtrackEvents_EventHasTracks(ST_MISC, SOUNDTRACK_MERCHANT)) or
+		(Soundtrack.Bank and SoundtrackEvents_EventHasTracks(ST_MISC, SOUNDTRACK_BANK)) or 
+		(Soundtrack.AuctionHouse and SoundtrackEvents_EventHasTracks(ST_MISC, SOUNDTRACK_AUCTION_HOUSE)) then
+			return
+		end
+		
+		
+		-- Really inefficient way to detect taxis...
+		local unitOnTaxi = UnitOnTaxi("player")
+		
+		if Soundtrack.MountEvents.InFlight and unitOnTaxi == nil then
+			Soundtrack.MountEvents.InFlight = false
+			debugEvents("UnitOnTaxi and in Flight! Stop flight")
+			Soundtrack_MountEvents_StopIfTracksAvailable(ST_MISC, SOUNDTRACK_FLIGHT)
+		elseif not Soundtrack.MountEvents.InFlight and unitOnTaxi == 1 then 
+			debugEvents("UnitOnTaxi and not in Flight! Start flight")
+			Soundtrack.MountEvents.InFlight = true
+			Soundtrack_MountEvents_PlayIfTracksAvailable(ST_MISC, SOUNDTRACK_FLIGHT)
+		end
+		
+		if not unitOnTaxi then
+			local isFlying = IsFlying()
+			local isMounted = IsMounted()
+			
+			-- TODO would be nicer to deal with each mount event separately and just use the priorities to avoid 
+			-- these complicated conditions:
+			if not Soundtrack.MountEvents.IsFlying and isFlying then
+				Soundtrack.MountEvents.IsFlying = true
+				Soundtrack_MountEvents_PlayIfTracksAvailable(ST_MISC, SOUNDTRACK_MOUNT_FLYING)
+			elseif (not Soundtrack.MountEvents.IsMounted or not Soundtrack.MountEvents.IsFlying) and isMounted then
+				Soundtrack.MountEvents.IsMounted = true
+				Soundtrack_MountEvents_PlayIfTracksAvailable(ST_MISC, SOUNDTRACK_MOUNT_GROUND)
+			elseif Soundtrack.MountEvents.IsMounted and not isMounted then
+				debugEvents("IsMounted and and IsMounted! Stop mount")
+				Soundtrack.MountEvents.IsMounted = false
+				Soundtrack_MountEvents_StopIfTracksAvailable(ST_MISC, SOUNDTRACK_MOUNT_GROUND)
+				--Soundtrack_OnUpdate()
+			elseif Soundtrack.MountEvents.IsFlying and not isFlying then
+				Soundtrack.MountEvents.IsFlying = false
+				Soundtrack_MountEvents_StopIfTracksAvailable(ST_MISC, SOUNDTRACK_MOUNT_FLYING)
+			end
+		end
+	end
+end
+
+function Soundtrack.MountEvents.OnEvent(self, event, ...)
+	if event == "VARIABLES_LOADED" then
+		Soundtrack.MountEvents.Initialize()
     end
 end
 
-function Soundtrack.MountEvents.Initalize()
+function Soundtrack.MountEvents.Initialize()
     Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_MOUNT_GROUND, 5, true)
     Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_FLIGHT, 5, true)
     Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_MOUNT_FLYING, 5, true)

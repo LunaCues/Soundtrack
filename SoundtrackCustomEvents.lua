@@ -1064,6 +1064,10 @@ function Soundtrack.CustomEvents.Initialize(self)
     Soundtrack_SortEvents(ST_CUSTOM)
 end
 
+function Soundtrack.CustomEvents.OnLoad(self)
+	self:RegisterEvent("VARIABLES_LOADED")
+end
+
 
 -- nil triggers are called at each update.
 function Soundtrack.CustomEvents.OnUpdate(self, elapsed)    
@@ -1093,6 +1097,12 @@ end
 
 function Soundtrack.CustomEvents.OnEvent(self, event, ...)
 	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = select(1, ...)
+	
+	if event == "VARIABLES_LOADED" then	
+		Soundtrack.CustomEvents.Initialize(self)
+    end
+	
+	Soundtrack.TraceCustom(event)
 	
 	-- All arguments are for Combat events, which can take up to 20 args.
     if event == "AUCTION_HOUSE_SHOW" then

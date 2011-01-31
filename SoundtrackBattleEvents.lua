@@ -363,6 +363,7 @@ function Soundtrack.BattleEvents.OnLoad(self)
     self:RegisterEvent("PLAYER_DEAD")
     self:RegisterEvent("UNIT_AURA")
     self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	self:RegisterEvent("VARIABLES_LOADED")
 end
 
 local delayTime = 0
@@ -381,6 +382,12 @@ end
     
  function Soundtrack.BattleEvents.OnEvent(self, event, ...)
     local arg1, arg2 = select(1, ...)
+	
+	if event == "VARIABLES_LOADED" then
+        Soundtrack.BattleEvents.Initialize()
+    end
+	
+	Soundtrack.TraceBattle(event)
 	
     if event == "PLAYER_REGEN_DISABLED" then
         if not Soundtrack.Settings.EnableBattleMusic then

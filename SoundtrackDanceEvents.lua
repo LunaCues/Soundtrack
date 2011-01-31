@@ -18,12 +18,19 @@ end
 
 function Soundtrack.DanceEvents.OnLoad(self)
     self:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
+	self:RegisterEvent("VARIABLES_LOADED")
 end
 
 
 function Soundtrack.DanceEvents.OnEvent(self, event, ...)
 	local arg1, arg2 = ...
     
+	if event == "VARIABLES_LOADED" then
+		Soundtrack.DanceEvents.Initialize()
+    end
+	
+	Soundtrack.TraceCustom(event)
+	
 	if not Soundtrack.Settings.EnableMiscMusic then
         return
     end

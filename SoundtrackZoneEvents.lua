@@ -263,7 +263,11 @@ function Soundtrack.ZoneEvents.OnEvent(self, event, ...)
         return
     end
 	
-	Soundtrack.Trace(event);
+	if event == "VARIABLES_LOADED" then
+		Soundtrack.ZoneEvents.Initialize()
+    end
+	
+	Soundtrack.TraceZones(event);
 	
     if event == "ZONE_CHANGED" or 
        event == "ZONE_CHANGED_INDOORS" or
