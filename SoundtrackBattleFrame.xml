@@ -1,0 +1,11 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+    <Script file="SoundtrackBattleEvents.lua" />
+	
+	<Frame name="SoundtrackBattleDUMMY" parent="UIParent" hidden="false">
+		<Scripts>
+			<OnUpdate>Soundtrack.BattleEvents.OnUpdate(self, elapsed)</OnUpdate>
+            <OnLoad>Soundtrack.BattleEvents.OnLoad(self)</OnLoad>
+            <OnEvent>Soundtrack.BattleEvents.OnEvent(self, event, ...)</OnEvent>
+        </Scripts>
+    </Frame>
+</Ui>
