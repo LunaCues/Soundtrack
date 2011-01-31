@@ -6,11 +6,11 @@
     <Script file="SoundtrackTimers.lua"/>
     <Script file="SoundtrackLibrary.lua" />
     <Script file="SoundtrackEvents.lua" />
-    <Script file="SoundtrackBattleEvents.lua" />
+    <!--Script file="SoundtrackBattleEvents.lua" />
     <Script file="SoundtrackZoneEvents.lua" />
     <Script file="SoundtrackDanceEvents.lua" />
     <Script file="SoundtrackCustomEvents.lua" />
-    <Script file="SoundtrackMountEvents.lua" />
+    <Script file="SoundtrackMountEvents.lua" /-->
 	<Script file="MyTracks.lua" />
     <Script file="DefaultTracks.lua" />
     <Script file="Soundtrack.lua" />
@@ -18,7 +18,7 @@
     <Frame name="SoundtrackDUMMY" parent="UIParent" hidden="false">
         <Scripts>
           <OnUpdate>Soundtrack_OnUpdate(self, elapsed)</OnUpdate>
-            <OnLoad>Soundtrack_OnLoad(self);</OnLoad>
+            <OnLoad>Soundtrack_OnLoad(self)</OnLoad>
             <OnEvent>Soundtrack_OnEvent(self, event, ...);</OnEvent>
         </Scripts>
     </Frame>
