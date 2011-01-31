@@ -344,12 +344,12 @@ local function OnVariablesLoaded(self)
     
     _SuspendSorting = true
 	Soundtrack_SetFrameLocks()
-    Soundtrack.DanceEvents.Initialize()
-    Soundtrack.ZoneEvents.Initialize()
-    Soundtrack.BattleEvents.Initialize()
-    Soundtrack.MountEvents.Initalize()
+    --Soundtrack.DanceEvents.Initialize()
+    --Soundtrack.ZoneEvents.Initialize()
+    --Soundtrack.BattleEvents.Initialize()
+    --Soundtrack.MountEvents.Initalize()
     -- Soundtrack_MiscEvents = {}
-    Soundtrack.CustomEvents.Initialize(self)
+    -- Soundtrack.CustomEvents.Initialize(self)
     _SuspendSorting = false
         
     -- Remove obsolete predefined events
@@ -780,9 +780,11 @@ local updateTime = .1
 -- Helps keep open sound ports by playing an empty sound.
 -- Thanks to Yarko's addon RangeColors for the idea!
 function Soundtrack_OpenSoundPorts()
+	--[[
 	PlaySound("GAMEHIGHLIGHTFRIENDLYUNIT")
 	PlaySound("GAMEHIGHLIGHTFRIENDLYUNIT")
 	PlaySound("GAMEHIGHLIGHTFRIENDLYUNIT")
+	--]]
 end
 
 function Soundtrack_OnUpdate(self, deltaT)
@@ -791,13 +793,13 @@ function Soundtrack_OnUpdate(self, deltaT)
 	
     Soundtrack.Library.OnUpdate(deltaT)
 	SoundtrackFrame_MovingTitle()
-	Soundtrack.CustomEvents.OnUpdate(deltaT)
+	--Soundtrack.CustomEvents.OnUpdate(deltaT)
 	
     if currentTime >= delayTime then
 	    delayTime = currentTime + updateTime
 		Soundtrack.Timers.OnUpdate(deltaT)
-	    Soundtrack.MountEvents.OnUpdate(deltaT)
-	    Soundtrack.BattleEvents.OnUpdate()
+	    --Soundtrack.MountEvents.OnUpdate(deltaT)
+	    --Soundtrack.BattleEvents.OnUpdate()
 		SoundtrackFrame_RefreshTrackProgress()
     end
 end
@@ -826,10 +828,9 @@ function Soundtrack_OnLoad(self)
     -- Register events
     self:RegisterEvent("VARIABLES_LOADED")
 
-    Soundtrack.BattleEvents.OnLoad(self)
-    Soundtrack.ZoneEvents.OnLoad(self)
-    Soundtrack.DanceEvents.OnLoad(self)
-    Soundtrack.MountEvents.OnLoad(self)
+    --Soundtrack.BattleEvents.OnLoad(self)
+    --Soundtrack.ZoneEvents.OnLoad(self)
+    --Soundtrack.DanceEvents.OnLoad(self)
 	Soundtrack.Events.OnLoad(self)
 end
 
@@ -840,9 +841,9 @@ function Soundtrack_OnEvent(self, event, ...)
         OnVariablesLoaded(self)
     end
 	
-    Soundtrack.ZoneEvents.OnEvent(self, event, ...)
-    Soundtrack.BattleEvents.OnEvent(self, event, ...)
-    Soundtrack.DanceEvents.OnEvent(self, event, ...)
-    Soundtrack.CustomEvents.OnEvent(self, event, ...)
+    --Soundtrack.ZoneEvents.OnEvent(self, event, ...)
+    --Soundtrack.BattleEvents.OnEvent(self, event, ...)
+    --Soundtrack.DanceEvents.OnEvent(self, event, ...)
+    --Soundtrack.CustomEvents.OnEvent(self, event, ...)
 	Soundtrack.Events.OnEvent(self, event, ...)
 end
