@@ -197,6 +197,7 @@ end
 
 Soundtrack.Events.Stack = 
 { 
+	--[[
     { eventName = nil, tableName = nil }, -- Level 1: Continent
     { eventName = nil, tableName = nil }, -- Level 2: Region
     { eventName = nil, tableName = nil }, -- Level 3: Zones
@@ -207,7 +208,19 @@ Soundtrack.Events.Stack =
     { eventName = nil, tableName = nil }, -- Level 8: Level up, Death, Ghost
     { eventName = nil, tableName = nil }, -- Level 9: Playlists
     { eventName = nil, tableName = nil }, -- Level 10: Preview
-
+	--]]
+	{ eventName = nil, tableName = nil }, -- Level 1: Continent
+    { eventName = nil, tableName = nil }, -- Level 2: Region
+    { eventName = nil, tableName = nil }, -- Level 3: Zones
+    { eventName = nil, tableName = nil }, -- Level 4: Interiors
+    { eventName = nil, tableName = nil }, -- Level 5: Status: Stealth, Mount, Flight
+    { eventName = nil, tableName = nil }, -- Level 6: NPCs: Merchant, Auction House 
+    { eventName = nil, tableName = nil }, -- Level 7: One-time Events: Victory, Dance
+    { eventName = nil, tableName = nil }, -- Level 8: Battle
+    { eventName = nil, tableName = nil }, -- Level 9: Boss
+    { eventName = nil, tableName = nil }, -- Level 10: Level up, Death, Ghost
+	{ eventName = nil, tableName = nil }, -- Level 11: Playlists
+	{ eventName = nil, tableName = nil } -- Level 12: Preview
 }
 
 Soundtrack.Events.Paused = false
