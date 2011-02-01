@@ -121,7 +121,7 @@ local function SoundtrackBattle_BossHasTracks(eventName)
 		if trackList then
 			local numTracks = table.getn(trackList)
 			if numTracks >= 1 then
-				Soundtrack.Trace(eventName.." has tracks.")
+				Soundtrack.TraceBattle(eventName.." has tracks.")
 				return true
 			end
 		end
@@ -182,7 +182,6 @@ function GetGroupEnemyLevel()
     
     for index,unit in ipairs(units) do
         local target = unit .. "target"
-		Soundtrack.Trace(target)
         local unitExists = UnitExists(target)
         local unitIsEnemy = not UnitIsFriend("player", target)
         local unitIsAlive = not UnitIsDeadOrGhost(target)
@@ -192,7 +191,6 @@ function GetGroupEnemyLevel()
             if bossTable then
                 local unitName = UnitName(target)
                 local bossEvent = bossTable[unitName]
-				Soundtrack.Trace(unitName)
                 if bossEvent then
 					if SoundtrackEvents_EventHasTracks(ST_BOSS, unitName) then
 						Soundtrack.PlayEvent(ST_BOSS, unitName)
@@ -381,10 +379,10 @@ function Soundtrack.BattleEvents.OnUpdate(self, elapsed)
 end
     
  function Soundtrack.BattleEvents.OnEvent(self, event, ...)
-    local arg1, arg2 = select(1, ...)
+	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = select(1, ...)
 	
 	if event == "VARIABLES_LOADED" then
-        Soundtrack.BattleEvents.Initialize()
+        Soundtrack.BattleEvents.Initialize(self)
     end
 	
 	Soundtrack.TraceBattle(event)
@@ -405,9 +403,18 @@ end
         else
             StopCombatMusic()            
         end
-    elseif event == "COMBAT_LOG_EVENT_UNFILTERED" and arg2 == "PARTY_KILL" then
-        hostileDeathCount = hostileDeathCount + 1
-        Soundtrack.TraceBattle("Death count: "..hostileDeathCount)
+    elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
+		if arg2 == "PARTY_KILL" then
+			hostileDeathCount = hostileDeathCount + 1
+			Soundtrack.TraceBattle("Death count: "..hostileDeathCount)
+		else
+			if Soundtrack.Settings.EnableMiscMusic then
+				for k,v in pairs(Soundtrack_BattleEvents) do
+					RunScript(v.script)
+					v.script()
+				end
+			end
+		end
     elseif event == "PLAYER_UNGHOST" then
         Soundtrack.StopEvent(ST_MISC, SOUNDTRACK_GHOST)
     elseif event == "PLAYER_ALIVE" then
@@ -418,7 +425,7 @@ end
         else
             Soundtrack.StopEvent(ST_MISC, SOUNDTRACK_GHOST)
         end
-    elseif event == "UNIT_AURA" then  -- PLAYER_AURAS_CHANGED
+    elseif event == "UNIT_AURA" then
         if UnitIsFeignDeath("player") then
             -- Stop the battle music
             Soundtrack.TraceBattle("Feign death: Stopping battle music")
@@ -436,8 +443,17 @@ end
     end
 end
 
+function Soundtrack.BattleEvents.RegisterEventScript(self, name, tableName, _trigger, _priority, _continuous, _script, _soundEffect)
+    Soundtrack_MiscEvents[name] = { trigger = _trigger, script = _script, eventtype = "Event Script", priority=_priority, continuous=_continuous, soundEffect=_soundEffect };
+	Soundtrack_BattleEvents[name] = {script = _script}
+	
+    self:RegisterEvent(_trigger);
+    
+    Soundtrack.AddEvent(tableName, name, _priority, _continuous, _soundEffect)
+end
 
-function Soundtrack.BattleEvents.Initialize()
+
+function Soundtrack.BattleEvents.Initialize(self)
     Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_UNKNOWN_BATTLE, 6, true)
 
 	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_CRITTER, 6, true)
@@ -465,5 +481,239 @@ function Soundtrack.BattleEvents.Initialize()
     Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_VICTORY, 6, false, true)
     Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_DEATH, 6, true, false)
     Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_GHOST, 6, true, false)
+	
+	
+	--[[
+	==========================================================
+		MISC EVENTS with COMBAT_LOG_EVENT_UNFILTERED event
+		
+		This allows them to register with the same frame
+			so that only one frame handles all
+			COMBAT_LOG_EVENT_UNFILTERED events
+	==========================================================
+	--]]
+	
+	Soundtrack.BattleEvents.RegisterEventScript(	-- Swing Crit
+		self,
+	    SOUNDTRACK_SWING_CRIT,
+	    ST_MISC,
+	    "COMBAT_LOG_EVENT_UNFILTERED",
+	    8,
+	    false,
+	    function()
+	        if arg2 == "SWING_DAMAGE" and arg4 == UnitName("player") and arg15 == 1 then
+				Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SWING_CRIT)
+			end
+	    end,
+		true
+	);
+	Soundtrack.BattleEvents.RegisterEventScript(	-- Swing
+		self,
+	    SOUNDTRACK_SWING_HIT,
+	    ST_MISC,
+	    "COMBAT_LOG_EVENT_UNFILTERED",
+	    8,
+	    false,
+	    function()
+	        if arg2 == "SWING_DAMAGE" and arg4 == UnitName("player") then	
+				if arg15 == nil then
+					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SWING_HIT)
+				else 
+					local eventTable = Soundtrack.Events.GetTable(ST_MISC) 
+					local numTracks = table.getn(eventTable[SOUNDTRACK_SWING_CRIT].tracks)
+					if numTracks == 0 then
+						Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SWING_HIT)
+					end
+				end
+			end
+	    end,
+		true
+	);
+
+	Soundtrack.BattleEvents.RegisterEventScript(	-- Damage Spells Crit
+		self,
+	    SOUNDTRACK_SPELL_CRIT,
+	    ST_MISC,
+	    "COMBAT_LOG_EVENT_UNFILTERED",
+	    8,
+	    false,
+	    function()
+	        if arg2 == "SPELL_DAMAGE" and arg4 == UnitName("player") and arg18 == 1 then
+				Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SPELL_CRIT)
+			end
+	    end,
+		true
+	);
+	Soundtrack.BattleEvents.RegisterEventScript(	-- Damage Spells
+		self,
+	    SOUNDTRACK_SPELL_HIT,
+	    ST_MISC,
+	    "COMBAT_LOG_EVENT_UNFILTERED",
+	    8,
+	    false,
+	    function()
+	        if arg2 == "SPELL_DAMAGE" and arg4 == UnitName("player") then
+				if arg18 == nil then
+					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SPELL_HIT)
+				else
+					local eventTable = Soundtrack.Events.GetTable(ST_MISC) 
+					local numTracks = table.getn(eventTable[SOUNDTRACK_SPELL_CRIT].tracks)
+					if numTracks == 0 then
+						Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SPELL_HIT)
+					end
+				end
+			end
+	    end,
+		true
+	);
+	
+	Soundtrack.BattleEvents.RegisterEventScript(	-- DoTs Crit
+		self,
+	    SOUNDTRACK_DOT_CRIT,
+	    ST_MISC,
+	    "COMBAT_LOG_EVENT_UNFILTERED",
+	    8,
+	    false,
+	    function()
+	        if arg2 == "SPELL_PERIODIC_DAMAGE" and arg4 == UnitName("player") and arg18 == 1 then
+				Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_DOT_CRIT)
+			end
+	    end,
+		true
+	);
+	Soundtrack.BattleEvents.RegisterEventScript(	-- DoTs
+		self,
+	    SOUNDTRACK_DOT_HIT,
+	    ST_MISC,
+	    "COMBAT_LOG_EVENT_UNFILTERED",
+	    8,
+	    false,
+	    function()
+	        if arg2 == "SPELL_PERIODIC_DAMAGE" and arg4 == UnitName("player") then
+				if arg18 == nil then
+					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_DOT_HIT)
+				else
+					local eventTable = Soundtrack.Events.GetTable(ST_MISC) 
+					local numTracks = table.getn(eventTable[SOUNDTRACK_DOT_CRIT].tracks)
+					if numTracks == 0 then
+						Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_DOT_HIT)
+					end
+				end
+			end
+	    end,
+		true
+	);
+	
+	Soundtrack.BattleEvents.RegisterEventScript(	-- Healing Spells Crit
+		self,
+	    SOUNDTRACK_HEAL_CRIT,
+	    ST_MISC,
+	    "COMBAT_LOG_EVENT_UNFILTERED",
+	    8,
+	    false,
+	    function()
+	        if arg2 == "SPELL_HEAL" and arg4 == UnitName("player") and arg15 == 1 then 
+					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HEAL_CRIT)
+			end
+	    end,
+		true
+	);
+	Soundtrack.BattleEvents.RegisterEventScript(	-- Healing Spells
+		self,
+	    SOUNDTRACK_HEAL_HIT,
+	    ST_MISC,
+	    "COMBAT_LOG_EVENT_UNFILTERED",
+	    8,
+	    false,
+	    function()
+	        if arg2 == "SPELL_HEAL" and arg4 == UnitName("player") then 
+				if arg15 == nil then 
+					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HEAL_HIT)
+				else
+					local eventTable = Soundtrack.Events.GetTable(ST_MISC) 
+					local numTracks = table.getn(eventTable[SOUNDTRACK_HEAL_CRIT].tracks)
+					if numTracks == 0 then
+						Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HEAL_HIT)
+					end
+				end
+			end
+	    end,
+		true
+	); 
+    
+	Soundtrack.BattleEvents.RegisterEventScript(	-- HoTs Crit
+		self,
+	    SOUNDTRACK_HOT_CRIT,
+	    ST_MISC,
+	    "COMBAT_LOG_EVENT_UNFILTERED",
+	    8,
+	    false,
+	    function()
+	        if arg2 == "SPELL_PERIODIC_HEAL" and arg4 == UnitName("player") and arg15 == 1 then 
+					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HOT_CRIT)
+			end
+	    end,
+		true
+	); 
+	Soundtrack.BattleEvents.RegisterEventScript(	-- HoTs
+		self,
+	    SOUNDTRACK_HOT_HIT,
+	    ST_MISC,
+	    "COMBAT_LOG_EVENT_UNFILTERED",
+	    8,
+	    false,
+	    function()
+	        if arg2 == "SPELL_PERIODIC_HEAL" and arg4 == UnitName("player") then 
+				if arg15 == nil then 
+					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HOT_HIT)
+				else
+					local eventTable = Soundtrack.Events.GetTable(ST_MISC) 
+					local numTracks = table.getn(eventTable[SOUNDTRACK_HOT_CRIT].tracks)
+					if numTracks == 0 then
+						Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HOT_HIT)
+					end
+				end
+			end
+	    end,
+		true
+	); 
+    
+	Soundtrack.BattleEvents.RegisterEventScript(	-- Range Crit
+		self,
+	    SOUNDTRACK_RANGE_CRIT,
+	    ST_MISC,
+	    "COMBAT_LOG_EVENT_UNFILTERED",
+	    8,
+	    false,
+	    function()
+	        if arg2 == "RANGE_DAMAGE" and arg4 == UnitName("player") and arg18 == 1 then
+				Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_RANGE_CRIT)
+			end
+	    end,
+		true
+	);
+	Soundtrack.BattleEvents.RegisterEventScript(	-- Range
+		self,
+	    SOUNDTRACK_RANGE_HIT,
+	    ST_MISC,
+	    "COMBAT_LOG_EVENT_UNFILTERED",
+	    8,
+	    false,
+	    function()
+	        if arg2 == "RANGE_DAMAGE" and arg4 == UnitName("player") then
+				if arg18 == nil then
+					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_RANGE_HIT)
+				else 
+					local eventTable = Soundtrack.Events.GetTable(ST_MISC) 
+					local numTracks = table.getn(eventTable[SOUNDTRACK_RANGE_CRIT].tracks)
+					if numTracks == 0 then
+						Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_RANGE_HIT)
+					end
+				end
+			end
+	    end,
+		true
+	);
+	
 
 end
