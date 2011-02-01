@@ -24,6 +24,7 @@ local ST_PLAYLISTS = "Playlists"
 
 Soundtrack_Events = {}
 Soundtrack_CustomEvents = {}
+Soundtrack_BattleEvents = {}
 Soundtrack_MiscEvents = {}
 Soundtrack_FlatEvents = {} -- Event nodes, but with collapsed events removed. used to match scrolling lists
 Soundtrack_EventNodes = {} -- Like sorted events, except its in a tree structure
@@ -201,9 +202,7 @@ function Soundtrack.AddEvent(tableName, eventName, _priority, _continuous, _soun
     
     local event = eventTable[eventName]
     if event then
-        if event.priority == nil then
-			event.priority = _priority
-		end
+		event.priority = _priority
 		if event.continuous == nil then
 			event.continuous = _continuous
 		end
@@ -348,7 +347,6 @@ local function OnVariablesLoaded(self)
     --Soundtrack.ZoneEvents.Initialize()
     --Soundtrack.BattleEvents.Initialize()
     --Soundtrack.MountEvents.Initalize()
-    -- Soundtrack_MiscEvents = {}
     -- Soundtrack.CustomEvents.Initialize(self)
     _SuspendSorting = false
         
