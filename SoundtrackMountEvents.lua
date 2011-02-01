@@ -97,6 +97,7 @@ function Soundtrack.MountEvents.OnUpdate(self, deltaT)
 			
 			-- TODO would be nicer to deal with each mount event separately and just use the priorities to avoid 
 			-- these complicated conditions:
+			--[[
 			if not Soundtrack.MountEvents.IsFlying and isFlying then
 				Soundtrack.MountEvents.IsFlying = true
 				Soundtrack_MountEvents_PlayIfTracksAvailable(ST_MISC, SOUNDTRACK_MOUNT_FLYING)
@@ -104,7 +105,7 @@ function Soundtrack.MountEvents.OnUpdate(self, deltaT)
 				Soundtrack.MountEvents.IsMounted = true
 				Soundtrack_MountEvents_PlayIfTracksAvailable(ST_MISC, SOUNDTRACK_MOUNT_GROUND)
 			elseif Soundtrack.MountEvents.IsMounted and not isMounted then
-				debugEvents("IsMounted and and IsMounted! Stop mount")
+				debugEvents("IsMounted and IsMounted! Stop mount")
 				Soundtrack.MountEvents.IsMounted = false
 				Soundtrack_MountEvents_StopIfTracksAvailable(ST_MISC, SOUNDTRACK_MOUNT_GROUND)
 				--Soundtrack_OnUpdate()
@@ -112,6 +113,17 @@ function Soundtrack.MountEvents.OnUpdate(self, deltaT)
 				Soundtrack.MountEvents.IsFlying = false
 				Soundtrack_MountEvents_StopIfTracksAvailable(ST_MISC, SOUNDTRACK_MOUNT_FLYING)
 			end
+			--]]
+			
+			if isMounted and isFlying then
+				Soundtrack_MountEvents_PlayIfTracksAvailable(ST_MISC, SOUNDTRACK_MOUNT_FLYING)
+			elseif isMounted and not isFlying then
+				Soundtrack_MountEvents_PlayIfTracksAvailable(ST_MISC, SOUNDTRACK_MOUNT_GROUND)
+			else
+				Soundtrack_MountEvents_StopIfTracksAvailable(ST_MISC, SOUNDTRACK_MOUNT_FLYING)
+				Soundtrack_MountEvents_StopIfTracksAvailable(ST_MISC, SOUNDTRACK_MOUNT_GROUND)
+			end
+				
 		end
 	end
 end
