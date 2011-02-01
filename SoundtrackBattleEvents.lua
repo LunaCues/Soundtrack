@@ -359,7 +359,7 @@ function Soundtrack.BattleEvents.OnLoad(self)
     self:RegisterEvent("PLAYER_UNGHOST")
     self:RegisterEvent("PLAYER_ALIVE")
     self:RegisterEvent("PLAYER_DEAD")
-    self:RegisterEvent("UNIT_AURA")
+    --self:RegisterEvent("UNIT_AURA")  -- Used for FeignDeath check only
     self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	self:RegisterEvent("VARIABLES_LOADED")
 end
@@ -369,6 +369,14 @@ local updateTime = .2
 
 function Soundtrack.BattleEvents.OnUpdate(self, elapsed)
 	local currentTime = GetTime()
+	
+	-- Feign death moved here to remove UNIT_AURA event
+	if UnitIsFeignDeath("player") then
+        -- Stop the battle music
+        Soundtrack.TraceBattle("Feign death: Stopping battle music")
+        Soundtrack.StopEventAtLevel(6)
+        Soundtrack.StopEventAtLevel(7)
+    end
 	
 	if currentTime > delayTime then
 		delayTime = currentTime + updateTime
@@ -425,13 +433,15 @@ end
         else
             Soundtrack.StopEvent(ST_MISC, SOUNDTRACK_GHOST)
         end
-    elseif event == "UNIT_AURA" then
+    --[[
+	elseif event == "UNIT_AURA" then
         if UnitIsFeignDeath("player") then
             -- Stop the battle music
             Soundtrack.TraceBattle("Feign death: Stopping battle music")
             Soundtrack.StopEventAtLevel(6)
             Soundtrack.StopEventAtLevel(7)
         end
+	--]]
     elseif event == "PLAYER_DEAD" then
         Soundtrack.TraceBattle("PLAYER_DEAD")
         if IsPlayerReallyDead() then
