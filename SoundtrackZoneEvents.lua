@@ -64,11 +64,13 @@ function Soundtrack_ZoneEvents_AddZones()
     local zoneSubText = GetSubZoneText();
     local minimapZoneText = GetMinimapZoneText();
     
+	--[[
     Soundtrack.TraceZones("continentText: " .. continentText);
     Soundtrack.TraceZones("zoneText: " .. zoneText);
     Soundtrack.TraceZones("zoneSubText: " .. zoneSubText);
     Soundtrack.TraceZones("minimapZoneText:" .. minimapZoneText);
-    
+    --]]
+	
     -- Construct full zone path
     
     local zoneText1, zoneText2, zoneText3, zoneText4;
@@ -77,13 +79,13 @@ function Soundtrack_ZoneEvents_AddZones()
         
     if not Soundtrack.IsNullOrEmpty(continentText) then
         zoneText1 = continentText;
-		Soundtrack.TraceZones("zoneText1: " .. zoneText1);
+		Soundtrack.TraceZones("Continent: " .. zoneText1);
         zonePath = continentText;
     end
         
     if not Soundtrack.IsNullOrEmpty(zoneText) then
         zoneText2 = continentText .. "/" .. zoneText;
-		Soundtrack.TraceZones("zoneText2: " .. zoneText2);
+		Soundtrack.TraceZones("ZoneText: " .. zoneText2);
         zonePath = zoneText2;
         Soundtrack.Events.RenameEvent(ST_ZONE, zoneText, zoneText2);
     end
@@ -91,14 +93,14 @@ function Soundtrack_ZoneEvents_AddZones()
 
     if zoneText ~= zoneSubText and not Soundtrack.IsNullOrEmpty(zoneSubText) then
         zoneText3 = zonePath .. "/" .. zoneSubText;
-		Soundtrack.TraceZones("zoneText3: " .. zoneText3);
+		Soundtrack.TraceZones("ZoneSubText: " .. zoneText3);
         zonePath = zoneText3;
         Soundtrack.Events.RenameEvent(ST_ZONE, zoneSubText, zoneText3);
     end
     
     if zoneText ~= minimapZoneText and zoneSubText ~= minimapZoneText and not Soundtrack.IsNullOrEmpty(minimapZoneText) then
         zoneText4 = zonePath .. "/" .. minimapZoneText;
-		Soundtrack.TraceZones("zoneText4: " .. zoneText4);
+		Soundtrack.TraceZones("MinimapZoneText: " .. zoneText4);
         zonePath = zoneText4;
         Soundtrack.Events.RenameEvent(ST_ZONE, minimapZoneText, zoneText4);
     end
@@ -120,7 +122,7 @@ function Soundtrack_ZoneEvents_AddZones()
 		end
 		AssignPriority(ST_ZONE, zoneText3, 3)
     end
-    
+     
     if zoneText2 then
 		local eventTable = Soundtrack.Events.GetTable(ST_ZONE)
 		if eventTable[zoneText2] == nil then
@@ -148,11 +150,13 @@ local function OnZoneChanged()
     local zoneSubText = GetSubZoneText();
     local minimapZoneText = GetMinimapZoneText();
     
+	--[[
     Soundtrack.TraceZones("continentText: " .. continentText);
     Soundtrack.TraceZones("zoneText: " .. zoneText);
     Soundtrack.TraceZones("zoneSubText: " .. zoneSubText);
     Soundtrack.TraceZones("minimapZoneText:" .. minimapZoneText);
-    
+    --]]
+	
     -- Construct full zone path
     
     local zoneText1, zoneText2, zoneText3, zoneText4;
@@ -161,13 +165,13 @@ local function OnZoneChanged()
         
     if not Soundtrack.IsNullOrEmpty(continentText) then
         zoneText1 = continentText;
-		Soundtrack.TraceZones("zoneText1: " .. zoneText1);
+		Soundtrack.TraceZones("Continent: " .. zoneText1);
         zonePath = continentText;
     end
         
     if not Soundtrack.IsNullOrEmpty(zoneText) then
         zoneText2 = continentText .. "/" .. zoneText;
-		Soundtrack.TraceZones("zoneText2: " .. zoneText2);
+		Soundtrack.TraceZones("ZoneText: " .. zoneText2);
         zonePath = zoneText2;
         Soundtrack.Events.RenameEvent(ST_ZONE, zoneText, zoneText2);
     end
@@ -175,14 +179,14 @@ local function OnZoneChanged()
 
     if zoneText ~= zoneSubText and not Soundtrack.IsNullOrEmpty(zoneSubText) then
         zoneText3 = zonePath .. "/" .. zoneSubText;
-		Soundtrack.TraceZones("zoneText3: " .. zoneText3);
+		Soundtrack.TraceZones("SubZoneText: " .. zoneText3);
         zonePath = zoneText3;
         Soundtrack.Events.RenameEvent(ST_ZONE, zoneSubText, zoneText3);
     end
     
     if zoneText ~= minimapZoneText and zoneSubText ~= minimapZoneText and not Soundtrack.IsNullOrEmpty(minimapZoneText) then
         zoneText4 = zonePath .. "/" .. minimapZoneText;
-		Soundtrack.TraceZones("zoneText4: " .. zoneText4);
+		Soundtrack.TraceZones("MinimapZoneText: " .. zoneText4);
         zonePath = zoneText4;
         Soundtrack.Events.RenameEvent(ST_ZONE, minimapZoneText, zoneText4);
     end
@@ -253,7 +257,7 @@ function Soundtrack.ZoneEvents.OnLoad(self)
     self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
     self:RegisterEvent("ZONE_CHANGED")
     self:RegisterEvent("ZONE_CHANGED_INDOORS")
-    self:RegisterEvent("PLAYER_REGEN_ENABLED")
+    --self:RegisterEvent("PLAYER_REGEN_ENABLED")
     self:RegisterEvent("MINIMAP_ZONE_CHANGED")
     self:RegisterEvent("VARIABLES_LOADED")
 end
