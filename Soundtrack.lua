@@ -314,8 +314,8 @@ local function OnVariablesLoaded(self)
     end
     
     Soundtrack.Settings = Soundtrack_Settings
-    
-	Soundtrack.Util.InitDebugChatFrame()
+	
+	Soundtrack.Timers.AddTimer("InitDebugChatFrame", 3, Soundtrack.Util.InitDebugChatFrame)
     InitDefaultSettings()
 
     Soundtrack_Tracks = {}
