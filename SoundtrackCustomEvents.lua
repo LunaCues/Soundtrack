@@ -1,11 +1,9 @@
+--[[
+    Soundtrack addon for World of Warcraft
 
-local function debug(msg)
-	Soundtrack.Util.DebugPrint(msg, 0.6, 0.6, 1.0)
-end
-
-Soundtrack.CustomEvents = {
-    BuffEvents = {}
-}
+    Custom events functions.
+    Functions that manage misc. and custom events.
+]]
 
 -- Level 1: Continent
 -- Level 2: Region
@@ -38,6 +36,16 @@ local ST_MISC = "Misc"
 local ST_CUSTOM = "Custom"
 local ST_PLAYLISTS = "Playlists"
 
+local arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20
+
+local function debug(msg)
+	Soundtrack.Util.DebugPrint(msg, 0.6, 0.6, 1.0)
+end
+
+Soundtrack.CustomEvents = {
+    BuffEvents = {}
+}
+
 Soundtrack.ActionHouse = false
 Soundtrack.Bank = false
 Soundtrack.Merchant = false
@@ -46,6 +54,8 @@ Soundtrack.Barbershop = false
 Soundtrack.CurrentStance = 0;
 Soundtrack.TreeForm = false;
 Soundtrack.MoonkinForm = false;
+
+local ST_CLASS_STEALTH
 
 function Soundtrack.CustomEvents.RegisterTrigger(self, trigger)
 	if trigger ~= nil then
@@ -522,15 +532,17 @@ function Soundtrack.CustomEvents.Initialize(self)
         true,
         function()
 			local class = UnitClass("player")
-            if SNDCUSTOM_IsStealthed == nil then 
-                SNDCUSTOM_IsStealthed = false 
+            if ST_CLASS_STEALTH == nil then 
+                ST_CLASS_STEALTH = false 
             end
-            if SNDCUSTOM_IsStealthed and not IsStealthed() and class == "Druid" then
-                Soundtrack_Custom_StopEvent(ST_MISC, SOUNDTRACK_DRUID_PROWL)
-                SNDCUSTOM_IsStealthed = false 
-            elseif not SNDCUSTOM_IsStealthed and IsStealthed() and class == "Druid" then
-                Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_DRUID_PROWL)
-                SNDCUSTOM_IsStealthed = true;
+            if ST_CLASS_STEALTH and not IsStealthed() and class == "Druid" then
+					Soundtrack_Custom_StopEvent(ST_MISC, SOUNDTRACK_DRUID_PROWL)
+					ST_CLASS_STEALTH = false 
+            elseif not ST_CLASS_STEALTH and IsStealthed() and class == "Druid" then
+				if Soundtrack.IsBuffActive("Interface\\Icons\\Ability_Druid_CatForm") then
+					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_DRUID_PROWL)
+					ST_CLASS_STEALTH = true;
+				end
             end
         end,
 		false
@@ -597,15 +609,17 @@ function Soundtrack.CustomEvents.Initialize(self)
         true,
         function()
 			local class = UnitClass("player")
-            if SNDCUSTOM_IsStealthed == nil then 
-                SNDCUSTOM_IsStealthed = false 
+            if ST_CLASS_STEALTH == nil then 
+                ST_CLASS_STEALTH = false 
             end
-            if SNDCUSTOM_IsStealthed and not IsStealthed() and class == "Rogue" then
-                Soundtrack_Custom_StopEvent(ST_MISC, SOUNDTRACK_ROGUE_STEALTH)
-                SNDCUSTOM_IsStealthed = false 
-            elseif not SNDCUSTOM_IsStealthed and IsStealthed() and class == "Rogue" then
-                Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_ROGUE_STEALTH)
-                SNDCUSTOM_IsStealthed = true;
+            if ST_CLASS_STEALTH and not IsStealthed() and class == "Rogue" then
+					Soundtrack_Custom_StopEvent(ST_MISC, SOUNDTRACK_ROGUE_STEALTH)
+					ST_CLASS_STEALTH = false 
+            elseif not ST_CLASS_STEALTH and IsStealthed() and class == "Rogue" then
+				if Soundtrack.IsBuffActive("Interface\\Icons\\ability_stealth") then
+					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_ROGUE_STEALTH)
+					ST_CLASS_STEALTH = true;
+				end
             end
         end,
 		false
@@ -801,6 +815,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_SHAMAN_GHOST_WOLF, ST_MISC, "Interface\\Icons\\Spell_Nature_SpiritWolf", ST_AURA_LVL, true, false)
 	
+	--[[
 	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_FLIGHT_OLD, SOUNDTRACK_FLIGHT)
 	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_DEATH_OLD, SOUNDTRACK_DEATH)
 	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_GHOST_OLD, SOUNDTRACK_GHOST)
@@ -834,7 +849,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_SWING_CRIT_OLD, SOUNDTRACK_SWING_CRIT)
 	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_SWING_HIT_OLD, SOUNDTRACK_SWING_HIT)
 	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_VICTORY_OLD, SOUNDTRACK_VICTORY)
-	
+	--]]
 	
 	-- Make sure there are events for each customevent
 	for k,v in pairs(Soundtrack_CustomEvents) do
@@ -880,6 +895,7 @@ function Soundtrack.CustomEvents.OnUpdate(self, elapsed)
 end
 
 function Soundtrack.CustomEvents.OnEvent(self, event, ...)
+	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = select(1, ...)
 	
 	if event == "VARIABLES_LOADED" then	
 		Soundtrack.CustomEvents.Initialize(self)
@@ -915,7 +931,7 @@ function Soundtrack.CustomEvents.OnEvent(self, event, ...)
 		
 	
     -- Handle custom buff events
-    elseif event == "UNIT_AURA" then 
+    elseif event == "UNIT_AURA" or event == "UPDATE_SHAPESHIFT_FORM" then 
 		if arg1 == "player" then
 		--[[
 			if Soundtrack.Settings.EnableCustomMusic then
