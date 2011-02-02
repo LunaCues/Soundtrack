@@ -90,6 +90,31 @@
                         <Anchor point="TOPLEFT" relativeTo="$parentStack9" relativePoint="BOTTOMLEFT" />
                     </Anchors>
                 </FontString>
+                <FontString name="$parentStack11" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentStack10" relativePoint="BOTTOMLEFT" />
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentStack12" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentStack11" relativePoint="BOTTOMLEFT" />
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentStack13" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentStack12" relativePoint="BOTTOMLEFT" />
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentStack14" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentStack13" relativePoint="BOTTOMLEFT" />
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentStack15" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentStack14" relativePoint="BOTTOMLEFT" />
+                    </Anchors>
+                </FontString>
             </Layer>
         </Layers>
         <Frames>

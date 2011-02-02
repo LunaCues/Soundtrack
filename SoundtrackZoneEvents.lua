@@ -5,6 +5,27 @@
     Functions that manage zone change events.
 ]]
 
+-- Level 1: Continent
+-- Level 2: Region
+-- Level 3: Zones
+-- Level 4: Interiors
+-- Level 5: Mount: Mount, Flight
+-- Level 6: Auras: Forms
+-- Level 7: Status: Swimming, Stealthed
+-- Level 8: Temp. Buffs: Dash, Class Stealth
+-- Level 9: NPCs: Merchant, Auction House 
+-- Level 10: One-time/SFX: Victory, Dance, Level up, Cinematics
+-- Level 11: Battle
+-- Level 12: Boss
+-- Level 13: Death, Ghost
+-- Level 14: Playlists
+-- Level 15: Preview
+
+local ST_CONTINENT_LVL = 1
+local ST_ZONE_LVL = 2
+local ST_SUBZONE_LVL = 3
+local ST_MINIMAP_LVL = 4
+
 local ST_BATTLE = "Battle"
 local ST_BOSS = "Boss"
 local ST_ZONE = "Zone"
@@ -12,6 +33,10 @@ local ST_DANCE = "Dance"
 local ST_MISC = "Misc"
 local ST_CUSTOM = "Custom"
 local ST_PLAYLISTS = "Playlists"
+
+Soundtrack.ZoneEvents = 
+{
+}
 
 -- Finds the continent name, based on the zone name
 local function FindContinentByZone(zoneName)
@@ -106,37 +131,37 @@ function Soundtrack_ZoneEvents_AddZones()
     end
     
     Soundtrack.TraceZones("Zone: " .. zonePath);
-    
+
     if zoneText4 then
 		local eventTable = Soundtrack.Events.GetTable(ST_ZONE)
 		if eventTable[zoneText4] == nil then
-			Soundtrack.AddEvent(ST_ZONE, zoneText4, 4, true)
+			Soundtrack.AddEvent(ST_ZONE, zoneText4, ST_MINIMAP_LVL, true)
 		end
-		AssignPriority(ST_ZONE, zoneText4, 4)
+		AssignPriority(ST_ZONE, zoneText4, ST_MINIMAP_LVL)
     end
     
     if zoneText3 then
 		local eventTable = Soundtrack.Events.GetTable(ST_ZONE)
 		if eventTable[zoneText3] == nil then
-			Soundtrack.AddEvent(ST_ZONE, zoneText3, 3, true)
+			Soundtrack.AddEvent(ST_ZONE, zoneText3, ST_SUBZONE_LVL, true)
 		end
-		AssignPriority(ST_ZONE, zoneText3, 3)
+		AssignPriority(ST_ZONE, zoneText3, ST_SUBZONE_LVL)
     end
      
     if zoneText2 then
 		local eventTable = Soundtrack.Events.GetTable(ST_ZONE)
 		if eventTable[zoneText2] == nil then
-			Soundtrack.AddEvent(ST_ZONE, zoneText2, 2, true)
+			Soundtrack.AddEvent(ST_ZONE, zoneText2, ST_ZONE_LVL, true)
 		end
-		AssignPriority(ST_ZONE, zoneText2, 2)
+		AssignPriority(ST_ZONE, zoneText2, ST_ZONE_LVL)
     end
     
     if zoneText1 then
 		local eventTable = Soundtrack.Events.GetTable(ST_ZONE)
 		if eventTable[zoneText1] == nil then
-			Soundtrack.AddEvent(ST_ZONE, zoneText1, 1, true)
+			Soundtrack.AddEvent(ST_ZONE, zoneText1, ST_CONTINENT_LVL, true)
 		end
-		AssignPriority(ST_ZONE, zoneText1, 1)
+		AssignPriority(ST_ZONE, zoneText1, ST_CONTINENT_LVL)
     end
    
 end
@@ -192,66 +217,60 @@ local function OnZoneChanged()
     end
     
     Soundtrack.TraceZones("Zone: " .. zonePath);
-    
+        
     if zoneText4 then
         if Soundtrack.Settings.AutoAddZones then
 			local eventTable = Soundtrack.Events.GetTable(ST_ZONE)
 			if eventTable[zoneText4] == nil then
-				Soundtrack.AddEvent(ST_ZONE, zoneText4, 4, true)
+				Soundtrack.AddEvent(ST_ZONE, zoneText4, ST_MINIMAP_LVL, true)
 			end
         end
-		AssignPriority(ST_ZONE, zoneText4, 4)
+		AssignPriority(ST_ZONE, zoneText4, ST_MINIMAP_LVL)
         Soundtrack.PlayEvent(ST_ZONE, zoneText4);
     else
-        Soundtrack.StopEventAtLevel(4);
+        Soundtrack.StopEventAtLevel(ST_MINIMAP_LVL);
     end
     
     if zoneText3 then
         if Soundtrack.Settings.AutoAddZones then
 			local eventTable = Soundtrack.Events.GetTable(ST_ZONE)
 			if eventTable[zoneText3] == nil then
-				Soundtrack.AddEvent(ST_ZONE, zoneText3, 3, true)
+				Soundtrack.AddEvent(ST_ZONE, zoneText3, ST_SUBZONE_LVL, true)
 			end
         end
-		AssignPriority(ST_ZONE, zoneText3, 3)
+		AssignPriority(ST_ZONE, zoneText3, ST_SUBZONE_LVL)
         Soundtrack.PlayEvent(ST_ZONE, zoneText3);
     else
-        Soundtrack.StopEventAtLevel(3);
+        Soundtrack.StopEventAtLevel(ST_SUBZONE_LVL);
     end
     
     if zoneText2 then
         if Soundtrack.Settings.AutoAddZones then
 			local eventTable = Soundtrack.Events.GetTable(ST_ZONE)
 			if eventTable[zoneText2] == nil then
-				Soundtrack.AddEvent(ST_ZONE, zoneText2, 2, true)
+				Soundtrack.AddEvent(ST_ZONE, zoneText2, ST_ZONE_LVL, true)
 			end
         end
-		AssignPriority(ST_ZONE, zoneText2, 2)
+		AssignPriority(ST_ZONE, zoneText2, ST_ZONE_LVL)
         Soundtrack.PlayEvent(ST_ZONE, zoneText2);
     else        
-        Soundtrack.StopEventAtLevel(2);
+        Soundtrack.StopEventAtLevel(ST_ZONE_LVL);
     end
     
     if zoneText1 then
         if Soundtrack.Settings.AutoAddZones then
 			local eventTable = Soundtrack.Events.GetTable(ST_ZONE)
 			if eventTable[zoneText1] == nil then
-				Soundtrack.AddEvent(ST_ZONE, zoneText1, 1, true)
+				Soundtrack.AddEvent(ST_ZONE, zoneText1, ST_CONTINENT_LVL, true)
 			end
         end
-		AssignPriority(ST_ZONE, zoneText1, 1)
+		AssignPriority(ST_ZONE, zoneText1, ST_CONTINENT_LVL)
         Soundtrack.PlayEvent(ST_ZONE, zoneText1);
     else        
-        Soundtrack.StopEventAtLevel(1);
+        Soundtrack.StopEventAtLevel(ST_CONTINENT_LVL);
     end
    
 end
-
-
-
-Soundtrack.ZoneEvents = 
-{
-}
 
 function Soundtrack.ZoneEvents.OnLoad(self)
     self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
@@ -289,16 +308,16 @@ function Soundtrack.ZoneEvents.Initialize()
     
     local tableName = Soundtrack.Events.GetTable(ST_ZONE);
     
-    Soundtrack.AddEvent(ST_ZONE, "Instances", 1, true);
-	Soundtrack.AddEvent(ST_ZONE, "PvP", 1, true);
-	Soundtrack.AddEvent(ST_ZONE, "Uncategorized", 1, true);
+    Soundtrack.AddEvent(ST_ZONE, "Instances", ST_CONTINENT_LVL, true);
+	Soundtrack.AddEvent(ST_ZONE, "PvP", ST_CONTINENT_LVL, true);
+	Soundtrack.AddEvent(ST_ZONE, "Uncategorized", ST_CONTINENT_LVL, true);
     
     for i,continentName in ipairs(continentNames) do      
-        Soundtrack.AddEvent(ST_ZONE, continentName, 1, true);
+        Soundtrack.AddEvent(ST_ZONE, continentName, ST_CONTINENT_LVL, true);
         local zoneNames = { GetMapZones(i) };
         for j,zoneName in ipairs(zoneNames) do
             local newName = continentName .. "/" .. zoneName;
-            Soundtrack.AddEvent(ST_ZONE, newName, 2, true);
+            Soundtrack.AddEvent(ST_ZONE, newName, ST_ZONE_LVL, true);
         end
     end 
        

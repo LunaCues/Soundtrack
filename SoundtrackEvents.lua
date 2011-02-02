@@ -5,7 +5,23 @@
     Functions that handle mapping named events with tracks in the library.
 ]]
 
-Soundtrack.MaxStackLevel = 10
+-- Level 1: Continent
+-- Level 2: Region
+-- Level 3: Zones
+-- Level 4: Interiors
+-- Level 5: Mount: Mount, Flight
+-- Level 6: Auras: Forms
+-- Level 7: Status: Swimming, Stealthed
+-- Level 8: Temp. Buffs: Dash, Class Stealth
+-- Level 9: NPCs: Merchant, Auction House 
+-- Level 10: One-time/SFX: Victory, Dance, Level up, Cinematics
+-- Level 11: Battle
+-- Level 12: Boss
+-- Level 13: Death, Ghost
+-- Level 14: Playlists
+-- Level 15: Preview
+
+Soundtrack.MaxStackLevel = 15
 
 local function verifyStackLevel(stackLevel)
     if not stackLevel or (not (stackLevel >= 1 and stackLevel <= Soundtrack.MaxStackLevel)) then
@@ -213,14 +229,17 @@ Soundtrack.Events.Stack =
     { eventName = nil, tableName = nil }, -- Level 2: Region
     { eventName = nil, tableName = nil }, -- Level 3: Zones
     { eventName = nil, tableName = nil }, -- Level 4: Interiors
-    { eventName = nil, tableName = nil }, -- Level 5: Status: Stealth, Mount, Flight
-    { eventName = nil, tableName = nil }, -- Level 6: NPCs: Merchant, Auction House 
-    { eventName = nil, tableName = nil }, -- Level 7: One-time Events: Victory, Dance
-    { eventName = nil, tableName = nil }, -- Level 8: Battle
-    { eventName = nil, tableName = nil }, -- Level 9: Boss
-    { eventName = nil, tableName = nil }, -- Level 10: Level up, Death, Ghost
-	{ eventName = nil, tableName = nil }, -- Level 11: Playlists
-	{ eventName = nil, tableName = nil } -- Level 12: Preview
+    { eventName = nil, tableName = nil }, -- Level 5: Mount: Mount, Flight
+    { eventName = nil, tableName = nil }, -- Level 6: Auras: Forms
+    { eventName = nil, tableName = nil }, -- Level 7: Status: Swimming, Stealthed
+    { eventName = nil, tableName = nil }, -- Level 8: Temp. Buffs: Dash, Class Stealth
+    { eventName = nil, tableName = nil }, -- Level 9: NPCs: Merchant, Auction House 
+    { eventName = nil, tableName = nil }, -- Level 10: One-time/SFX: Victory, Dance, Level up, Cinematics
+	{ eventName = nil, tableName = nil }, -- Level 11: Battle
+	{ eventName = nil, tableName = nil }, -- Level 12: Boss
+	{ eventName = nil, tableName = nil }, -- Level 13: Death, Ghost
+	{ eventName = nil, tableName = nil }, -- Level 14: Playlists	
+	{ eventName = nil, tableName = nil }  -- Level 15: Preview
 }
 
 Soundtrack.Events.Paused = false

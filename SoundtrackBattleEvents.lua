@@ -5,6 +5,27 @@
     Functions that manage battle situation changes.
 ]]
 
+-- Level 1: Continent
+-- Level 2: Region
+-- Level 3: Zones
+-- Level 4: Interiors
+-- Level 5: Mount: Mount, Flight
+-- Level 6: Auras: Forms
+-- Level 7: Status: Swimming, Stealthed
+-- Level 8: Temp. Buffs: Dash, Class Stealth
+-- Level 9: NPCs: Merchant, Auction House 
+-- Level 10: One-time/SFX: Victory, Dance, Level up, Cinematics
+-- Level 11: Battle
+-- Level 12: Boss
+-- Level 13: Death, Ghost
+-- Level 14: Playlists
+-- Level 15: Preview
+
+local ST_SFX_LVL = 10
+local ST_BATTLE_LVL = 11
+local ST_BOSS_LVL = 12
+local ST_DEATH_LVL = 13
+
 local ST_BATTLE = "Battle"
 local ST_BOSS = "Boss"
 local ST_ZONE = "Zone"
@@ -12,6 +33,8 @@ local ST_DANCE = "Dance"
 local ST_MISC = "Misc"
 local ST_CUSTOM = "Custom"
 local ST_PLAYLISTS = "Playlists"
+
+local arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20
 
 -- Classifications for mobs
 local classifications = 
@@ -294,14 +317,18 @@ local hostileDeathCount = 0
 local currentBattleTypeIndex = 0 -- Used to determine battle priorities and escalations
 
 local function StartVictoryMusic()
-    Soundtrack.StopEventAtLevel(7)
+	Soundtrack.StopEventAtLevel(ST_BATTLE_LVL)
+	Soundtrack.StopEventAtLevel(ST_BOSS_LVL)
     if hostileDeathCount > 0 then
         -- Attempt to start victory music
         Soundtrack.PlayEvent(ST_MISC, SOUNDTRACK_VICTORY)
 		local victoryEvent = Soundtrack.GetEvent(ST_MISC, SOUNDTRACK_VICTORY)
 		if victoryEvent.soundEffect == true then
 			Soundtrack.TraceBattle("Victory = sound effect")
-			Soundtrack.StopEventAtLevel(6)
+			--[[
+			Soundtrack.StopEventAtLevel(ST_BATTLE_LVL)
+			Soundtrack.StopEventAtLevel(ST_BOSS_LVL)
+			--]]
 		end
         hostileDeathCount = 0
     else
@@ -448,8 +475,8 @@ end
     elseif event == "PLAYER_DEAD" then
         Soundtrack.TraceBattle("PLAYER_DEAD")
         if IsPlayerReallyDead() then
-			Soundtrack.StopEventAtLevel(6)
-			Soundtrack.StopEventAtLevel(7)
+			Soundtrack.StopEventAtLevel(ST_BATTLE_LVL)
+			Soundtrack.StopEventAtLevel(ST_BOSS_LVL)
             Soundtrack.PlayEvent(ST_MISC, SOUNDTRACK_DEATH)
         end
 		currentBattleTypeIndex = 0 -- out of combat
@@ -467,33 +494,33 @@ end
 
 
 function Soundtrack.BattleEvents.Initialize(self)
-    Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_UNKNOWN_BATTLE, 6, true)
+    Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_UNKNOWN_BATTLE, ST_BATTLE_LVL, true)
 
-	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_CRITTER, 6, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_CRITTER, ST_BATTLE_LVL, true)
 	
-	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB, 6, true)
-	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB .."/1 Trivial", 6, true)
-	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB .."/2 Easy", 6, true)
-	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB .."/3 Normal", 6, true)
-	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB .."/4 Tough", 6, true)
-	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB .."/5 Impossible", 6, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB, ST_BATTLE_LVL, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB .."/1 Trivial", ST_BATTLE_LVL, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB .."/2 Easy", ST_BATTLE_LVL, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB .."/3 Normal", ST_BATTLE_LVL, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB .."/4 Tough", ST_BATTLE_LVL, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_NORMAL_MOB .."/5 Impossible", ST_BATTLE_LVL, true)
 	
-	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_ELITE_MOB, 6, true)
-    Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_ELITE_MOB .."/1 Trivial", 6, true)
-	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_ELITE_MOB .."/2 Easy", 6, true)
-	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_ELITE_MOB .."/3 Normal", 6, true)
-	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_ELITE_MOB .."/4 Tough", 6, true)
-	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_ELITE_MOB .."/5 Impossible", 6, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_ELITE_MOB, ST_BATTLE_LVL, true)
+    Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_ELITE_MOB .."/1 Trivial", ST_BATTLE_LVL, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_ELITE_MOB .."/2 Easy", ST_BATTLE_LVL, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_ELITE_MOB .."/3 Normal", ST_BATTLE_LVL, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_ELITE_MOB .."/4 Tough", ST_BATTLE_LVL, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_ELITE_MOB .."/5 Impossible", ST_BATTLE_LVL, true)
 	
-	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_BOSS_BATTLE, 6, true)
-    Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_WORLD_BOSS_BATTLE, 6, true)
-    Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_PVP_BATTLE, 6, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_BOSS_BATTLE, ST_BOSS_LVL, true)
+    Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_WORLD_BOSS_BATTLE, ST_BATTLE_LVL, true)
+    Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_PVP_BATTLE, ST_BATTLE_LVL, true)
 
-	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_RARE, 6, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_RARE, ST_BOSS_LVL, true)
 	
-    Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_VICTORY, 6, false, true)
-    Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_DEATH, 6, true, false)
-    Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_GHOST, 6, true, false)
+    Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_VICTORY, ST_SFX_LVL, false, true)
+    Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_DEATH, ST_DEATH_LVL, true, false)
+    Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_GHOST, ST_DEATH_LVL, true, false)
 	
 	
 	--[[
@@ -511,7 +538,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    SOUNDTRACK_SWING_CRIT,
 	    ST_MISC,
 	    "COMBAT_LOG_EVENT_UNFILTERED",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        if arg2 == "SWING_DAMAGE" and arg4 == UnitName("player") and arg15 == 1 then
@@ -525,7 +552,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    SOUNDTRACK_SWING_HIT,
 	    ST_MISC,
 	    "COMBAT_LOG_EVENT_UNFILTERED",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        if arg2 == "SWING_DAMAGE" and arg4 == UnitName("player") then	
@@ -548,7 +575,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    SOUNDTRACK_SPELL_CRIT,
 	    ST_MISC,
 	    "COMBAT_LOG_EVENT_UNFILTERED",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        if arg2 == "SPELL_DAMAGE" and arg4 == UnitName("player") and arg18 == 1 then
@@ -562,7 +589,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    SOUNDTRACK_SPELL_HIT,
 	    ST_MISC,
 	    "COMBAT_LOG_EVENT_UNFILTERED",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        if arg2 == "SPELL_DAMAGE" and arg4 == UnitName("player") then
@@ -585,7 +612,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    SOUNDTRACK_DOT_CRIT,
 	    ST_MISC,
 	    "COMBAT_LOG_EVENT_UNFILTERED",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        if arg2 == "SPELL_PERIODIC_DAMAGE" and arg4 == UnitName("player") and arg18 == 1 then
@@ -599,7 +626,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    SOUNDTRACK_DOT_HIT,
 	    ST_MISC,
 	    "COMBAT_LOG_EVENT_UNFILTERED",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        if arg2 == "SPELL_PERIODIC_DAMAGE" and arg4 == UnitName("player") then
@@ -622,7 +649,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    SOUNDTRACK_HEAL_CRIT,
 	    ST_MISC,
 	    "COMBAT_LOG_EVENT_UNFILTERED",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        if arg2 == "SPELL_HEAL" and arg4 == UnitName("player") and arg15 == 1 then 
@@ -636,7 +663,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    SOUNDTRACK_HEAL_HIT,
 	    ST_MISC,
 	    "COMBAT_LOG_EVENT_UNFILTERED",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        if arg2 == "SPELL_HEAL" and arg4 == UnitName("player") then 
@@ -659,7 +686,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    SOUNDTRACK_HOT_CRIT,
 	    ST_MISC,
 	    "COMBAT_LOG_EVENT_UNFILTERED",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        if arg2 == "SPELL_PERIODIC_HEAL" and arg4 == UnitName("player") and arg15 == 1 then 
@@ -673,7 +700,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    SOUNDTRACK_HOT_HIT,
 	    ST_MISC,
 	    "COMBAT_LOG_EVENT_UNFILTERED",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        if arg2 == "SPELL_PERIODIC_HEAL" and arg4 == UnitName("player") then 
@@ -696,7 +723,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    SOUNDTRACK_RANGE_CRIT,
 	    ST_MISC,
 	    "COMBAT_LOG_EVENT_UNFILTERED",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        if arg2 == "RANGE_DAMAGE" and arg4 == UnitName("player") and arg18 == 1 then
@@ -710,7 +737,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    SOUNDTRACK_RANGE_HIT,
 	    ST_MISC,
 	    "COMBAT_LOG_EVENT_UNFILTERED",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        if arg2 == "RANGE_DAMAGE" and arg4 == UnitName("player") then

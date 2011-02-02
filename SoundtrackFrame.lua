@@ -3,6 +3,33 @@ local TRACKS_TO_DISPLAY = 16
 local ASSIGNED_TRACKS_TO_DISPLAY = 7
 EVENTS_ITEM_HEIGHT = 21
 
+-- Level 1: Continent
+-- Level 2: Region
+-- Level 3: Zones
+-- Level 4: Interiors
+-- Level 5: Mount: Mount, Flight
+-- Level 6: Auras: Forms
+-- Level 7: Status: Swimming, Stealthed
+-- Level 8: Temp. Buffs: Dash, Class Stealth
+-- Level 9: NPCs: Merchant, Auction House 
+-- Level 10: One-time/SFX: Victory, Dance, Level up, Cinematics
+-- Level 11: Battle
+-- Level 12: Boss
+-- Level 13: Death, Ghost
+-- Level 14: Playlists
+-- Level 15: Preview
+
+local ST_PLAYLIST_LVL = 14
+local ST_PREVIEW_LVL = 15
+
+local ST_BATTLE = "Battle"
+local ST_BOSS = "Boss"
+local ST_ZONE = "Zone"
+local ST_DANCE = "Dance"
+local ST_MISC = "Misc"
+local ST_CUSTOM = "Custom"
+local ST_PLAYLISTS = "Playlists"
+
 --DEBUG = 1
 
 local SEVT = 
@@ -673,6 +700,11 @@ function SoundtrackFrame_RefreshPlaybackControls()
                 SoundtrackControlFrameStack8:Show()
                 SoundtrackControlFrameStack9:Show()
                 SoundtrackControlFrameStack10:Show()
+                SoundtrackControlFrameStack11:Show()
+                SoundtrackControlFrameStack12:Show()
+                SoundtrackControlFrameStack13:Show()
+                SoundtrackControlFrameStack14:Show()
+                SoundtrackControlFrameStack15:Show()
             else
                 SoundtrackControlFrameStackTitle:Hide()
                 SoundtrackControlFrameStack1:Hide()
@@ -685,6 +717,11 @@ function SoundtrackFrame_RefreshPlaybackControls()
                 SoundtrackControlFrameStack8:Hide()
                 SoundtrackControlFrameStack9:Hide()
                 SoundtrackControlFrameStack10:Hide()
+                SoundtrackControlFrameStack11:Hide()
+                SoundtrackControlFrameStack12:Hide()
+                SoundtrackControlFrameStack13:Hide()
+                SoundtrackControlFrameStack14:Hide()
+                SoundtrackControlFrameStack15:Hide()
             end
         else
             controlFrame:Hide()
@@ -725,10 +762,10 @@ function SoundtrackFrame_OnShow()
 end
 
 function SoundtrackFrame_OnHide()
-    Soundtrack.StopEventAtLevel(10) -- TODO Anthony (Preview music)
+    Soundtrack.StopEventAtLevel(ST_PREVIEW_LVL) -- TODO Anthony (Preview music)
     
 	if SEVT.SelectedEventsTable ~= "Playlists" then
-        Soundtrack.StopEventAtLevel(9) -- TODO Anthony
+        Soundtrack.StopEventAtLevel(ST_PLAYLIST_LVL) -- TODO Anthony
     end
 end
 
@@ -908,7 +945,7 @@ function SoundtrackFrameAddPlaylistButton_OnClick()
 	StaticPopup_Show("SOUNDTRACK_ADD_PLAYLIST_POPUP")
 end
 function SoundtrackFrame_AddPlaylist(playlistName)
-    Soundtrack.AddEvent("Playlists", playlistName, 9, true)
+    Soundtrack.AddEvent("Playlists", playlistName, ST_PLAYLIST_LVL, true)
     SoundtrackFrame_SelectedEvent = playlistName
 	Soundtrack_SortEvents("Playlists")
     SoundtrackFrame_RefreshEvents()
@@ -951,7 +988,7 @@ function SoundtrackFrameRenamePlaylistButton_OnClick()
 	StaticPopup_Show("SOUNDTRACK_RENAME_PLAYLIST_POPUP")
 end
 function SoundtrackFrame_RenamePlaylist(oldPlaylistName, newPlaylistName)
-    Soundtrack.RenameEvent("Playlists", oldPlaylistName, newPlaylistName, 9, true)
+    Soundtrack.RenameEvent("Playlists", oldPlaylistName, newPlaylistName, ST_PLAYLIST_LVL true)
     SoundtrackFrame_SelectedEvent = newPlaylistName
 	Soundtrack_SortEvents("Playlists")
     SoundtrackFrame_RefreshEvents()
@@ -964,7 +1001,7 @@ StaticPopupDialogs["SOUNDTRACK_RENAME_PLAYLIST_POPUP"] = {
 	maxLetters = 100,
 	OnAccept = function(self)
 		local newPlaylistName = _G[self:GetName().."EditBox"]
-		SoundtrackFrame_RenameEvent("Playlists", SoundtrackFrame_SelectedEvent, newPlaylistName:GetText(), 9, true)
+		SoundtrackFrame_RenameEvent("Playlists", SoundtrackFrame_SelectedEvent, newPlaylistName:GetText(), ST_PLAYLIST_LVL, true)
 		self:Hide()
 	end,
 	OnShow = function(self)
@@ -979,7 +1016,7 @@ StaticPopupDialogs["SOUNDTRACK_RENAME_PLAYLIST_POPUP"] = {
 	end,
 	EditBoxOnEnterPressed = function(self)
 		local newPlaylistName = _G[self:GetName().."EditBox"]
-		SoundtrackFrame_RenameEvent("Playlists", SoundtrackFrame_SelectedEvent, newPlaylistName:GetText(), 9, true)
+		SoundtrackFrame_RenameEvent("Playlists", SoundtrackFrame_SelectedEvent, newPlaylistName:GetText(), ST_PLAYLIST_LVL, true)
 		self:Hide()
 	end,
 	EditBoxOnEscapePressed = function(self)
@@ -995,7 +1032,7 @@ StaticPopupDialogs["SOUNDTRACK_RENAME_PLAYLIST_POPUP"] = {
 
 function SoundtrackFrameDeletePlaylistButton_OnClick()
     Soundtrack.TraceFrame("Deleting " .. SoundtrackFrame_SelectedEvent)
-    Soundtrack.Events.DeleteEvent("Playlists", SoundtrackFrame_SelectedEvent)
+    Soundtrack.Events.DeleteEvent(ST_PLAYLISTS, SoundtrackFrame_SelectedEvent)
     SoundtrackFrame_RefreshEvents()
 end
 
@@ -1027,7 +1064,7 @@ end
 function SoundtrackControlFrame_PlaylistMenu_OnClick(self)
     Soundtrack.TraceFrame("PlaylistMenu_OnClick")
 
-    local table = Soundtrack.Events.GetTable("Playlists")
+    local table = Soundtrack.Events.GetTable(ST_PLAYLISTS)
     Soundtrack.TraceFrame(self:GetID())
     
     local i = 1
@@ -1040,13 +1077,13 @@ function SoundtrackControlFrame_PlaylistMenu_OnClick(self)
     end
     
     if eventName then
-        Soundtrack.PlayEvent("Playlists", eventName)
+        Soundtrack.PlayEvent(ST_PLAYLISTS, eventName)
     end
 end
 
 function SoundtrackControlFrame_PlaylistMenu_Initialize()
  
-    local playlistTable = Soundtrack.Events.GetTable("Playlists")
+    local playlistTable = Soundtrack.Events.GetTable(ST_PLAYLISTS)
     
 	table.sort(playlistTable, function(a,b) return a<b end)
 	table.sort(playlistTable, function(a,b) return a>b end)
@@ -1118,10 +1155,10 @@ end
 -- Plays a track using a temporary "preview" event on stack level 7
 function PlayPreviewTrack(trackName)
     -- Make sure the preview event exists
-    Soundtrack.Events.DeleteEvent("Misc", "Preview")
-    Soundtrack.AddEvent("Misc", "Preview", 10, true)
+    Soundtrack.Events.DeleteEvent(ST_MISC, "Preview")
+    Soundtrack.AddEvent(ST_MISC, "Preview", ST_PREVIEW_LVL, true)
     Soundtrack.AssignTrack("Preview", trackName)
-    Soundtrack.PlayEvent("Misc", "Preview", true)
+    Soundtrack.PlayEvent(ST_MISC, "Preview", true)
 end
 
 function SoundtrackFrameTrackButton_OnClick(self, mouseButton, down)
@@ -1233,7 +1270,7 @@ function SoundtrackFrame_OnTabChanged()
     if (SEVT.SelectedEventsTable == nil) then
     
     else
-        Soundtrack.StopEvent("Misc", "Preview") -- Stop preview track
+        Soundtrack.StopEvent(ST_MISC, "Preview") -- Stop preview track
         
         -- Select first event if possible 
         SoundtrackFrame_SelectedEvent = nil
@@ -1292,7 +1329,7 @@ function SoundtrackFrame_OnTabChanged()
         end
         
 		if SEVT.SelectedEventsTable ~= "Playlists" then
-            Soundtrack.StopEventAtLevel(9) -- Stop playlists when we go out of the playlist panel
+            Soundtrack.StopEventAtLevel(ST_PLAYLIST_LVL) -- Stop playlists when we go out of the playlist panel
         end
     end
 end
@@ -1348,7 +1385,7 @@ local function GetEventDepth(eventPath)
    end
 end
 
-function QuestLogTitleButton_Resize(questLogTitle)
+--[[ function QuestLogTitleButton_Resize(questLogTitle)
 	-- the purpose of this function is to resize the contents of the questLogTitle button to fit inside its width
 
 	-- first reset the width of the button's font string (called normal text)
@@ -1387,7 +1424,7 @@ function QuestLogTitleButton_Resize(questLogTitle)
 	--questNormalText:SetHeight(34);
 	questNormalText:SetWidth(questNormalTextWidth);
 end
-
+--]]
 
 
 
@@ -1441,7 +1478,7 @@ function SoundtrackFrame_RefreshEvents()
                 -- TODO use node.name + depth space?
                 button:SetText(GetLeafText(eventName))
 
---CSCIGUY CHANGE EVENT LIST TEXT COLOR ---testing				
+		--CSCIGUY CHANGE EVENT LIST TEXT COLOR ---testing				
 				button:SetNormalFontObject("GameFontNormalSmall")
 				local font = button:GetNormalFontObject()
 				font:SetTextColor(1, 1, 1, 1.0)
@@ -1454,9 +1491,9 @@ function SoundtrackFrame_RefreshEvents()
 					
 				button:SetHighlightFontObject(Hilightfont)
 		
-QuestLogTitleButton_Resize(button)
+				--QuestLogTitleButton_Resize(button)
 				
---CSCIGUY CHANGE EVENT LIST TEXT COLOR ---testing	end
+		--CSCIGUY CHANGE EVENT LIST TEXT COLOR ---testing	end
 
                 button:SetID(buttonIndex)
                 button:Show()

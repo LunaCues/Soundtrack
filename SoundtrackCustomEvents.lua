@@ -7,6 +7,29 @@ Soundtrack.CustomEvents = {
     BuffEvents = {}
 }
 
+-- Level 1: Continent
+-- Level 2: Region
+-- Level 3: Zones
+-- Level 4: Interiors
+-- Level 5: Mount: Mount, Flight
+-- Level 6: Auras: Forms
+-- Level 7: Status: Swimming, Stealthed
+-- Level 8: Temp. Buffs: Dash, Class Stealth
+-- Level 9: NPCs: Merchant, Auction House 
+-- Level 10: One-time/SFX: Victory, Dance, Level up, Cinematics
+-- Level 11: Battle
+-- Level 12: Boss
+-- Level 13: Death, Ghost
+-- Level 14: Playlists
+-- Level 15: Preview
+
+local ST_MOUNT_LVL = 5
+local ST_AURA_LVL = 6
+local ST_STATUS_LVL = 7
+local ST_BUFF_LVL = 8
+local ST_NPC_LVL = 9
+local ST_SFX_LVL = 10
+
 local ST_BATTLE = "Battle"
 local ST_BOSS = "Boss"
 local ST_ZONE = "Zone"
@@ -15,10 +38,6 @@ local ST_MISC = "Misc"
 local ST_CUSTOM = "Custom"
 local ST_PLAYLISTS = "Playlists"
 
-local arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20
-
-Soundtrack.CombatLogDelayTime = 0
-Soundtrack.CombatLogUpdateTime = .1
 Soundtrack.ActionHouse = false
 Soundtrack.Bank = false
 Soundtrack.Merchant = false
@@ -216,13 +235,12 @@ function Soundtrack.CustomEvents.Initialize(self)
     self:RegisterEvent("BARBER_SHOP_CLOSE")
 
 	
-    -- Add fixed custom events 
-
+    -- Add fixed custom events
 	Soundtrack.CustomEvents.RegisterUpdateScript(	-- Jump
 		self,
         SOUNDTRACK_JUMP, 
         ST_MISC,
-        8,
+        ST_SFX_LVL,
         false,
         function()
 			-- hooksecurefunc for "JumpOrAscendStart"
@@ -233,7 +251,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		self,
         SOUNDTRACK_SWIMMING, 
         ST_MISC,
-        5,
+        ST_STATUS_LVL,
         true,
         function()
             if SNDCUSTOM_IsSwimming == nil then 
@@ -254,7 +272,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		self,
         SOUNDTRACK_AUCTION_HOUSE, 
         ST_MISC,
-        5,
+        ST_NPC_LVL,
         true,
         function()
             if SNDCUSTOM_AuctionHouse == nil then 
@@ -275,7 +293,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		self,
         SOUNDTRACK_BANK, 
         ST_MISC,
-        5,
+        ST_NPC_LVL,
         true,
         function()
             if SNDCUSTOM_Bank == nil then 
@@ -297,7 +315,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		self,
         SOUNDTRACK_MERCHANT, 
         ST_MISC,
-        5, -- TODO Anthony: This conflicts with battle level, was 6
+        ST_NPC_LVL, -- TODO Anthony: This conflicts with battle level, was 6
         true,
         function()
             if SNDCUSTOM_Merchant == nil then 
@@ -318,7 +336,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		self,
 		SOUNDTRACK_BARBERSHOP,
 		ST_MISC,
-		5,
+		ST_NPC_LVL,
 		true,
 		function()
 			if SNDCUSTOM_Barbershop == nil then
@@ -339,7 +357,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		self,
 		SOUNDTRACK_CINEMATIC,
 		ST_MISC,
-		5,
+		ST_NPC_LVL,
 		true,
 		function()
 			if SNDCUSTOM_Cinematic == nil then
@@ -362,7 +380,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		SOUNDTRACK_NPC_EMOTE,
 		ST_MISC,
 		"CHAT_MSG_MONSTER_EMOTE",
-		8,
+		ST_SFX_LVL,
 		false,
 		function()
 			Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_NPC_EMOTE)
@@ -374,7 +392,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		SOUNDTRACK_NPC_SAY,
 		ST_MISC,
 		"CHAT_MSG_MONSTER_SAY",
-		8,
+		ST_SFX_LVL,
 		false,
 		function()
 			Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_NPC_SAY)
@@ -386,7 +404,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		SOUNDTRACK_NPC_WHISPER,
 		ST_MISC,
 		"CHAT_MSG_MONSTER_WHISPER",
-		8,
+		ST_SFX_LVL,
 		false,
 		function()
 			Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_NPC_WHISPER)
@@ -398,7 +416,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		SOUNDTRACK_NPC_YELL,
 		ST_MISC,
 		"CHAT_MSG_MONSTER_YELL",
-		8,
+		ST_SFX_LVL,
 		false,
 		function()
 			Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_NPC_YELL)
@@ -406,13 +424,12 @@ function Soundtrack.CustomEvents.Initialize(self)
 		true
 		);
 	
-	
 	Soundtrack.CustomEvents.RegisterEventScript(	-- Level Up
 		self,
 	    SOUNDTRACK_LEVEL_UP,
 	    ST_MISC,
 	    "PLAYER_LEVEL_UP",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_LEVEL_UP);
@@ -424,7 +441,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    SOUNDTRACK_JOIN_PARTY,
 	    ST_MISC,
 	    "PARTY_MEMBERS_CHANGED",
-	    6,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        if SOUNDTRACK_InParty == nil then 
@@ -444,7 +461,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    SOUNDTRACK_JOIN_RAID,
 	    ST_MISC,
 	    "PARTY_MEMBERS_CHANGED",
-	    6,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        if SOUNDTRACK_InRaid == nil then 
@@ -465,7 +482,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    SOUNDTRACK_DK_CHANGE,
 	    ST_MISC,
 	    "UPDATE_SHAPESHIFT_FORM",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        local class = UnitClass("player")
@@ -483,7 +500,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    SOUNDTRACK_DRUID_CHANGE,
 	    "Misc",
 	    "UPDATE_SHAPESHIFT_FORM",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        local class = UnitClass("player")
@@ -501,7 +518,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		self,
         SOUNDTRACK_DRUID_PROWL, 
         ST_MISC,
-        5,
+        ST_BUFF_LVL,
         true,
         function()
 			local class = UnitClass("player")
@@ -524,7 +541,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    SOUNDTRACK_PALADIN_CHANGE,
 	    ST_MISC,
 	    "UPDATE_SHAPESHIFT_FORM",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        local class = UnitClass("player")
@@ -542,7 +559,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    SOUNDTRACK_PRIEST_CHANGE,
 	    ST_MISC,
 	    "UPDATE_SHAPESHIFT_FORM",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        local class = UnitClass("player")
@@ -560,7 +577,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    SOUNDTRACK_ROGUE_CHANGE,
 	    ST_MISC,
 	    "UPDATE_SHAPESHIFT_FORM",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        local class = UnitClass("player")
@@ -576,7 +593,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		self,
         SOUNDTRACK_ROGUE_STEALTH, 
         ST_MISC,
-        5,
+        ST_BUFF_LVL,
         true,
         function()
 			local class = UnitClass("player")
@@ -599,7 +616,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    SOUNDTRACK_SHAMAN_CHANGE,
 	    ST_MISC,
 	    "UPDATE_SHAPESHIFT_FORM",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        local class = UnitClass("player")
@@ -617,7 +634,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    SOUNDTRACK_WARRIOR_CHANGE,
 	    ST_MISC,
 	    "UPDATE_SHAPESHIFT_FORM",
-	    8,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        local class = UnitClass("player")
@@ -630,13 +647,12 @@ function Soundtrack.CustomEvents.Initialize(self)
 		true
 	);
 	
-
 	Soundtrack.CustomEvents.RegisterEventScript(	-- Duel Requested
 		self,
 	    SOUNDTRACK_DUEL_REQUESTED,
 	    ST_MISC,
 	    "DUEL_REQUESTED",
-	    5,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_DUEL_REQUESTED)
@@ -648,7 +664,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    SOUNDTRACK_QUEST_COMPLETE,
 	    ST_MISC,
 	    "QUEST_COMPLETE",
-	    6,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_QUEST_COMPLETE)
@@ -661,7 +677,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		self,
         SOUNDTRACK_STEALTHED, 
         ST_MISC,
-        5,
+        ST_AURA_LVL,
         true,
         function()
             if SNDCUSTOM_IsStealthed == nil then 
@@ -699,14 +715,13 @@ function Soundtrack.CustomEvents.Initialize(self)
 
 --]]
 	
-
 	-- Thanks to sgtrama!
 	Soundtrack.CustomEvents.RegisterEventScript(	-- LFG Complete
 		self,
 	    SOUNDTRACK_LFG_COMPLETE,
 	    ST_MISC,
 	    "LFG_COMPLETION_REWARD",
-	    6,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_LFG_COMPLETE)
@@ -719,7 +734,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	    SOUNDTRACK_ACHIEVEMENT,
 	    ST_MISC,
 	    "ACHIEVEMENT_EARNED",
-	    6,
+	    ST_SFX_LVL,
 	    false,
 	    function()
 	        Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_ACHIEVEMENT)
@@ -727,36 +742,33 @@ function Soundtrack.CustomEvents.Initialize(self)
 		true
 	);
 	
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DK, ST_MISC, "null", 1, false, false);
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID, ST_MISC, "null", 1, false, false);
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_PALADIN, ST_MISC, "null", 1, false, false);
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_PRIEST, ST_MISC, "null", 1, false, false);
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_ROGUE, ST_MISC, "null", 1, false, false);
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_SHAMAN, ST_MISC, "null", 1, false, false);
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_WARRIOR, ST_MISC, "null", 1, false, false);
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_HUNTER, ST_MISC, "null", 1, false, false);
 	
-	
-	
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DK, ST_MISC, "null", 8, false, false);
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID, ST_MISC, "null", 8, false, false);
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_PALADIN, ST_MISC, "null", 8, false, false);
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_PRIEST, ST_MISC, "null", 8, false, false);
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_ROGUE, ST_MISC, "null", 8, false, false);
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_SHAMAN, ST_MISC, "null", 8, false, false);
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_WARRIOR, ST_MISC, "null", 8, false, false);
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_HUNTER, ST_MISC, "null", 8, false, false);
-	
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_COMBAT_EVENTS, ST_MISC, "null", 8, false, false);
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_GROUP_EVENTS, ST_MISC, "null", 8, false, false);
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_NPC_EVENTS, ST_MISC, "null", 8, false, false);
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_STATUS_EVENTS, ST_MISC, "null", 8, false, false);
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_COMBAT_EVENTS, ST_MISC, "null", 1, false, false);
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_GROUP_EVENTS, ST_MISC, "null", 1, false, false);
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_NPC_EVENTS, ST_MISC, "null", 1, false, false);
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_STATUS_EVENTS, ST_MISC, "null", 1, false, false);
 
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_HUNTER_CAMO, ST_MISC, "Interface\\Icons\\ability_hunter_displacement", 8, true, false)
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_HUNTER_CAMO, ST_MISC, "Interface\\Icons\\ability_hunter_displacement", ST_BUFF_LVL, true, false)
 	
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_ROGUE_SPRINT, ST_MISC, "Interface\\Icons\\Ability_Rogue_Sprint", 8, true, false)
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_ROGUE_SPRINT, ST_MISC, "Interface\\Icons\\Ability_Rogue_Sprint", ST_BUFF_LVL, true, false)
 	
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID_DASH, ST_MISC, "Interface\\Icons\\Ability_Druid_Dash", 8, true, false)
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID_CAT, ST_MISC, "Interface\\Icons\\Ability_Druid_CatForm", 8, true, false)
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID_AQUATIC, ST_MISC, "Interface\\Icons\\Ability_Druid_AquaticForm", 8, true, false)
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID_BEAR, ST_MISC, "Interface\\Icons\\Ability_Racial_BearForm", 8, true, false)
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID_TRAVEL, ST_MISC, "Interface\\Icons\\Ability_Druid_TravelForm", 8, true, false)
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID_FLIGHT, ST_MISC, "Interface\\Icons\\Ability_Druid_FlightForm", 8, true, false)
-
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID_DASH, ST_MISC, "Interface\\Icons\\Ability_Druid_Dash", ST_BUFF_LVL, true, false)
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID_CAT, ST_MISC, "Interface\\Icons\\Ability_Druid_CatForm", ST_AURA_LVL, true, false)
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID_AQUATIC, ST_MISC, "Interface\\Icons\\Ability_Druid_AquaticForm", ST_AURA_LVL, true, false)
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID_BEAR, ST_MISC, "Interface\\Icons\\Ability_Racial_BearForm", ST_AURA_LVL, true, false)
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID_TRAVEL, ST_MISC, "Interface\\Icons\\Ability_Druid_TravelForm", ST_AURA_LVL, true, false)
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_DRUID_FLIGHT, ST_MISC, "Interface\\Icons\\Ability_Druid_FlightForm", ST_AURA_LVL, true, false)
+ 
 	Soundtrack.CustomEvents.RegisterUpdateScript(	-- Moonkin Form
-	    self, SOUNDTRACK_DRUID_MOONKIN, ST_MISC, 8, true,
+	    self, SOUNDTRACK_DRUID_MOONKIN, ST_MISC, ST_AURA_LVL, true,
 	    function()
 	        local class = UnitClass("player")
 			local buff = Soundtrack.IsBuffActive("Interface\\Icons\\Spell_Nature_ForceOfNature")
@@ -772,7 +784,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		false
 	); 
 	Soundtrack.CustomEvents.RegisterUpdateScript(	-- Tree of Life Form
-	    self, SOUNDTRACK_DRUID_TREE, ST_MISC, 8, true,
+	    self, SOUNDTRACK_DRUID_TREE, ST_MISC, ST_AURA_LVL, true,
 	    function()
 	        local class = UnitClass("player")
 			local buff = Soundtrack.IsBuffActive("Interface\\Icons\\Ability_Druid_TreeofLife")
@@ -787,7 +799,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 		false
 	);
 	
-	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_SHAMAN_GHOST_WOLF, ST_MISC, "Interface\\Icons\\Spell_Nature_SpiritWolf", 8, true, false)
+	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_SHAMAN_GHOST_WOLF, ST_MISC, "Interface\\Icons\\Spell_Nature_SpiritWolf", ST_AURA_LVL, true, false)
 	
 	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_FLIGHT_OLD, SOUNDTRACK_FLIGHT)
 	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_DEATH_OLD, SOUNDTRACK_DEATH)
@@ -868,7 +880,6 @@ function Soundtrack.CustomEvents.OnUpdate(self, elapsed)
 end
 
 function Soundtrack.CustomEvents.OnEvent(self, event, ...)
-	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = select(1, ...)
 	
 	if event == "VARIABLES_LOADED" then	
 		Soundtrack.CustomEvents.Initialize(self)
@@ -876,7 +887,6 @@ function Soundtrack.CustomEvents.OnEvent(self, event, ...)
 	
 	Soundtrack.TraceCustom(event)
 	
-	-- All arguments are for Combat events, which can take up to 20 args.
     if event == "AUCTION_HOUSE_SHOW" then
 		debug("AUCTION_HOUSE_SHOW")
         Soundtrack.AuctionHouse = true

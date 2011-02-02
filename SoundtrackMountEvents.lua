@@ -4,6 +4,24 @@
     Mount events functions.
 ]]
 
+-- Level 1: Continent
+-- Level 2: Region
+-- Level 3: Zones
+-- Level 4: Interiors
+-- Level 5: Mount: Mount, Flight
+-- Level 6: Auras: Forms
+-- Level 7: Status: Swimming, Stealthed
+-- Level 8: Temp. Buffs: Dash, Class Stealth
+-- Level 9: NPCs: Merchant, Auction House 
+-- Level 10: One-time/SFX: Victory, Dance, Level up, Cinematics
+-- Level 11: Battle
+-- Level 12: Boss
+-- Level 13: Death, Ghost
+-- Level 14: Playlists
+-- Level 15: Preview
+
+local ST_MOUNT_LVL = 5
+
 local ST_BATTLE = "Battle"
 local ST_BOSS = "Boss"
 local ST_ZONE = "Zone"
@@ -22,8 +40,8 @@ Soundtrack.MountEvents.IsMounted = false
 
 
 local function Soundtrack_MountEvents_PlayIfTracksAvailable(tableName, eventName)
-	local stackTable = Soundtrack.Events.Stack[5].tableName
-    local stackEvent = Soundtrack.Events.Stack[5].eventName
+	local stackTable = Soundtrack.Events.Stack[ST_MOUNT_LVL].tableName
+    local stackEvent = Soundtrack.Events.Stack[ST_MOUNT_LVL].eventName
 	if tableName == stackTable and eventName == stackEvent then
 		return
 	end
@@ -40,7 +58,7 @@ local function Soundtrack_MountEvents_PlayIfTracksAvailable(tableName, eventName
 end
 local function Soundtrack_MountEvents_StopIfTracksAvailable(tableName, eventName)
 	local eventTable = Soundtrack.Events.GetTable(tableName)
-	local stackEvent = Soundtrack.Events.Stack[5].eventName
+	local stackEvent = Soundtrack.Events.Stack[ST_MOUNT_LVL].eventName
 	if eventTable[eventName] and eventName == stackEvent then
 		local trackList = eventTable[eventName].tracks
 		if trackList then
@@ -67,6 +85,7 @@ function Soundtrack.MountEvents.OnUpdate(self, deltaT)
 			return
 		end
 		
+		--[[
 		if IsSwimming() and SoundtrackEvents_EventHasTracks(ST_MISC, SOUNDTRACK_SWIMMING) then
 			return
 		end
@@ -76,7 +95,7 @@ function Soundtrack.MountEvents.OnUpdate(self, deltaT)
 		(Soundtrack.AuctionHouse and SoundtrackEvents_EventHasTracks(ST_MISC, SOUNDTRACK_AUCTION_HOUSE)) then
 			return
 		end
-		
+		--]]
 		
 		-- Really inefficient way to detect taxis...
 		local unitOnTaxi = UnitOnTaxi("player")
@@ -135,7 +154,7 @@ function Soundtrack.MountEvents.OnEvent(self, event, ...)
 end
 
 function Soundtrack.MountEvents.Initialize()
-    Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_MOUNT_GROUND, 5, true)
-    Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_FLIGHT, 5, true)
-    Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_MOUNT_FLYING, 5, true)
+    Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_MOUNT_GROUND, ST_MOUNT_LVL, true)
+    Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_FLIGHT, ST_MOUNT_LVL, true)
+    Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_MOUNT_FLYING, ST_MOUNT_LVL, true)
 end

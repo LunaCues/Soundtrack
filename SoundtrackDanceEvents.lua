@@ -4,6 +4,24 @@
     Dance events functions.
 ]]
 
+-- Level 1: Continent
+-- Level 2: Region
+-- Level 3: Zones
+-- Level 4: Interiors
+-- Level 5: Mount: Mount, Flight
+-- Level 6: Auras: Forms
+-- Level 7: Status: Swimming, Stealthed
+-- Level 8: Temp. Buffs: Dash, Class Stealth
+-- Level 9: NPCs: Merchant, Auction House 
+-- Level 10: One-time/SFX: Victory, Dance, Level up, Cinematics
+-- Level 11: Battle
+-- Level 12: Boss
+-- Level 13: Death, Ghost
+-- Level 14: Playlists
+-- Level 15: Preview
+
+local ST_DANCE_LVL = 10
+
 local ST_BATTLE = "Battle"
 local ST_BOSS = "Boss"
 local ST_ZONE = "Zone"
@@ -56,29 +74,29 @@ end
 
 
 function Soundtrack.DanceEvents.Initialize()
-    Soundtrack.AddEvent(ST_DANCE, "Human male", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Human male", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Human female", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Dwarf male", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Dwarf female", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Gnome male", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Gnome female", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Night Elf male", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Night Elf female", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Undead male", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Undead female", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Orc male", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Orc female", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Tauren male", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Tauren female", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Troll male", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Troll female", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Blood Elf male", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Blood Elf female", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Draenei male", 5, false)
-    Soundtrack.AddEvent(ST_DANCE, "Draenei female", 5, false)
-	Soundtrack.AddEvent(ST_DANCE, "Worgen male", 5, false)
-	Soundtrack.AddEvent(ST_DANCE, "Worgen female", 5, false)
-	Soundtrack.AddEvent(ST_DANCE, "Goblin male", 5, false)
-	Soundtrack.AddEvent(ST_DANCE, "Goblin female", 5, false)
+    Soundtrack.AddEvent(ST_DANCE, "Human male", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Human male", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Human female", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Dwarf male", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Dwarf female", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Gnome male", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Gnome female", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Night Elf male", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Night Elf female", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Undead male", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Undead female", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Orc male", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Orc female", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Tauren male", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Tauren female", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Troll male", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Troll female", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Blood Elf male", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Blood Elf female", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Draenei male", ST_DANCE_LVL, false)
+    Soundtrack.AddEvent(ST_DANCE, "Draenei female", ST_DANCE_LVL, false)
+	Soundtrack.AddEvent(ST_DANCE, "Worgen male", ST_DANCE_LVL, false)
+	Soundtrack.AddEvent(ST_DANCE, "Worgen female", ST_DANCE_LVL, false)
+	Soundtrack.AddEvent(ST_DANCE, "Goblin male", ST_DANCE_LVL, false)
+	Soundtrack.AddEvent(ST_DANCE, "Goblin female", ST_DANCE_LVL, false)
 end
