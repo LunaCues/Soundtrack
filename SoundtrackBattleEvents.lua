@@ -371,12 +371,15 @@ function Soundtrack.BattleEvents.OnUpdate(self, elapsed)
 	local currentTime = GetTime()
 	
 	-- Feign death moved here to remove UNIT_AURA event
-	if UnitIsFeignDeath("player") then
+	-- if UnitIsFeignDeath("player") then	-- UnitIsFeignDeath broken?
+	--[[
+	if UnitAura("player", "Feign Death") == "Feign Death" then
         -- Stop the battle music
         Soundtrack.TraceBattle("Feign death: Stopping battle music")
         Soundtrack.StopEventAtLevel(6)
         Soundtrack.StopEventAtLevel(7)
     end
+	--]]
 	
 	if currentTime > delayTime then
 		delayTime = currentTime + updateTime
