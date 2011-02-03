@@ -1478,7 +1478,7 @@ function SoundtrackFrame_RefreshEvents()
                 -- TODO use node.name + depth space?
                 button:SetText(GetLeafText(eventName))
 
-		--CSCIGUY CHANGE EVENT LIST TEXT COLOR ---testing				
+			--CSCIGUY CHANGE EVENT LIST TEXT COLOR ---testing				
 				button:SetNormalFontObject("GameFontNormalSmall")
 				local font = button:GetNormalFontObject()
 				font:SetTextColor(1, 1, 1, 1.0)
@@ -1493,50 +1493,47 @@ function SoundtrackFrame_RefreshEvents()
 		
 				--QuestLogTitleButton_Resize(button)
 				
-		--CSCIGUY CHANGE EVENT LIST TEXT COLOR ---testing	end
+			--CSCIGUY CHANGE EVENT LIST TEXT COLOR ---testing	end
 
                 button:SetID(buttonIndex)
                 button:Show()
-        --        local buttontext = button:GetText()--csciguy debug
-			-- Soundtrack.Message("REFRESHEVENTS-BUTTONTEXT:"..buttontext.." Index:"..buttonIndex.."!")	--csciguy debug
+				--local buttontext = button:GetText()--csciguy debug
+				--Soundtrack.Message("REFRESHEVENTS-BUTTONTEXT:"..buttontext.." Index:"..buttonIndex.."!")	--csciguy debug
                 local event = Soundtrack_Events[SEVT.SelectedEventsTable][eventName]
 
                 -- TODO Make sure nodes is always initialized
-			--Soundtrack.Message("SoundtrackFrameEventButton-buttonIndex:"..buttonIndex.."!")
-            -- local highlightButton = _G["SoundtrackFrameEventButton"..buttonIndex.."Highlight"] or error("Missing highlight " .. i)
+				--Soundtrack.Message("SoundtrackFrameEventButton-buttonIndex:"..buttonIndex.."!")
+				--local highlightButton = _G["SoundtrackFrameEventButton"..buttonIndex.."Highlight"] or error("Missing highlight " .. i)
 			
                 local expandable = eventNode.nodes and table.maxn(eventNode.nodes) >= 1
                 if expandable then
-				
-                    if event.expanded then
-                        button:SetNormalTexture("Interface\\Buttons\\UI-MinusButton-Up")
+					if event.expanded then
+						button:SetNormalTexture("Interface\\Buttons\\UI-MinusButton-Up")
                     else
-                        button:SetNormalTexture("Interface\\Buttons\\UI-PlusButton-Up")
+						button:SetNormalTexture("Interface\\Buttons\\UI-PlusButton-Up")
                     end
- -- highlightButton:SetTexture("Interface\\Buttons\\UI-PlusButton-Hilight")
-				 button:SetHighlightTexture("Interface\\Buttons\\UI-PlusButton-Hilight")
-				
-	--			button:SetNormalFontObject("GameFontHighlight");
-		--		local Hilightfont = button:GetNormalFontObject();
-			--	Hilightfont:SetTextColor(0, 0.75, 0.75, 1.0);
-				--button:SetNormalFontObject(Hilightfont);
-
+					--highlightButton:SetTexture("Interface\\Buttons\\UI-PlusButton-Hilight")
+					button:SetHighlightTexture("Interface\\Buttons\\UI-PlusButton-Hilight")
+					--button:SetNormalFontObject("GameFontHighlight");
+					--local Hilightfont = button:GetNormalFontObject();
+					--Hilightfont:SetTextColor(0, 0.75, 0.75, 1.0);
+					--button:SetNormalFontObject(Hilightfont);
                     button:UnlockHighlight()
                 else
-                --  highlightButton:SetTexture("")
-			     button:SetHighlightTexture("")
-			      button:SetNormalTexture("")
+					--highlightButton:SetTexture("")
+					button:SetHighlightTexture("")
+					button:SetNormalTexture("")
                 end    
 			
                 -- Show number ofassigned tracks
-               local assignedText = _G["SoundtrackFrameEventButton"..buttonIndex.."ButtonTextAssigned"]
-			--  local assignedText = _G["SoundtrackFrameEventButton"..buttonIndex.."ButtonTextDuration"]
+				local assignedText = _G["SoundtrackFrameEventButton"..buttonIndex.."ButtonTextAssigned"]
+				--local assignedText = _G["SoundtrackFrameEventButton"..buttonIndex.."ButtonTextDuration"]
                 if event then 
-                    local numAssignedTracks = table.maxn(event.tracks)
-                    if (numAssignedTracks == 0) then
-                        assignedText:SetText("")
-                    else
-                        assignedText:SetText("("..numAssignedTracks..")")
+					local numAssignedTracks = table.maxn(event.tracks)
+					if (numAssignedTracks == 0) then
+						assignedText:SetText("")
+					else
+						assignedText:SetText("("..numAssignedTracks..")")
                     end
                 end
                 
