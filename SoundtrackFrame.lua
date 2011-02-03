@@ -819,7 +819,12 @@ end
 function SoundtrackFrameEventButton_OnClick(self, mouseButton, down)
 
     Soundtrack.TraceFrame("EventButton_OnClick")
-
+	
+	if mouseButton == "RightButton" then
+		Soundtrack.TraceFrame("Right click, do nothing")
+		return
+	end
+	
     Soundtrack.Events.Pause(false)
 
     local flatEventsTable = GetFlatEventsTable()
