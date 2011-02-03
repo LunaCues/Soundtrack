@@ -1385,6 +1385,9 @@ local function GetEventDepth(eventPath)
    end
 end
 
+
+-- Lunaqua: Blizzard provides this function;
+-- No need for it to be here other than causing taint.
 --[[ function QuestLogTitleButton_Resize(questLogTitle)
 	-- the purpose of this function is to resize the contents of the questLogTitle button to fit inside its width
 
@@ -1471,7 +1474,7 @@ function SoundtrackFrame_RefreshEvents()
             buttonIndex = i - listOffset
             if (buttonIndex <= EVENTS_TO_DISPLAY) then
             
-                --nameText = _G["SoundtrackFrameEventButton"..buttonIndex.."ButtonTextName"]
+				--nameText = _G["SoundtrackFrameEventButton"..buttonIndex.."ButtonTextName"]
                 --nameText:SetText(GetLeafText(selectedSortedEventsTable[i]))
                 button = _G["SoundtrackFrameEventButton"..buttonIndex]
                
@@ -1491,7 +1494,7 @@ function SoundtrackFrame_RefreshEvents()
 					
 				button:SetHighlightFontObject(Hilightfont)
 		
-				--QuestLogTitleButton_Resize(button)
+				QuestLogTitleButton_Resize(button)
 				
 			--CSCIGUY CHANGE EVENT LIST TEXT COLOR ---testing	end
 
