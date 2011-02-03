@@ -707,27 +707,7 @@ function Soundtrack.CustomEvents.Initialize(self)
         end,
 		false
 	);
-	--[[
-	Soundtrack.CustomEvents.RegisterUpdateScript(
-	"Stealthed",
-	"Misc",
-	4,
-	true,
-	function()
-		if SNDCUSTOM_IsStealthed == nil then
-			SNDCUSTOM_IsStealthed = false
-		end
-		if SNDCUSTOM_IsStealthed and not IsStealthed() then
-			Soundtrack.StopEvent("Misc", "Stealthed");
-			SNDCUSTOM_IsStealthed = false
-		elseif not SNDCUSTOM_IsStealthed andIsStealthed () then
-			Soundtrack.PlayEvent("Misc", "Stealthed");
-			SNDCUSTOM_IsStealthed = true;
-		end
-	end
-);
-
---]]
+	
 	
 	-- Thanks to sgtrama!
 	Soundtrack.CustomEvents.RegisterEventScript(	-- LFG Complete
