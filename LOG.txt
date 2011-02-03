@@ -27,3 +27,14 @@ Added Misc. events: Hunter Camouflage
 Fixed Barbershop event.
 Fixed mount and swimming checks.
 
+
+1.30 alpha
+Made dummy frames for Battle, Custom, Dance, Mount, and Zone events.
+Removed Battle, Custom, Dance, Mount, and Zone events from OnEvent, OnUpdate, and OnLoad calls in Soundtrack.lua.
+Misc. events for COMBAT_LOG_EVENT_UNFILTERED register with Battle frame.
+Simplified Mount checks.
+Removed Feign Death check.
+Removed QuestLogTitleButton_Resize for taint.
+Made Soundtrack option from minimap tab 'uncheckable'.
+Added a lot more stack levels to avoid overlap in spells and event check removal.
+
