@@ -408,9 +408,10 @@ function Soundtrack.BattleEvents.OnUpdate(self, elapsed)
     end
 	--]]
 	
-	if currentTime > delayTime then
-		delayTime = currentTime + updateTime
-		if currentBattleTypeIndex > 0 then
+	
+	if currentBattleTypeIndex > 0 then
+		if currentTime > delayTime then
+			delayTime = currentTime + updateTime
 			AnalyzeBattleSituation()
 		end
 	end
