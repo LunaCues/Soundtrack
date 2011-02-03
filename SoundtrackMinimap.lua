@@ -64,6 +64,7 @@ function SoundtrackMinimapMenu_Initialize()
     local info = {}
     info.text = "Soundtrack"
     info.notClickable = 1
+	info.notCheckable = 1
     info.isTitle = 1
     UIDropDownMenu_AddButton(info, 1)
     
