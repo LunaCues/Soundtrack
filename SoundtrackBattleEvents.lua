@@ -334,6 +334,7 @@ local function StartVictoryMusic()
     else
         Soundtrack.StopEvent(ST_MISC, SOUNDTRACK_VICTORY)
     end
+	Soundtrack.Events.OnStackChanged(true)
 end
 
 local function StopCombatMusic()
