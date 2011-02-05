@@ -820,11 +820,6 @@ function SoundtrackFrameEventButton_OnClick(self, mouseButton, down)
 
     Soundtrack.TraceFrame("EventButton_OnClick")
 	
-	if mouseButton == "RightButton" then
-		Soundtrack.TraceFrame("Right click, do nothing")
-		return
-	end
-	
     Soundtrack.Events.Pause(false)
 
     local flatEventsTable = GetFlatEventsTable()
@@ -835,7 +830,9 @@ function SoundtrackFrameEventButton_OnClick(self, mouseButton, down)
     -- TODO only react if clicking the expand/collapse button
     
     local event = Soundtrack_Events[SEVT.SelectedEventsTable][SoundtrackFrame_SelectedEvent]
-    if event.expanded then
+    if mouseButton == "RightButton" then
+		-- Do nothing
+	elseif event.expanded then
        event.expanded = false
        Soundtrack.TraceFrame(SoundtrackFrame_SelectedEvent .. " is now collapsed")
     else 
