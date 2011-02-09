@@ -1389,7 +1389,6 @@ end
 
 
 -- Lunaqua: Blizzard provides this function;
--- No need for it to be here other than causing taint.
 --[[ function QuestLogTitleButton_Resize(questLogTitle)
 	-- the purpose of this function is to resize the contents of the questLogTitle button to fit inside its width
 
@@ -1495,8 +1494,20 @@ function SoundtrackFrame_RefreshEvents()
 				Hilightfont:SetTextColor(1, 1, 0, 1.0)
 					
 				button:SetHighlightFontObject(Hilightfont)
-		
-				QuestLogTitleButton_Resize(button)
+				
+				-- QuestLogTitleButton_Resize(button)
+				-- Lunaqua: QuestLogTitleButton_Resize hack for event buttons :)
+				local eventNormalText = button.normalText;
+				
+				eventNormalText:SetWidth(0);
+				button:SetText(eventNormalText:GetText());
+				
+				local rightEdge = button:GetLeft() + button:GetWidth() - 20;
+				local buttonTextWidth = button:GetWidth() - max(button:GetRight() - rightEdge, 0);
+				--questNormalText:GetWidth() - max(questNormalText:GetRight() - rightEdge, 0);
+				eventNormalText:SetWidth(buttonTextWidth);
+				
+				
 				
 			--CSCIGUY CHANGE EVENT LIST TEXT COLOR ---testing	end
 
