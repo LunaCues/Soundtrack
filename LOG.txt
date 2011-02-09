@@ -38,3 +38,8 @@ Removed QuestLogTitleButton_Resize for taint.
 Made Soundtrack option from minimap tab 'uncheckable'.
 Added a lot more stack levels to avoid overlap in spells and event check removal.
 
+
+1.30 beta
+Right-click on events will select but not expand.
+Refixed victory event issues.
+Modified QuestLogTitleButton_Resize for event buttons.
