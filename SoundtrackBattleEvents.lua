@@ -196,7 +196,7 @@ function GetGroupEnemyLevel()
     local pvpEnabled = false
     
     local bossTable = nil
-	local bossEventName = Soundtrack.Events.Stack[7].eventName
+	local bossEventName = Soundtrack.Events.Stack[ST_BOSS_LVL].eventName
 	local bossHasTracks = SoundtrackEvents_EventHasTracks(ST_BOSS, bossEventName)
 	
 	if bossEventName == nil or (bossEventName and not bossHasTracks) then
@@ -223,11 +223,6 @@ function GetGroupEnemyLevel()
 				end
             end
             
-            -- If we find at least one target, we set the minimum to trivial instead of unknown.
-			-- 1.29: This would set it to Critter, so we'll leave as unknown
-            --[[ if highestDifficulty == 1 then
-                highestDifficulty = 3
-            end	--]]
             
             -- Check for pvp
             if not pvpEnabled then
