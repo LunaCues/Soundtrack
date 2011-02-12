@@ -19,6 +19,7 @@ EVENTS_ITEM_HEIGHT = 21
 -- Level 14: Playlists
 -- Level 15: Preview
 
+local ST_BOSS_LVL = 12
 local ST_PLAYLIST_LVL = 14
 local ST_PREVIEW_LVL = 15
 
@@ -918,7 +919,7 @@ StaticPopupDialogs["SOUNDTRACK_ADD_BOSS"] = {
     hideOnEscape = 1
 }
 function SoundtrackFrame_AddNamedBoss(targetName)
-    Soundtrack.AddEvent("Boss", targetName, 7, true)
+    Soundtrack.AddEvent("Boss", targetName, ST_BOSS_LVL, true)
     SoundtrackFrame_SelectedEvent = targetName
     SoundtrackFrame_RefreshEvents()
 end
