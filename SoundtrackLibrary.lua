@@ -22,7 +22,7 @@ function Soundtrack.Library.AddDefaultTrack(trackName, _length, _title, _artist,
     --Soundtrack.SortTracks()
 end
 
-function Soundtrack.Library.AddProjectTrack(trackName, _length, _title, _artist, _album)
+function Soundtrack_Library_AddProjectTrack(trackName, _length, _title, _artist, _album)
 	Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, projectTrack = true}
 end
 
