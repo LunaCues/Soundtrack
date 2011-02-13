@@ -12,6 +12,7 @@ localization.de.lua
 localization.es.lua
 localization.default.lua
 Soundtrack.xml
+SoundtrackProject.xml
 SoundtrackFrame.xml
 SoundtrackBattleFrame.xml
 SoundtrackCustomFrame.xml
