@@ -8,16 +8,24 @@
 Soundtrack.Library.CurrentlyPlayingTrack = nil
 local fadeOut = false
 
+local function debug(msg)
+    Soundtrack.Util.DebugPrint("[Library]: " .. msg, 0.25, 0.25, 1.0)
+end
+
 function Soundtrack.Library.AddTrack(trackName, _length, _title, _artist, _album)
     Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album }
     --Soundtrack.SortTracks()
 end
 
-    
 function Soundtrack.Library.AddDefaultTrack(trackName, _length, _title, _artist, _album)             
     Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, defaultTrack = true }
     --Soundtrack.SortTracks()
 end
+
+function Soundtrack.Library.AddProjectTrack(trackName, _length, _title, _artist, _album)
+	Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, projectTrack = true}
+end
+
 
 function Soundtrack.Library.StopMusic()
 	-- Remove the playback continuity timers
@@ -27,8 +35,8 @@ function Soundtrack.Library.StopMusic()
 	
 	-- Play EmptyTrack
     Soundtrack.Library.CurrentlyPlayingTrack = "None"
-    Soundtrack.TraceLibrary("Playing empty track.")
-    Soundtrack.TraceLibrary("PlayMusic('Interface\\AddOns\\Soundtrack\\EmptyTrack.mp3')")
+    debug("Playing empty track.")
+    debug("PlayMusic('Interface\\AddOns\\Soundtrack\\EmptyTrack.mp3')")
     PlayMusic("Interface\\AddOns\\Soundtrack\\EmptyTrack.mp3") 
     SoundtrackFrame_TouchTracks()
 end
@@ -36,14 +44,14 @@ end
 function Soundtrack.Library.PauseMusic()
 	-- Play EmptyTrack
     Soundtrack.Library.CurrentlyPlayingTrack = "None"
-    Soundtrack.TraceLibrary("Playing empty track.")
-    Soundtrack.TraceLibrary("PlayMusic('Interface\\AddOns\\Soundtrack\\EmptyTrack.mp3')")
+    debug("Playing empty track.")
+    debug("PlayMusic('Interface\\AddOns\\Soundtrack\\EmptyTrack.mp3')")
     PlayMusic("Interface\\AddOns\\Soundtrack\\EmptyTrack.mp3") 
     SoundtrackFrame_TouchTracks()
 end
 
 function Soundtrack.Library.StopTrack()
-    Soundtrack.TraceLibrary("StopTrack()")
+    debug("StopTrack()")
     fadeOut = true
     nextTrackInfo = nil
 end    
@@ -55,7 +63,7 @@ local nextTrackName;
 local function DelayedPlayMusic()
    Soundtrack.Library.CurrentlyPlayingTrack = nextTrackName
    SetNowPlayingText(nextTrackInfo.title, nextTrackInfo.artist, nextTrackInfo.album)
-   Soundtrack.TraceLibrary("PlayMusic(".. nextFileName ..")")
+   debug("PlayMusic(".. nextFileName ..")")
    -- Soundtrack.Library.StopTrack()
    PlayMusic(nextFileName)
    SoundtrackFrame_TouchTracks()
@@ -89,7 +97,7 @@ function Soundtrack.Library.PlayTrack(trackName, soundEffect)
 
     if soundEffect == nil then soundEffect = false end
 
-    Soundtrack.TraceLibrary("PlayTrack(".. Soundtrack.GetPathFileName(trackName) ..")")
+    debug("PlayTrack(".. Soundtrack.GetPathFileName(trackName) ..")")
     
     -- Check if the track is valid
     if not Soundtrack_Tracks[trackName] then
@@ -106,7 +114,9 @@ function Soundtrack.Library.PlayTrack(trackName, soundEffect)
     -- TODO : Change DefaultScore name
     if nextTrackInfo.defaultTrack then
         nextFileName = "Sound\\Music\\" .. trackName .. ".mp3"
-    else
+    elseif nextTrackInfo.projectTrack then
+		nextFileName = "Interface\\Addons\\"..trackName..".mp3"
+	else
         --nextFileName = "Interface\\AddOns\\Soundtrack\\Music\\"..trackName..".mp3"
 		nextFileName = "Interface\\AddOns\\SoundtrackMusic\\"..trackName..".mp3"
     end        
@@ -122,7 +132,7 @@ function Soundtrack.Library.PlayTrack(trackName, soundEffect)
 		end
 	fadeOut = true
 	else
-		Soundtrack.TraceLibrary("PlaySoundFile(".. nextFileName ..")")  -- EDITED, replaced fileName with nextFileName
+		debug("PlaySoundFile(".. nextFileName ..")")  -- EDITED, replaced fileName with nextFileName
 		PlaySoundFile(nextFileName) -- sound effect. play the music overlapping other music
 		nextTrackInfo = nil
     end
@@ -161,7 +171,7 @@ function Soundtrack.Library.RemoveTrack(trackName)
             for k,v in Soundtrack_Events[eventTab] do 
                 for i,tn in ipairs(v.tracks) do
                     if tn == trackName then
-                        Soundtrack.TraceLibrary("Removed assigned track "..trackName)
+                        debug("Removed assigned track "..trackName)
                         table.remove(v.tracks, i)
                         break
                     end
