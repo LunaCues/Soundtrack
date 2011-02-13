@@ -385,7 +385,9 @@ local function OnVariablesLoaded(self)
     _SuspendSorting = false
         
     -- Remove obsolete predefined events
-    PurgeEvents()
+	--PurgeEvents()
+	Soundtrack.Timers.AddTimer("PurgeEvents", 3, PurgeEvents)
+    
 
     -- sort all the tables
     for i,eventTabName in ipairs(Soundtrack_EventTabs) do
