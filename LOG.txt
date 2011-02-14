@@ -43,3 +43,12 @@ Added a lot more stack levels to avoid overlap in spells and event check removal
 Right-click on events will select but not expand.
 Refixed victory event issues.
 Modified QuestLogTitleButton_Resize for event buttons.
+
+2.0 beta
+Fixed custom boss music; wrong stack level issue.
+Modified Playback Control button configurations.
+Added SoundtrackProjects.lua.
+Added timer to PurgeEvents() call so projects have time to load songs.
+Updated localizations.
+
+
