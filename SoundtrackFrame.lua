@@ -1707,7 +1707,7 @@ local function GetCurrentProject()
 	local i
     for i=1, #(SoundtrackProjects), 1 do
         if (SoundtrackFrame.selectedProject == SoundtrackProjects[i].name) then
-			return i
+			return name
         end
     end
     
@@ -1945,7 +1945,6 @@ end
 
 function SoundtrackFrame_LoadProject_OnClick()
 	for i, projectText in pairs(GetProjects()) do
-		print ("LoadProject ", i,projectText,SoundtrackFrame.selectedProject)
         if SoundtrackFrame.selectedProject == i then
 			SoundtrackProject_AttemptToLoadProject(projectText)
 		end
@@ -1955,7 +1954,6 @@ end
 
 function SoundtrackFrame_RemoveProject_OnClick()
 	for i, projectText in pairs(GetProjects()) do
-		print ("LoadProject ", i,projectText,SoundtrackFrame.selectedProject)
         if SoundtrackFrame.selectedProject == i then
 			SoundtrackProject_AttemptToRemoveProject(projectText)
 		end

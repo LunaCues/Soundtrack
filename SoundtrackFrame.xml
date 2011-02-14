@@ -2956,6 +2956,12 @@
                             <OnClick>
                                 SoundtrackFrame_LoadProject_OnClick();
                             </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_PROJECT_LOAD, SOUNDTRACK_PROJECT_LOAD_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
                         </Scripts>
                     </Button>
 					<Button name="SoundtrackFrame_RemoveProject" inherits="UIPanelButtonTemplate" text="Remove">
@@ -2965,7 +2971,7 @@
                         <Anchors>
                             <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_LoadProject" relativePoint="BOTTOMLEFT">
                                 <Offset>
-                                    <AbsDimension x="00" y="-10"/>
+                                    <AbsDimension x="00" y="-5"/>
                                 </Offset>
                             </Anchor>
                         </Anchors>
@@ -2973,6 +2979,12 @@
                             <OnClick>
                                 SoundtrackFrame_RemoveProject_OnClick();
                             </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_PROJECT_REMOVE, SOUNDTRACK_PROJECT_REMOVE_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
                         </Scripts>
                     </Button>
 							
