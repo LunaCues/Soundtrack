@@ -45,15 +45,14 @@ local function SoundtrackProject_LoadProject(projectEventsTable)
 		local SoundtrackTable = Soundtrack.Events.GetTable(i)
 		for j, eventName in pairs(ProjectTable) do					-- for every event
 			if SoundtrackTable[j] == nil then						-- if event doesn't exist, copy project event
-				SoundtrackTable[j] = eventName
-			else
-				for k, track in pairs(eventName.tracks) do			-- insert tracks into event
-					local loaded = false
-					for l, strack in pairs(SoundtrackTable[j].tracks) do
-						if strack == track then loaded = true end
-					end
-					if not loaded then table.insert(SoundtrackTable[j].tracks, track) end
+				Soundtrack.AddEvent(i, j, eventName.priority, eventName.continuous, eventName.soundEffect)
+			end
+			for k, track in pairs(eventName.tracks) do			-- insert tracks into event
+				local loaded = false
+				for l, strack in pairs(SoundtrackTable[j].tracks) do
+					if strack == track then loaded = true end
 				end
+				if not loaded then table.insert(SoundtrackTable[j].tracks, track) end
 			end
 		end
 	end
@@ -81,12 +80,13 @@ local function SoundtrackProject_RemoveProject(projectEventsTable)
 end
 
 
+-- Load a project according to project name
 function  SoundtrackProject_AttemptToLoadProject(projectName)
 	for i, project in pairs(SoundtrackProjects) do
 		if strlower(projectName) == strlower(project.name) then
 			for j, locale in pairs(project.locales) do
 				if GetLocale() == locale then
-					print("[SoundtrackProject] Loading: ",projectName)
+					print("[SoundtrackProject] Loading:",project.name)
 					SoundtrackProject_LoadProject(project.projectTable)
 					return
 				end
@@ -95,13 +95,13 @@ function  SoundtrackProject_AttemptToLoadProject(projectName)
 	end
 end
 
-
+-- Remove a project according to project name
 function SoundtrackProject_AttemptToRemoveProject(projectName)
 	for i, project in pairs(SoundtrackProjects) do
 		if strlower(projectName) == strlower(project.name) then
 			for j, locale in pairs(project.locales) do
 				if GetLocale() == locale then
-					print("[SoundtrackProject] Removing: ",projectName)
+					print("[SoundtrackProject] Removing:",project.name)
 					SoundtrackProject_RemoveProject(project.projectTable)
 					return
 				end
