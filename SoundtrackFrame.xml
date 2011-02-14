@@ -2528,6 +2528,15 @@
                                 </Anchor>
                             </Anchors>
                         </FontString>
+						<FontString name="SoundtrackFrame_FontStringProjectOptions" inherits="GameFontNormal" text="Project Options"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="300" y="-300"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
 						<FontString name="SoundtrackFrame_FontStringEnableEventsOptions" inherits="GameFontNormal" text="Enable Events"> 
                             <Anchors>
                                 <Anchor point="TOPLEFT">
@@ -2546,6 +2555,8 @@
                                 </Anchor>
                             </Anchors>
                         </FontString>
+						
+						
                     </Layer>
                 </Layers>
                 <Frames>
@@ -2893,6 +2904,79 @@
                         </Scripts>
                     </Frame>
 
+					<Frame name="SoundtrackFrame_ProjectDropDown" inherits="UIDropDownMenuTemplate" enableMouse="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringProjectOptions" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="-20" y="-20" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+                            <Layer level="BACKGROUND">
+                                <FontString name="$parentLabel" inherits="GameFontHighlightSmall" text="Project">
+                                    <Anchors>
+                                        <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+                                            <Offset>
+                                                <AbsDimension x="21" y="0"/>
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+						<Scripts>
+                            <OnLoad>
+								_G[self:GetName().."Label"]:SetText(SOUNDTRACK_PROJECT);
+                                SoundtrackFrame_ProjectDropDown_OnLoad(self);
+                            </OnLoad>
+                            <OnShow>
+                                SoundtrackFrame_ProjectDropDown_OnLoad(self);
+                            </OnShow>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_PROJECT, SOUNDTRACK_PROJECT_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+					</Frame>
+					<Button name="SoundtrackFrame_LoadProject" inherits="UIPanelButtonTemplate" text="Load">
+                        <Size>
+                            <AbsDimension x="100" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_ProjectDropDown" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="20" y="-10"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                SoundtrackFrame_LoadProject_OnClick();
+                            </OnClick>
+                        </Scripts>
+                    </Button>
+					<Button name="SoundtrackFrame_RemoveProject" inherits="UIPanelButtonTemplate" text="Remove">
+                        <Size>
+                            <AbsDimension x="100" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_LoadProject" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="00" y="-10"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                SoundtrackFrame_RemoveProject_OnClick();
+                            </OnClick>
+                        </Scripts>
+                    </Button>
+							
+							
 					<CheckButton name="SoundtrackFrame_EnableDebugMode" inherits="OptionsCheckButtonTemplate">
                         <Anchors>
                             <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringDebugOptions" relativePoint="BOTTOMLEFT">

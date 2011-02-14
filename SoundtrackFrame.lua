@@ -1155,7 +1155,7 @@ function SoundtrackFrameAssignedTrackCheckBox_OnClick(self, mouseButton, down)
     SoundtrackFrame_RefreshTracks()
 end
 
--- Plays a track using a temporary "preview" event on stack level 7
+-- Plays a track using a temporary "preview" event on stack level 15
 function PlayPreviewTrack(trackName)
     -- Make sure the preview event exists
     Soundtrack.Events.DeleteEvent(ST_MISC, "Preview")
@@ -1610,6 +1610,7 @@ function SoundtrackFrame_IsTrackActive(trackName)
     return false
 end
 
+
 local cooldowns = { 0, 1, 2, 3, 5, 10, 15, 30 }
 
 local function GetBattleCooldowns()
@@ -1636,6 +1637,7 @@ local function GetCurrentBattleCooldown()
     return 1
 end
 
+
 local locations = { "LEFT", "TOPLEFT", "TOPRIGHT", "RIGHT", "BOTTOMRIGHT", "BOTTOMLEFT" }
 
 local function GetPlaybackButtonsLocations()
@@ -1659,6 +1661,8 @@ local function GetCurrentPlaybackButtonsLocation()
 	
 	return 1
 end
+
+
 
 local silences = { 0, 5, 10, 20, 30, 40, 60, 90, 120 }
 
@@ -1690,6 +1694,28 @@ end
 
 
 
+
+local function GetProjects()
+	local projects = {}
+	for i, project in pairs(SoundtrackProjects) do
+		table.insert(projects, project.name)
+	end
+	return projects
+end
+
+local function GetCurrentProject()
+	local i
+    for i=1, #(SoundtrackProjects), 1 do
+        if (SoundtrackFrame.selectedProject == SoundtrackProjects[i].name) then
+			return i
+        end
+    end
+    
+    return ""
+end
+
+
+
 function SoundtrackFrame_Toggle()
     if (SoundtrackFrame:IsVisible()) then
         SoundtrackFrame:Hide()
@@ -1698,11 +1724,52 @@ function SoundtrackFrame_Toggle()
     end
 end
 
+
+
+function SoundtrackFrame_ProjectDropDown_OnLoad(self)
+    SoundtrackFrame.selectedProject = GetCurrentProject()
+    UIDropDownMenu_SetSelectedID(self, SoundtrackFrame.selectedProject)
+    UIDropDownMenu_Initialize(self, SoundtrackFrame_ProjectDropDown_Initialize)
+    UIDropDownMenu_SetWidth(self, 130)
+end
+
+function SoundtrackFrame_ProjectDropDown_LoadProjects(projectsTexts)
+    local currentProject = SoundtrackFrame.selectedProject
+    local info
+    
+    for i, projectText in pairs(projectsTexts) do
+        local checked = nil
+        if currentProject == i then
+            checked = 1
+			UIDropDownMenu_SetText(SoundtrackFrame_ProjectDropDown, projectText)
+        end
+
+        info = {}
+        info.text = projectText
+        info.func = SoundtrackFrame_ProjectDropDown_OnClick
+        info.checked = checked
+        UIDropDownMenu_AddButton(info)
+    end
+end
+
+function SoundtrackFrame_ProjectDropDown_Initialize()
+    SoundtrackFrame_ProjectDropDown_LoadProjects(GetProjects())    
+end
+
+function SoundtrackFrame_ProjectDropDown_OnClick(self)
+    UIDropDownMenu_SetSelectedID(SoundtrackFrame_ProjectDropDown, self:GetID())
+    SoundtrackFrame.selectedProject = self:GetID()
+    -- Save settings.
+    -- Soundtrack.Settings.Silence = projects[SoundtrackFrame.selectedProject]
+end
+
+
+
 function SoundtrackFrame_PlaybackButtonsLocationDropDown_OnLoad(self)
 	SoundtrackFrame.selectedLocation = GetCurrentPlaybackButtonsLocation()
 	UIDropDownMenu_SetSelectedID(self, SoundtrackFrame.selectedLocation)
 	UIDropDownMenu_Initialize(self, SoundtrackFrame_PlaybackButtonsLocationDropDown_Initialize)
-	UIDropDownMenu_SetWidth(self, 130)
+	UIDropDownMenu_SetWidth(self, 160)
 end
 
 function SoundtrackFrame_PlaybackButtonsLocationDropDown_Initialize()
@@ -1735,16 +1802,13 @@ function SoundtrackFrame_PlaybackButtonsLocationDropDown_OnClick(self)
 	SoundtrackFrame_RefreshPlaybackControls()
 end
 
+
+
 function SoundtrackFrame_BattleCooldownDropDown_OnLoad(self)
     
     SoundtrackFrame.selectedCooldown = GetCurrentBattleCooldown()
     UIDropDownMenu_SetSelectedID(self, SoundtrackFrame.selectedCooldown)
     UIDropDownMenu_Initialize(self, SoundtrackFrame_BattleCooldownDropDown_Initialize)
-    UIDropDownMenu_SetWidth(self, 130)
-end
-
-function SoundtrackFrame_EventTypeDropDown_OnLoad(self)
-    UIDropDownMenu_Initialize(self, SoundtrackFrame_EventTypeDropDown_Initialize)
     UIDropDownMenu_SetWidth(self, 130)
 end
 
@@ -1771,6 +1835,19 @@ function SoundtrackFrame_BattleCooldownDropDown_Initialize()
     SoundtrackFrame_BattleCooldownDropDown_LoadCooldowns(GetBattleCooldowns())    
 end
 
+function SoundtrackFrame_BattleCooldownDropDown_OnClick(self)
+    UIDropDownMenu_SetSelectedID(SoundtrackFrame_BattleCooldownDropDown, self:GetID())
+    SoundtrackFrame.selectedCooldown = self:GetID()
+    -- Save settings.
+    Soundtrack.Settings.BattleCooldown = cooldowns[SoundtrackFrame.selectedCooldown]
+end
+
+
+function SoundtrackFrame_EventTypeDropDown_OnLoad(self)
+    UIDropDownMenu_Initialize(self, SoundtrackFrame_EventTypeDropDown_Initialize)
+    UIDropDownMenu_SetWidth(self, 130)
+end
+
 function SoundtrackFrame_EventTypeDropDown_AddInfo(id, caption)
     local info = UIDropDownMenu_CreateInfo()
     info.value = id
@@ -1789,15 +1866,6 @@ function SoundtrackFrame_EventTypeDropDown_Initialize()
     for i=1, #(eventTypes) do
         SoundtrackFrame_EventTypeDropDown_AddInfo(i, eventTypes[i])
     end
-end
-
-
-
-function SoundtrackFrame_BattleCooldownDropDown_OnClick(self)
-    UIDropDownMenu_SetSelectedID(SoundtrackFrame_BattleCooldownDropDown, self:GetID())
-    SoundtrackFrame.selectedCooldown = self:GetID()
-    -- Save settings.
-    Soundtrack.Settings.BattleCooldown = cooldowns[SoundtrackFrame.selectedCooldown]
 end
 
 function SoundtrackFrame_EventTypeDropDown_OnClick(self)
@@ -1833,8 +1901,9 @@ function SoundtrackFrame_EventTypeDropDown_OnClick(self)
     SoundtrackFrame_RefreshCustomEvent()
 end
 
+
+
 function SoundtrackFrame_SilenceDropDown_OnLoad(self)
-    
     SoundtrackFrame.selectedSilence = GetCurrentSilence()
     UIDropDownMenu_SetSelectedID(SoundtrackFrame_SilenceDropDown, SoundtrackFrame.selectedSilence)
     UIDropDownMenu_Initialize(SoundtrackFrame_SilenceDropDown, SoundtrackFrame_SilenceDropDown_Initialize)
@@ -1870,6 +1939,29 @@ function SoundtrackFrame_SilenceDropDown_OnClick(self)
     -- Save settings.
     Soundtrack.Settings.Silence = silences[SoundtrackFrame.selectedSilence]
 end
+
+
+
+
+function SoundtrackFrame_LoadProject_OnClick()
+	for i, projectText in pairs(GetProjects()) do
+		print ("LoadProject ", i,projectText,SoundtrackFrame.selectedProject)
+        if SoundtrackFrame.selectedProject == i then
+			SoundtrackProject_AttemptToLoadProject(projectText)
+		end
+	end
+end
+
+
+function SoundtrackFrame_RemoveProject_OnClick()
+	for i, projectText in pairs(GetProjects()) do
+		print ("LoadProject ", i,projectText,SoundtrackFrame.selectedProject)
+        if SoundtrackFrame.selectedProject == i then
+			SoundtrackProject_AttemptToRemoveProject(projectText)
+		end
+	end
+end
+
 
 -- TODO Anthony : Refresh when no events is selected (right now the checks from the last thing
 -- get shown and you can check things on/off anyways.
