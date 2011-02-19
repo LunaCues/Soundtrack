@@ -125,7 +125,7 @@ end
 
 function SoundtrackProject_OnEvent(self, event, ...)
 	if event == "VARIABLES_LOADED" then								-- VARIABLES_LOADED, time to load stuff!
-	
+		--[[
 		SLASH_SOUNDTRACKPROJECT1, SLASH_SOUNDTRACKPROJECT2 = '/soundtrackproject', '/stp'
 		
 		local function SoundtrackProjectSlashCmd(msg)				-- SLASH COMMAND FUNCTION
@@ -154,6 +154,8 @@ function SoundtrackProject_OnEvent(self, event, ...)
 		end
 		SlashCmdList["SOUNDTRACKPROJECT"] = SoundtrackProjectSlashCmd
 		print ("Soundtrack Project: /stp")
+		--]]	
+	
 	end
 end
 
