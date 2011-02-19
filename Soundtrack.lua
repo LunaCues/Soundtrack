@@ -38,6 +38,10 @@ local ST_PLAYLISTS = "Playlists"
 -- Level 14: Playlists
 -- Level 15: Preview
 
+
+local ST_BOSS_LVL = 12
+local ST_PLAYLIST_LVL = 14
+
 --[[
 function Soundtrack_GetContinentLvl () return 1 end
 function Soundtrack_GetRegionLvl() return 2 end
@@ -341,6 +345,22 @@ function Soundtrack_MyTracksExist()
 	end
 end
 
+
+
+local function SetUserEventsToCorrectLevel()
+		local tableName = Soundtrack.Events.GetTable("Boss")
+		for j, eventName in pairs(tableName) do		
+			tableName[j].priority = ST_BOSS_LVL
+			Soundtrack.Trace(j .. " set to " .. ST_BOSS_LVL)
+		end
+
+		tableName = Soundtrack.Events.GetTable("Playlists")
+		for j, eventName in pairs(tableName) do		
+			tableName[j].priority = ST_PLAYLIST_LVL
+			Soundtrack.Trace(j .. " set to " .. ST_PLAYLIST_LVL)
+		end
+end
+
 local function OnVariablesLoaded(self)
 
     if not Soundtrack_Settings then
@@ -348,8 +368,11 @@ local function OnVariablesLoaded(self)
     end
     
     Soundtrack.Settings = Soundtrack_Settings
-	
+	Soundtrack.Util.InitDebugChatFrame()
+	Soundtrack.Timers.AddTimer("InitDebugChatFrame", 1, Soundtrack.Util.InitDebugChatFrame)
+	Soundtrack.Timers.AddTimer("InitDebugChatFrame", 2, Soundtrack.Util.InitDebugChatFrame)
 	Soundtrack.Timers.AddTimer("InitDebugChatFrame", 3, Soundtrack.Util.InitDebugChatFrame)
+	
     InitDefaultSettings()
 
     Soundtrack_Tracks = {}
@@ -377,16 +400,18 @@ local function OnVariablesLoaded(self)
     
     _SuspendSorting = true
 	Soundtrack_SetFrameLocks()
-    --Soundtrack.DanceEvents.Initialize()
-    --Soundtrack.ZoneEvents.Initialize()
-    --Soundtrack.BattleEvents.Initialize()
-    --Soundtrack.MountEvents.Initalize()
-    -- Soundtrack.CustomEvents.Initialize(self)
+	--[[
+    Soundtrack.DanceEvents.Initialize()
+    Soundtrack.ZoneEvents.Initialize()
+    Soundtrack.BattleEvents.Initialize()
+    Soundtrack.MountEvents.Initalize()
+    Soundtrack.CustomEvents.Initialize(self)
+	--]]
     _SuspendSorting = false
         
     -- Remove obsolete predefined events
 	--PurgeEvents()
-	Soundtrack.Timers.AddTimer("PurgeEvents", 3, PurgeEvents)
+	Soundtrack.Timers.AddTimer("PurgeEvents", 5, PurgeEvents)
     
 
     -- sort all the tables
@@ -395,16 +420,19 @@ local function OnVariablesLoaded(self)
     end
     
     Soundtrack.SortTracks()
-    
+    SetUserEventsToCorrectLevel()
+	
     local numTracks = getn(Soundtrack_SortedTracks)
     DEFAULT_CHAT_FRAME:AddMessage("Soundtrack: Loaded with " .. numTracks.." track(s) in library.", 0.0, 1.0, 0.25)
-    --Soundtrack.Trace("Num battle events "..getn(Soundtrack_SortedEvents["Battle"]))
-    --Soundtrack.Trace("Num zone events "..getn(Soundtrack_SortedEvents["Zone"]))
-    --Soundtrack.Trace("Num dance events "..getn(Soundtrack_SortedEvents["Dance"]))
-    --Soundtrack.Trace("Num misc events "..getn(Soundtrack_SortedEvents["Misc"]))
-    --Soundtrack.Trace("Num custom eventcustom events "..getn(Soundtrack_SortedEvents["Custom"]))
-    --Soundtrack.Trace("Num playlists "..getn(Soundtrack_SortedEvents["Playlists"]))
-    
+    --[[
+	Soundtrack.Trace("Num battle events "..getn(Soundtrack_SortedEvents["Battle"]))
+    Soundtrack.Trace("Num zone events "..getn(Soundtrack_SortedEvents["Zone"]))
+    Soundtrack.Trace("Num dance events "..getn(Soundtrack_SortedEvents["Dance"]))
+    Soundtrack.Trace("Num misc events "..getn(Soundtrack_SortedEvents["Misc"]))
+    Soundtrack.Trace("Num custom eventcustom events "..getn(Soundtrack_SortedEvents["Custom"]))
+    Soundtrack.Trace("Num playlists "..getn(Soundtrack_SortedEvents["Playlists"]))
+    --]]
+	
     SoundtrackFrame_RefreshPlaybackControls()
 end
 StaticPopupDialogs["ST_NO_LOADMYTRACKS_POPUP"] = {
