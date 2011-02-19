@@ -283,17 +283,17 @@ local function GetBattleType()
                classification == "rare" then
             return SOUNDTRACK_RARE  -- "Rare"
         elseif classification == "elite" then
-			local EliteMobDifficulty = "Elite Mob/"..difficulty
+			local EliteMobDifficulty = SOUNDTRACK_ELITE_MOB.."/"..difficulty
 			local eventTable = Soundtrack.Events.GetTable(ST_BATTLE)
-			if table.getn(eventTable[EliteMobDifficulty].tracks) ~= 0 then
+			if #(eventTable[EliteMobDifficulty].tracks) ~= 0 then
 				return EliteMobDifficulty
 			else
 				return SOUNDTRACK_ELITE_MOB		-- "Elite Battle"
 			end
         elseif classification == "normal" then
-			local NormalMobDifficulty = "Normal Mob/"..difficulty
+			local NormalMobDifficulty = SOUNDTRACK_NORMAL_MOB.."/"..difficulty
 			local eventTable = Soundtrack.Events.GetTable(ST_BATTLE)
-			if table.getn(eventTable[NormalMobDifficulty].tracks) ~= 0 then
+			if #(eventTable[NormalMobDifficulty].tracks) ~= 0 then
 				return NormalMobDifficulty
 			else
 				return SOUNDTRACK_NORMAL_MOB
@@ -360,9 +360,9 @@ local function AnalyzeBattleSituation()
     local battleTypeIndex = Soundtrack.IndexOf(battleEvents, battleType)
     -- If we're in cooldown, but a higher battle is already playing, keep that one, 
     -- otherwise we can escalate the battle music.
-    --Soundtrack.TraceEvents("CurrentBattleTypeIndex: " .. currentBattleTypeIndex)
-    --Soundtrack.TraceEvents("BattleTypeIndex: " .. battleTypeIndex)
-    
+    Soundtrack.TraceBattle("CurrentBattleTypeIndex: "..currentBattleTypeIndex.."  BattleTypeIndex: "..battleTypeIndex)
+    if Soundtrack.Settings.EscalateBattleMusic then Soundtrack.TraceBattle("EscalateBattleMusic enabled") end
+	
     -- If we are out of combat, we play the battle event.
     -- If we are in combat, we only escalate if option is turned on
     if currentBattleTypeIndex == 0 or 
@@ -412,7 +412,7 @@ function Soundtrack.BattleEvents.OnUpdate(self, elapsed)
 	end
 end
     
- function Soundtrack.BattleEvents.OnEvent(self, event, ...)
+function Soundtrack.BattleEvents.OnEvent(self, event, ...)
 	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = select(1, ...)
 	
 	if event == "VARIABLES_LOADED" then
