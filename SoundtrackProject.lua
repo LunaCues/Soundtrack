@@ -31,7 +31,7 @@ function SoundtrackProject_InsertProject(_projectName, _projectTable, _locales)
 	
 	table.insert(SoundtrackProjects, project)
 	
-	print("[SoundtrackProject] ",_projectName," loaded. ")
+	print("[Soundtrack] Project: ",_projectName,".")
 end
 
 
@@ -86,7 +86,7 @@ function  SoundtrackProject_AttemptToLoadProject(projectName)
 		if strlower(projectName) == strlower(project.name) then
 			for j, locale in pairs(project.locales) do
 				if GetLocale() == locale then
-					print("[SoundtrackProject] Loading:",project.name)
+					print("[Soundtrack] Loading project:",project.name)
 					SoundtrackProject_LoadProject(project.projectTable)
 					return
 				end
@@ -101,7 +101,7 @@ function SoundtrackProject_AttemptToRemoveProject(projectName)
 		if strlower(projectName) == strlower(project.name) then
 			for j, locale in pairs(project.locales) do
 				if GetLocale() == locale then
-					print("[SoundtrackProject] Removing:",project.name)
+					print("[Soundtrack] Removing project:",project.name)
 					SoundtrackProject_RemoveProject(project.projectTable)
 					return
 				end
