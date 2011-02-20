@@ -51,4 +51,10 @@ Added SoundtrackProjects.lua.
 Added timer to PurgeEvents() call so projects have time to load songs.
 Updated localizations.
 
+2.0.1 beta
+Removed SoundtrackProject slash commands.
+Added more InitDebugChatFrame timers.
+Fixed battle escalation problem.
+Added autofix for Boss and Playlist events.
+Changed Soundtrack Project load and print messages.
 
