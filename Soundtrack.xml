@@ -4,6 +4,7 @@
 	<Script file="localization.fr.lua"/>
 	<Script file="localization.es.lua"/>
 	<Script file="localization.lua"/>
+	<Script file="SoundtrackLevels.lua" />
 	<Script file="SoundtrackProfile.lua" />
     <Script file="SoundtrackObjects.lua" />
     <Script file="SoundtrackUtil.lua" />

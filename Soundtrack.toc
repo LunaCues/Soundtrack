@@ -11,6 +11,7 @@ localization.fr.lua
 localization.de.lua
 localization.es.lua
 localization.default.lua
+SoundtrackLevels.lua
 Soundtrack.xml
 SoundtrackProject.xml
 SoundtrackFrame.xml

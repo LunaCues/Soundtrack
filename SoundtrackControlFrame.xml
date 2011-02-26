@@ -115,6 +115,11 @@
                         <Anchor point="TOPLEFT" relativeTo="$parentStack14" relativePoint="BOTTOMLEFT" />
                     </Anchors>
                 </FontString>
+                <FontString name="$parentStack16" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentStack15" relativePoint="BOTTOMLEFT" />
+                    </Anchors>
+                </FontString>
             </Layer>
         </Layers>
         <Frames>

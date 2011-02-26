@@ -14,52 +14,6 @@ Soundtrack_EventTabs = {
     "Playlists"
 }
 
-local ST_BATTLE = "Battle"
-local ST_BOSS = "Boss"
-local ST_ZONE = "Zone"
-local ST_DANCE = "Dance"
-local ST_MISC = "Misc"
-local ST_CUSTOM = "Custom"
-local ST_PLAYLISTS = "Playlists"
-
--- Level 1: Continent
--- Level 2: Region
--- Level 3: Zones
--- Level 4: Interiors
--- Level 5: Mount: Mount, Flight
--- Level 6: Auras: Forms
--- Level 7: Status: Swimming, Stealthed
--- Level 8: Temp. Buffs: Dash, Class Stealth
--- Level 9: NPCs: Merchant, Auction House 
--- Level 10: One-time/SFX: Victory, Dance, Level up, Cinematics
--- Level 11: Battle
--- Level 12: Boss
--- Level 13: Death, Ghost
--- Level 14: Playlists
--- Level 15: Preview
-
-
-local ST_BOSS_LVL = 12
-local ST_PLAYLIST_LVL = 14
-
---[[
-function Soundtrack_GetContinentLvl () return 1 end
-function Soundtrack_GetRegionLvl() return 2 end
-function Soundtrack_GetZoneLvl() return 3 end
-function Soundtrack_GetMinimapLvl() return 4 end
-function Soundtrack_GetMountLvl() return 5 end
-function Soundtrack_GetAuraLvl() return 6 end
-function Soundtrack_GetStatusLvl() return 7 end
-function Soundtrack_GetBuffLvl() return 8 end
-function Soundtrack_GetNPCLvl() return 9 end
-function Soundtrack_GetLvl() return 10 end
-function Soundtrack_GetBattleLvl() return 11 end
-function Soundtrack_GetBossLvl() return 12 end
-function Soundtrack_GetDeathLvl() return 13 end
-function Soundtrack_GetPlayListLvl() return 14 end
-function Soundtrack_GetPreviewLvl() return 15 end
---]]
-
 Soundtrack_Events = {}
 Soundtrack_CustomEvents = {}
 Soundtrack_BattleEvents = {}

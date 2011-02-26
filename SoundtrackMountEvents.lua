@@ -4,32 +4,6 @@
     Mount events functions.
 ]]
 
--- Level 1: Continent
--- Level 2: Region
--- Level 3: Zones
--- Level 4: Interiors
--- Level 5: Mount: Mount, Flight
--- Level 6: Auras: Forms
--- Level 7: Status: Swimming, Stealthed
--- Level 8: Temp. Buffs: Dash, Class Stealth
--- Level 9: NPCs: Merchant, Auction House 
--- Level 10: One-time/SFX: Victory, Dance, Level up, Cinematics
--- Level 11: Battle
--- Level 12: Boss
--- Level 13: Death, Ghost
--- Level 14: Playlists
--- Level 15: Preview
-
-local ST_MOUNT_LVL = 5
-
-local ST_BATTLE = "Battle"
-local ST_BOSS = "Boss"
-local ST_ZONE = "Zone"
-local ST_DANCE = "Dance"
-local ST_MISC = "Misc"
-local ST_CUSTOM = "Custom"
-local ST_PLAYLISTS = "Playlists"
-
 local function debugEvents(msg)
     Soundtrack.Trace(msg, 0.25, 0.25, 0.25)
 end

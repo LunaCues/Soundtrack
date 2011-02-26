@@ -3,34 +3,6 @@ local TRACKS_TO_DISPLAY = 16
 local ASSIGNED_TRACKS_TO_DISPLAY = 7
 EVENTS_ITEM_HEIGHT = 21
 
--- Level 1: Continent
--- Level 2: Region
--- Level 3: Zones
--- Level 4: Interiors
--- Level 5: Mount: Mount, Flight
--- Level 6: Auras: Forms
--- Level 7: Status: Swimming, Stealthed
--- Level 8: Temp. Buffs: Dash, Class Stealth
--- Level 9: NPCs: Merchant, Auction House 
--- Level 10: One-time/SFX: Victory, Dance, Level up, Cinematics
--- Level 11: Battle
--- Level 12: Boss
--- Level 13: Death, Ghost
--- Level 14: Playlists
--- Level 15: Preview
-
-local ST_BOSS_LVL = 12
-local ST_PLAYLIST_LVL = 14
-local ST_PREVIEW_LVL = 15
-
-local ST_BATTLE = "Battle"
-local ST_BOSS = "Boss"
-local ST_ZONE = "Zone"
-local ST_DANCE = "Dance"
-local ST_MISC = "Misc"
-local ST_CUSTOM = "Custom"
-local ST_PLAYLISTS = "Playlists"
-
 --DEBUG = 1
 
 local SEVT = 
@@ -706,6 +678,7 @@ function SoundtrackFrame_RefreshPlaybackControls()
                 SoundtrackControlFrameStack13:Show()
                 SoundtrackControlFrameStack14:Show()
                 SoundtrackControlFrameStack15:Show()
+				SoundtrackControlFrameStack16:Show()
             else
                 SoundtrackControlFrameStackTitle:Hide()
                 SoundtrackControlFrameStack1:Hide()
@@ -723,6 +696,7 @@ function SoundtrackFrame_RefreshPlaybackControls()
                 SoundtrackControlFrameStack13:Hide()
                 SoundtrackControlFrameStack14:Hide()
                 SoundtrackControlFrameStack15:Hide()
+				SoundtrackControlFrameStack16:Hide()
             end
         else
             controlFrame:Hide()
@@ -1155,7 +1129,7 @@ function SoundtrackFrameAssignedTrackCheckBox_OnClick(self, mouseButton, down)
     SoundtrackFrame_RefreshTracks()
 end
 
--- Plays a track using a temporary "preview" event on stack level 15
+-- Plays a track using a temporary "preview" event on stack level 16
 function PlayPreviewTrack(trackName)
     -- Make sure the preview event exists
     Soundtrack.Events.DeleteEvent(ST_MISC, "Preview")
