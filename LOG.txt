@@ -58,3 +58,7 @@ Fixed battle escalation problem.
 Added autofix for Boss and Playlist events.
 Changed Soundtrack Project load and print messages.
 
+2.0.2 release
+Added a new stack level for sound effects
+Added SoundtrackLevels.lua for stack levels
+Modified order of importance for combat events.
