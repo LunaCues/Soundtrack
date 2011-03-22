@@ -36,18 +36,17 @@ local battleEvents = {
 	SOUNDTRACK_CRITTER,
 	
 	SOUNDTRACK_NORMAL_MOB,
-	SOUNDTRACK_NORMAL_MOB .."/1 Trivial", 	-- Gray
-	SOUNDTRACK_NORMAL_MOB .."/2 Easy",	 	-- Green
-	SOUNDTRACK_NORMAL_MOB .."/3 Normal",  	-- Yellow
-	SOUNDTRACK_NORMAL_MOB .."/4 Tough",	 	-- Orange
-	SOUNDTRACK_NORMAL_MOB .."/5 Impossible",	-- Red
-	
 	SOUNDTRACK_ELITE_MOB,
-    SOUNDTRACK_ELITE_MOB .."/1 Trivial",		-- Gray
-	SOUNDTRACK_ELITE_MOB .."/2 Easy",        -- Green
-	SOUNDTRACK_ELITE_MOB .."/3 Normal",      -- Yellow
-	SOUNDTRACK_ELITE_MOB .."/4 Tough",       -- Orange
-	SOUNDTRACK_ELITE_MOB .."/5 Impossible",  -- Red
+	SOUNDTRACK_NORMAL_MOB .."/1 Trivial", 	-- Gray
+    SOUNDTRACK_ELITE_MOB .."/1 Trivial",	-- Gray
+	SOUNDTRACK_NORMAL_MOB .."/2 Easy",	 	-- Green
+	SOUNDTRACK_ELITE_MOB .."/2 Easy",       -- Green
+	SOUNDTRACK_NORMAL_MOB .."/3 Normal",  	-- Yellow
+	SOUNDTRACK_ELITE_MOB .."/3 Normal",     -- Yellow
+	SOUNDTRACK_NORMAL_MOB .."/4 Tough",	 	-- Orange
+	SOUNDTRACK_ELITE_MOB .."/4 Tough",      -- Orange
+	SOUNDTRACK_NORMAL_MOB .."/5 Impossible",-- Red
+	SOUNDTRACK_ELITE_MOB .."/5 Impossible", -- Red
 	
 	SOUNDTRACK_RARE, 
 	SOUNDTRACK_BOSS_BATTLE,
