@@ -688,7 +688,7 @@
                     </Anchor>
                 </Anchors>
             </Button>
-            <Button name="SoundtrackFrameTab9" inherits="SoundtrackFrameTabTemplate" id="9" text="Options">
+            <Button name="SoundtrackFrameTab9" inherits="SoundtrackFrameTabTemplate" id="9" text="About">
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="SoundtrackFrameTab8" relativePoint="TOPRIGHT">
                         <Offset>
@@ -1486,8 +1486,6 @@
                             </OnLeave>
                         </Scripts>
                     </Button>
-                    
-
                     <Frame name="SoundtrackFrameRightPanelTracks">
                         <Frames>
                             <!-- Track list -->
@@ -2507,10 +2505,9 @@
                         </Frames>
                     </Frame>
                     
-
-
                 </Frames>
             </Frame>
+			
             <Frame name="SoundtrackFrameOptionsFrame" hidden="true">
                 <Size>
                     <RelDimension x="0.5" y="0.8"/>
@@ -3176,6 +3173,209 @@
                         SoundtrackFrame_RefreshOptionsFrame();
                     </OnShow>
                 </Scripts>
+			</Frame>
+			
+			<Frame name="SoundtrackFrameAboutFrame" hidden="true">
+			
+                <Size>
+                    <RelDimension x="0.5" y="0.8"/>
+                </Size>
+				<Anchors>
+                    <Anchor point="TOP" relativeTo="SoundtrackFrame" relativePoint="TOP" />
+                </Anchors>
+				<Layers>
+                    <Layer level="BACKGROUND">
+                        <FontString name="SoundtrackFrame_FontStringAbout1" inherits="GameFontNormal" text="About Soundtrack:"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="50" y="-50"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                        <FontString name="SoundtrackFrame_FontStringAbout2" inherits="GameFontNormal" text="Created by: Morricone "> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringAbout1" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="10" y="-10"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                        <FontString name="SoundtrackFrame_FontStringAbout3" inherits="GameFontNormal" text="Maintained by: Lunaqua "> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringAbout2" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="0" y="-5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                        <FontString name="SoundtrackFrame_FontStringAbout4" inherits="GameFontNormal" text="Credits:"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringAbout3" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="0" y="-10"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                        <FontString name="SoundtrackFrame_FontStringAbout5" inherits="GameFontNormal" 
+							text="   • Athame - GetGroupEnemyLevel fix (before 1.21)"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringAbout4" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="0" y="-5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+						<FontString name="SoundtrackFrame_FontStringAbout6" inherits="GameFontNormal" 
+							text="   • csciguy - v1.28 update for 4.0.3 "> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringAbout5" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="0" y="-5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                        <FontString name="SoundtrackFrame_FontStringAbout7" inherits="GameFontNormal" 
+							text="   • Darken5 - Music stop fix (1.24c)"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringAbout6" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="0" y="-5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+						<FontString name="SoundtrackFrame_FontStringAbout8" inherits="GameFontNormal" 
+							text="   • FluffyBearLina - v1.21 fan update "> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringAbout7" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="0" y="-5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+						<FontString name="SoundtrackFrame_FontStringAbout9" inherits="GameFontNormal" 
+							text="   • IAmParadox - GenerateMyLibrary.py fix (1.17)"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringAbout8" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="0" y="-5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+						<FontString name="SoundtrackFrame_FontStringAbout10" inherits="GameFontNormal" 
+							text="   • momokies - French localization (2.0.3)"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringAbout9" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="0" y="-5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+						<FontString name="SoundtrackFrame_FontStringAbout11" inherits="GameFontNormal" 
+							text="   • sgtrama - Misc. event LFG Complete (1.26)"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringAbout10" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="0" y="-5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+						<FontString name="SoundtrackFrame_FontStringAbout12" inherits="GameFontNormal" 
+							text="   • Si63 - Random setting for playlists fix (1.24b)"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringAbout11" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="0" y="-5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+						<FontString name="SoundtrackFrame_FontStringAbout13" inherits="GameFontNormal" 
+							text="   • zephus67 - Misc. event Stealth fix (1.24)"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringAbout12" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="0" y="-5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+						<FontString name="SoundtrackFrame_FontStringAbout14" inherits="GameFontNormal" 
+							text=" "> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringAbout13" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="0" y="-5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+						
+						
+						<FontString name="SoundtrackFrame_FontStringSlash1" inherits="GameFontNormal" 
+							text="Slash commands: "> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringAbout1" relativePoint="TOPLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="375" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+						<FontString name="SoundtrackFrame_FontStringSlash2" inherits="GameFontNormal" 
+							text="   /soundtrack, /st - Open Soundtrack window"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringSlash1" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="0" y="-5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+						<FontString name="SoundtrackFrame_FontStringSlash3" inherits="GameFontNormal" 
+							text="   /soundtrack debug - Turn on/off debug mode"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringSlash2" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="0" y="-5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+						<FontString name="SoundtrackFrame_FontStringSlash4" inherits="GameFontNormal" 
+							text="   /soundtrack report - Open report frame"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringSlash3" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="0" y="-5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+						<FontString name="SoundtrackFrame_FontStringSlash5" inherits="GameFontNormal" 
+							text="   /soundtrack reset - Reset main window position"> 
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringSlash4" relativePoint="BOTTOMLEFT" >
+                                    <Offset>
+                                        <AbsDimension x="0" y="-5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+						
+                    </Layer>
+                </Layers>			
 			</Frame>
 		</Frames>
         <Scripts>
