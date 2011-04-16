@@ -165,6 +165,8 @@ SOUNDTRACK_DRUID_TREE = "Druid/Tree of Life Form"
 SOUNDTRACK_HUNTER = "Hunter"
 SOUNDTRACK_HUNTER_CAMO = "Hunter/Camouflage"
 
+SOUNDTRACK_MAGE = "Mage"
+
 SOUNDTRACK_PALADIN = "Paladin"
 SOUNDTRACK_PALADIN_CHANGE = "Paladin/Change Aura"
 
@@ -180,10 +182,13 @@ SOUNDTRACK_SHAMAN = "Shaman"
 SOUNDTRACK_SHAMAN_CHANGE = "Shaman/Change Form"
 SOUNDTRACK_SHAMAN_GHOST_WOLF = "Shaman/Ghost Wolf"
 
+SOUNDTRACK_WARLOCK = "Warlock"
+
 SOUNDTRACK_WARRIOR = "Warrior"
 SOUNDTRACK_WARRIOR_CHANGE = "Warrior/Change Stance"
 
 -- Old Misc Event Names
+--[[
 SOUNDTRACK_FLIGHT_OLD = "Flight Path"
 SOUNDTRACK_DEATH_OLD = "Death"
 SOUNDTRACK_GHOST_OLD = "Ghost"
@@ -217,7 +222,7 @@ SOUNDTRACK_DOT_HIT_OLD = "Spell DoT"
 SOUNDTRACK_SWING_CRIT_OLD = "Swing Crit"
 SOUNDTRACK_SWING_HIT_OLD = "Swing"
 SOUNDTRACK_VICTORY_OLD = "Victory"
-
+--]]
 
 SOUNDTRACK_REMOVE_MISC = "Remove Misc. Event"
 SOUNDTRACK_REMOVE_MISC_TIP = "Removes the selected misc. event."

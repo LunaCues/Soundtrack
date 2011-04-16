@@ -162,6 +162,8 @@ SOUNDTRACK_DRUID_TREE = "Druide/Forme d'Arbre de Vie"
 SOUNDTRACK_HUNTER = "Chasseur"
 SOUNDTRACK_HUNTER_CAMO = "Chasseur/Camouflage"
 
+SOUNDTRACK_MAGE = "Mage"
+
 SOUNDTRACK_PALADIN = "Paladin"
 SOUNDTRACK_PALADIN_CHANGE = "Paladin/Changer Aura"
 
@@ -170,12 +172,14 @@ SOUNDTRACK_PRIEST_CHANGE = "Pretre/Changer Forme"
 
 SOUNDTRACK_ROGUE = "Voleur"
 SOUNDTRACK_ROGUE_CHANGE = "Voleur/Changer Camouflage"
-SOUNDTRACK_ROGUE_SPRINT = "Rogue/Sprint"
-SOUNDTRACK_ROGUE_STEALTH = "Rogue/Camouflage"
+SOUNDTRACK_ROGUE_SPRINT = "Voleur/Sprint"
+SOUNDTRACK_ROGUE_STEALTH = "Voleur/Camouflage"
 
 SOUNDTRACK_SHAMAN = "Chaman"
 SOUNDTRACK_SHAMAN_CHANGE = "Chaman/Changer Forme"
 SOUNDTRACK_SHAMAN_GHOST_WOLF = "Chaman/Loup Fantome"
+
+SOUNDTRACK_WARLOCK = "Demoniste"
 
 SOUNDTRACK_WARRIOR = "Guerrier"
 SOUNDTRACK_WARRIOR_CHANGE = "Guerrier/Changer Posture"
