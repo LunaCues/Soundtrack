@@ -5,7 +5,7 @@
     Functions that manage misc. and custom events.
 ]]
 
-local arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20
+arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = nil
 
 local function debug(msg)
 	Soundtrack.Util.DebugPrint("[Custom]: ".. msg, 0.6, 0.6, 1.0)
@@ -802,7 +802,7 @@ function Soundtrack.CustomEvents.Initialize(self)
 	
 	-- Make sure there are events for each customevent
 	for k,v in pairs(Soundtrack_CustomEvents) do
-	    --Soundtrack.AddEvent(ST_CUSTOM, k, v.priority, v.continuous, v.soundEffect)
+	    Soundtrack.AddEvent(ST_CUSTOM, k, v.priority, v.continuous, v.soundEffect)
 		if v.eventtype == "Event Script" then
 			self:RegisterEvent(v.trigger)
 		end
@@ -844,7 +844,7 @@ function Soundtrack.CustomEvents.OnUpdate(self, elapsed)
 end
 
 function Soundtrack.CustomEvents.OnEvent(self, event, ...)
-	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = select(1, ...)
+	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = ... -- select(1, ...)
 	
 	if event == "VARIABLES_LOADED" then	
 		Soundtrack.CustomEvents.Initialize(self)
@@ -882,7 +882,6 @@ function Soundtrack.CustomEvents.OnEvent(self, event, ...)
     -- Handle custom buff events
     elseif event == "UNIT_AURA" or event == "UPDATE_SHAPESHIFT_FORM" then 
 		if arg1 == "player" then
-		--[[
 			if Soundtrack.Settings.EnableCustomMusic then
 				for k,v in pairs(Soundtrack_CustomEvents) do
 					if v.eventtype == "Buff" then
@@ -956,15 +955,15 @@ function Soundtrack.CustomEvents.OnEvent(self, event, ...)
     end
     
     -- Handle custom events
-	--[[
     if Soundtrack.Settings.EnableCustomMusic then
         for k,v in pairs(Soundtrack_CustomEvents) do
             if v.eventtype == "Event Script" then
                 if event == v.trigger then
+					--[[
 					local hasTracks = SoundtrackEvents_EventHasTracks(ST_CUSTOM, k)
-					if hasTracks then
+					if hasTracks then --]]
 						RunScript(v.script)
-					end
+					--end
                 end
             end
         end
@@ -975,10 +974,11 @@ function Soundtrack.CustomEvents.OnEvent(self, event, ...)
         for k,v in pairs(Soundtrack_MiscEvents) do
             if v.eventtype == "Event Script" then
                 if event == v.trigger then
+					--[[
 					local hasTracks = SoundtrackEvents_EventHasTracks(ST_MISC, k) 
-					if hasTracks then
+					if hasTracks then --]]
 						v.script();
-					end
+					--end
                 end
             end
         end

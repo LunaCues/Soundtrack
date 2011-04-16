@@ -76,7 +76,7 @@ function SoundtrackFrame_OnLoad(self)
 
     tinsert(UISpecialFrames, "SoundtrackFrame")
     
-    PanelTemplates_SetNumTabs(self, 7)
+    PanelTemplates_SetNumTabs(self, 9)
     PanelTemplates_UpdateTabs(self)
     
     PanelTemplates_SetTab(SoundtrackFrame, 1)
@@ -113,10 +113,10 @@ local function GetTabIndex(tableName)
         return 4
     elseif (tableName == "Misc") then 
         return 5
-    --[[elseif (tableName == "Custom") then
-        return 6 --]]
-    elseif (tableName == "Playlists") then
+    elseif (tableName == "Custom") then
         return 6
+    elseif (tableName == "Playlists") then
+        return 7
     else 
         return 0
     end
@@ -1222,18 +1222,18 @@ function SoundtrackFrameTab_OnClick()
         SoundtrackFrameOptionsFrame:Hide()
 	
 	-- Custom tab
-    --[[elseif (SoundtrackFrame.selectedTab == 6) then
+    elseif (SoundtrackFrame.selectedTab == 6) then
         SEVT.SelectedEventsTable = "Custom"
-      --  SoundtrackFrameEventFrame:Show()
-      --  SoundtrackFrameOptionsFrame:Hide() --]]
+        SoundtrackFrameEventFrame:Show()
+        SoundtrackFrameOptionsFrame:Hide()
 			
 	-- Playlists tab
-    elseif (SoundtrackFrame.selectedTab == 6) then
+    elseif (SoundtrackFrame.selectedTab == 7) then
         SEVT.SelectedEventsTable = "Playlists"
         SoundtrackFrameEventFrame:Show()
         SoundtrackFrameOptionsFrame:Hide()
     -- Options tab
-    elseif (SoundtrackFrame.selectedTab == 7) then
+    elseif (SoundtrackFrame.selectedTab == 8) then
         SEVT.SelectedEventsTable = nil
         SoundtrackFrameEventFrame:Hide()
         SoundtrackFrameOptionsFrame:Show()
@@ -1281,8 +1281,8 @@ function SoundtrackFrame_OnTabChanged()
             SoundtrackFrameAddCustomEventButton:Show()
             SoundtrackFrameEditCustomEventButton:Show()
 			SoundtrackFrameDeleteCustomEventButton:Show()
-            _G["SoundtrackFrameRightPanelTracks"]:Hide()
-            _G["SoundtrackFrameRightPanelEditEvent"]:Show()
+            --_G["SoundtrackFrameRightPanelTracks"]:Hide()
+            --_G["SoundtrackFrameRightPanelEditEvent"]:Show()
         else
             SoundtrackFrameAddCustomEventButton:Hide()
             SoundtrackFrameEditCustomEventButton:Hide()
@@ -2189,7 +2189,7 @@ function SoundtrackFrame_MoveAssignedTrack(direction)
     
 end
 
-function SoundtrackFrameAddCustomEventButton_OnClick()
+function SoundtrackFrameAddCustomEventButton_OnClick(self)
     _G["SoundtrackFrameRightPanelTracks"]:Hide()
     _G["SoundtrackFrameRightPanelEditEvent"]:Show()
     
@@ -2204,10 +2204,11 @@ function SoundtrackFrameAddCustomEventButton_OnClick()
         indexedName = name .. " " .. index
     end
     
-    local script = "-- Custom script\nSoundtrack.PlayEvent(\"Custom\", " .. indexedName .. ")"
+    local script = "-- Custom script\n"
+		.. "Soundtrack_Custom_PlayEvent(\"Custom\", " .. indexedName .. ") \n"
+		.. "Soundtrack_Custom_StopEvent(\"Custom\", " .. indexedName .. ") \n"
     
-    Soundtrack.CustomEvents.RegisterEventScript(indexedName, "Custom", "UNIT_AURA", 4, true, 
-        script) 
+    Soundtrack.CustomEvents.RegisterEventScript(self, indexedName, "Custom", "UNIT_AURA", 4, true, script) 
     SoundtrackFrame_SelectedEvent = indexedName
     SoundtrackFrame_RefreshEvents()
     SoundtrackFrame_RefreshCustomEvent()
@@ -2254,12 +2255,13 @@ end
 
 function SoundtrackFrameDeleteCustomEventButton_OnClick()
 
-    --[[for i=1, #(Soundtrack_CustomEvents) do
+    for i=1, #(Soundtrack_CustomEvents) do
         if Soundtrack_CustomEvents[i] == SoundtrackFrame_SelectedEvent then
             table.remove(Soundtrack_CustomEvents, i)
             Soundtrack.TraceFrame("Deleted custom event: " .. SoundtrackFrame_SelectedEvent)
         end
-    end]]
+    end
+	--]]
     Soundtrack_CustomEvents[SoundtrackFrame_SelectedEvent] = nil
     Soundtrack.Events.DeleteEvent("Custom", SoundtrackFrame_SelectedEvent)
 end

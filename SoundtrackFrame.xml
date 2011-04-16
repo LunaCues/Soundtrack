@@ -661,16 +661,7 @@
                     </Anchor>
                 </Anchors>
             </Button>
-            <!--Button name="SoundtrackFrameTab6" inherits="SoundtrackFrameTabTemplate" id="6" text="Custom">
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrameTab5" relativePoint="TOPRIGHT">
-                        <Offset>
-                            <AbsDimension x="-8" y="0"/>
-                        </Offset>
-                    </Anchor>
-                </Anchors>
-            </Button-->
-            <Button name="SoundtrackFrameTab6" inherits="SoundtrackFrameTabTemplate" id="6" text="Playlists">
+            <Button name="SoundtrackFrameTab6" inherits="SoundtrackFrameTabTemplate" id="6" text="Custom">
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="SoundtrackFrameTab5" relativePoint="TOPRIGHT">
                         <Offset>
@@ -679,9 +670,27 @@
                     </Anchor>
                 </Anchors>
             </Button>
-            <Button name="SoundtrackFrameTab7" inherits="SoundtrackFrameTabTemplate" id="7" text="Options">
+            <Button name="SoundtrackFrameTab7" inherits="SoundtrackFrameTabTemplate" id="7" text="Playlists">
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="SoundtrackFrameTab6" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-8" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="SoundtrackFrameTab8" inherits="SoundtrackFrameTabTemplate" id="8" text="Options">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrameTab7" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-8" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+            <Button name="SoundtrackFrameTab9" inherits="SoundtrackFrameTabTemplate" id="9" text="Options">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="SoundtrackFrameTab8" relativePoint="TOPRIGHT">
                         <Offset>
                             <AbsDimension x="-8" y="0"/>
                         </Offset>
@@ -1416,7 +1425,7 @@
                                 _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ADD_BUTTON);
                             </OnLoad>
                             <OnClick>
-                                SoundtrackFrameAddCustomEventButton_OnClick();
+                                SoundtrackFrameAddCustomEventButton_OnClick(self);
                             </OnClick>
                             <OnEnter>
                                 Soundtrack.ShowTip(self, SOUNDTRACK_ADD_CUSTOM, SOUNDTRACK_ADD_CUSTOM_TIP);
@@ -2270,7 +2279,7 @@
                                     <Anchors>
                                         <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame" relativePoint="TOPLEFT">
                                             <Offset>
-                                                <AbsDimension x="300" y="-50"/>
+                                                <AbsDimension x="255" y="-50"/>
                                             </Offset>
                                         </Anchor>
                                     </Anchors>
@@ -2382,7 +2391,7 @@
 
                             <Frame name="SoundtrackFrame_ScriptEditFrame">
                                 <Size>
-                                    <AbsDimension x="500" y="400"/>
+                                    <AbsDimension x="500" y="320"/>
                                 </Size>
                                 <Anchors>
                                     <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_FontStringScript" relativePoint="BOTTOMLEFT">
@@ -2407,7 +2416,7 @@
 
                                     <ScrollFrame name="SoundtrackFrame_EventEditScrollFrame" inherits="UIPanelScrollFrameTemplate">
                                         <Size>
-                                            <AbsDimension x="466" y="384"/>
+                                            <AbsDimension x="466" y="304"/>
                                         </Size>
                                         <Anchors>
                                             <Anchor point="TOPLEFT">
@@ -2442,19 +2451,20 @@
                                         <ScrollChild>
                                             <EditBox name="SoundtrackFrame_EventScript" multiLine="true" letters="4096" autoFocus="false">
                                                 <Size>
-                                                    <AbsDimension x="500" y="400"/>
+                                                    <AbsDimension x="500" y="320"/>
                                                 </Size>
                                                 <Scripts>
                                                     <OnTextChanged>
-                                                        local scrollBar = _G[self:GetName().."ScrollBar"]
-                                                        self:UpdateScrollChildRect();
+                                                        --[[local scrollBar = _G["SoundtrackFrame_EventScriptScrollBar"]
+                                                        --SoundtrackFrame_EventScript:UpdateScrollChildRect();
                                                         local min;
                                                         local max;
                                                         min, max = scrollBar:GetMinMaxValues();
                                                         if ( max > 0 and (self.max ~= max) ) then
                                                         self.max = max;
                                                         scrollBar:SetValue(max);
-                                                        end
+                                                        end 
+														--]]
                                                     </OnTextChanged>
                                                     <OnEscapePressed>
                                                         self:ClearFocus();
@@ -2475,14 +2485,15 @@
                                     </OnLoad>
                                 </Scripts>
                             </Frame>
+							
                             <Button name="SoundtrackFrameSaveEvent" inherits="UIPanelButtonTemplate" text="Save">
                                 <Size>
                                     <AbsDimension x="100" y="22"/>
                                 </Size>
                                 <Anchors>
-                                    <Anchor point="BOTTOMRIGHT" relativeTo="SoundtrackFrame" relativePoint="BOTTOMRIGHT">
+                                    <Anchor point="TOPRIGHT" relativeTo="SoundtrackFrame_ScriptEditFrame" relativePoint="BOTTOMRIGHT">
                                         <Offset>
-                                            <AbsDimension x="-30" y="20"/>
+                                            <AbsDimension x="0" y="0"/>
                                         </Offset>
                                     </Anchor>
                                 </Anchors>
