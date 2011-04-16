@@ -1,7 +1,7 @@
 --------------------------------------------------
 -- localization.es.lua (Spanish)
 --------------------------------------------------
-if GetLocale() == "esES" then
+if GetLocale() == "esES" or GetLocale() == "esMX" then
 
 SOUNDTRACK_DANCE_EMOTES = {
     "Te pones a bailar.",
@@ -148,8 +148,8 @@ SOUNDTRACK_SWING_HIT = "Combate/Swing"
 SOUNDTRACK_VICTORY = "Combate/Victoria"
 
 
-SOUNDTRACK_DK = "Death Knight"
-SOUNDTRACK_DK_CHANGE = "Death Knight/Change Presence"
+SOUNDTRACK_DK = "Caballero de la Muerte"
+SOUNDTRACK_DK_CHANGE = "Caballero de la Muerte/Change Presence"
 
 SOUNDTRACK_DRUID = "Druida"
 SOUNDTRACK_DRUID_CHANGE = "Druida/Change Form"
@@ -163,30 +163,30 @@ SOUNDTRACK_DRUID_PROWL = "Druida/Prowl"
 SOUNDTRACK_DRUID_TRAVEL = "Druida/Forma de Viaje"
 SOUNDTRACK_DRUID_TREE = "Druida/Forma de Tree of Life"
 
-SOUNDTRACK_HUNTER = "Hunter"
-SOUNDTRACK_HUNTER_CAMO = "Hunter/Camuflaje"
+SOUNDTRACK_HUNTER = "Cazador"
+SOUNDTRACK_HUNTER_CAMO = "Cazador/Camuflaje"
 
-SOUNDTRACK_MAGE = "Mage"
+SOUNDTRACK_MAGE = "Mago"
 
 SOUNDTRACK_PALADIN = "Paladin"
 SOUNDTRACK_PALADIN_CHANGE = "Paladin/Change Aura"
 
-SOUNDTRACK_PRIEST = "Priest"
-SOUNDTRACK_PRIEST_CHANGE = "Priest/Change Form"
+SOUNDTRACK_PRIEST = "Sacerdotisa"
+SOUNDTRACK_PRIEST_CHANGE = "Sacerdotisa/Change Form"
 
-SOUNDTRACK_ROGUE = "Rogue"
-SOUNDTRACK_ROGUE_CHANGE = "Rogue/Change Stealth"
-SOUNDTRACK_ROGUE_SPRINT = "Rogue/Sprint"
-SOUNDTRACK_ROGUE_STEALTH = "Rogue/Stealth"
+SOUNDTRACK_ROGUE = "Picaro"
+SOUNDTRACK_ROGUE_CHANGE = "Picaro/Change Stealth"
+SOUNDTRACK_ROGUE_SPRINT = "Picaro/Sprint"
+SOUNDTRACK_ROGUE_STEALTH = "Picaro/Stealth"
 
-SOUNDTRACK_SHAMAN = "Shaman"
-SOUNDTRACK_SHAMAN_CHANGE = "Shaman/Change Form"
-SOUNDTRACK_SHAMAN_GHOST_WOLF = "Shaman/Ghost Wolf"
+SOUNDTRACK_SHAMAN = "Chaman"
+SOUNDTRACK_SHAMAN_CHANGE = "Chaman/Change Form"
+SOUNDTRACK_SHAMAN_GHOST_WOLF = "Chaman/Ghost Wolf"
 
-SOUNDTRACK_WARLOCK = "Warlock"
+SOUNDTRACK_WARLOCK = "Bruja"
 
-SOUNDTRACK_WARRIOR = "Warrior"
-SOUNDTRACK_WARRIOR_CHANGE = "Warrior/Change Stance"
+SOUNDTRACK_WARRIOR = "Guerrero"
+SOUNDTRACK_WARRIOR_CHANGE = "Guerrero/Change Stance"
 
 -- Old misc events
 SOUNDTRACK_DEATH_OLD = "Death"
@@ -267,103 +267,104 @@ SOUNDTRACK_ENTER_PLAYLIST_NAME = "Enter Playlist Name:"
 
 
 -- Playback Controls
-SOUNDTRACK_PREVIOUS = "Previous Track"
+SOUNDTRACK_PREVIOUS = "Canción anterior"
 SOUNDTRACK_PREVIOUS_TIP = "Skips to the previous track in this event."
 
-SOUNDTRACK_PLAY = "Play"
+SOUNDTRACK_PLAY = "Jugar"
 SOUNDTRACK_PLAY_TIP = "Click to resume this event."
 
-SOUNDTRACK_PAUSE = "Pause"
+SOUNDTRACK_PAUSE = "Poner en pausa"
 SOUNDTRACK_PAUSE_TIP = "Click to pause this event."
 
-SOUNDTRACK_NEXT = "Next Track"
+SOUNDTRACK_NEXT = "Última  canción"
 SOUNDTRACK_NEXT_TIP = "Skips to the next track in this event."
 
-SOUNDTRACK_STOP = "Stop"
+SOUNDTRACK_STOP = "Detener"
 SOUNDTRACK_STOP_TIP = "Stops the event."
 
-SOUNDTRACK_INFO = "Info"
+SOUNDTRACK_INFO = "Información"
 SOUNDTRACK_INFO_TIP = "Gives information on the currently playing track."
 
-SOUNDTRACK_REPORT = "Report"
+SOUNDTRACK_REPORT = "Informar "
 SOUNDTRACK_REPORT_TIP = "Report currently playing track to say, party/raid, or guild."
 
 -- Options Tab
-SOUNDTRACK_SHOW_MINIMAP_BUTTON = "Show Minimap Button"
-SOUNDTRACK_SHOW_MINIMAP_BUTTON_TIP = "Displays the Soundtrack icon on the minimap. The icon can be repositioned by dragging it around the minimap. If you turn off this button, you can open Soundtrack's main window with a keybinding or with the /soundtrack command."
+SOUNDTRACK_SHOW_MINIMAP_BUTTON = "Mostrar minimapa botón "
+SOUNDTRACK_SHOW_MINIMAP_BUTTON_TIP = "Muestra el icono de la banda sonora en el minimapa. El icono puede cambiar de posición arrastrándolo todo el minimapa."
 
-SOUNDTRACK_SHOW_PLAYBACK_CONTROLS = "Playback Controls"
-SOUNDTRACK_SHOW_PLAYBACK_CONTROLS_TIP = "Displays a mini toolbar with a previous, pause, and next button to control the playback. The controls can be repositioned by dragging the name area."
+SOUNDTRACK_SHOW_PLAYBACK_CONTROLS = "Controles de reproducción"
+SOUNDTRACK_SHOW_PLAYBACK_CONTROLS_TIP = "Muestra una barra de herramientas mini con una pausa anterior, y situado junto al control de la reproducción."
 
-SOUNDTRACK_LOCK_PLAYBACK_CONTROLS = "Lock Playback Controls"
-SOUNDTRACK_LOCK_PLAYBACK_CONTROLS_TIP = "Makes the Playback Controls unmovable."
+SOUNDTRACK_LOCK_PLAYBACK_CONTROLS = "Bloquear los controles de reproducción"
+SOUNDTRACK_LOCK_PLAYBACK_CONTROLS_TIP = "Hace que los controles de reproducción inamovible."
 
-SOUNDTRACK_SHOW_TRACK_INFO = "Show Track Information"
-SOUNDTRACK_SHOW_TRACK_INFO_TIP = "When track changes, the track's title, album and artist are shortly displayed on the screen. The track information frame can be repositioned by dragging it when it appears."
+SOUNDTRACK_SHOW_TRACK_INFO = "Mostrar información de la canción"
+SOUNDTRACK_SHOW_TRACK_INFO_TIP = "Cuando los cambios de pista, la pista de título, álbum y artista en breve aparecerá en la pantalla. " 
+	.."El marco de seguimiento de la información puede cambiar de posición, arrastre cuando aparezca."
 
-SOUNDTRACK_SHOW_DEFAULT_MUSIC = "Show Default Music"
-SOUNDTRACK_SHOW_DEFAULT_MUSIC_TIP = "Adds all the available music tracks included with the game to your music library."
+SOUNDTRACK_SHOW_DEFAULT_MUSIC = "Mostrar música predeterminada"
+SOUNDTRACK_SHOW_DEFAULT_MUSIC_TIP = "Agrega todas las pistas de música disponibles se incluye con el juego en tu colección de música."
 
-SOUNDTRACK_LOCK_NOW_PLAYING = "Lock Track Info. Frame"
-SOUNDTRACK_LOCK_NOW_PLAYING_TIP = "Locks the track information frame so it cannot be moved or clicked."
+SOUNDTRACK_LOCK_NOW_PLAYING = "Bloquear Track Info. Frame"
+SOUNDTRACK_LOCK_NOW_PLAYING_TIP = "Bloquea el marco de información de la pista por lo que no se pueden mover o hacer clic."
 
-SOUNDTRACK_SHOW_DEBUG = "Output Debug Information"
-SOUNDTRACK_SHOW_DEBUG_TIP = "Outputs verbose debug information to the chat frame. Output is sent to default chat frame or the frame named 'Soundtrack' if available."
+SOUNDTRACK_SHOW_DEBUG = "información de sacar error de la computadora"
+SOUNDTRACK_SHOW_DEBUG_TIP = "Salidas detallada información de depuración en el marco del chat. Salida se envía a marco de chat o el marco nombrado 'Soundtrack' si está disponible."
 
-SOUNDTRACK_SHOW_EVENT_STACK = "Event Stack"
-SOUNDTRACK_SHOW_EVENT_STACK_TIP = "Displays the currently active events in the stack, below the minimap (useful for debugging)."
+SOUNDTRACK_SHOW_EVENT_STACK = "Pila de eventos"
+SOUNDTRACK_SHOW_EVENT_STACK_TIP = "Pantalla pila de eventos (conveniente para sacar error de la computadora)."
 
-SOUNDTRACK_AUTO_ADD_ZONES = "Automatically Add Zones"
-SOUNDTRACK_AUTO_ADD_ZONES_TIP = "Adds new zones to the list of zone events as you travel. Zones are added hierarchically at all levels (e.g. continents, major areas, cities, towns, inns, etc."
+SOUNDTRACK_AUTO_ADD_ZONES = "Añadir automáticamente las zonas"
+SOUNDTRACK_AUTO_ADD_ZONES_TIP = "Añadir nuevas zonas a la lista de eventos de zona mientras viajas."
+							
+SOUNDTRACK_ESCALATE_BATTLE = "Escalar la música de batalla"
+SOUNDTRACK_ESCALATE_BATTLE_TIP = "Si durante una batalla se detecta a un enemigo más fuerte, permite que la música para cambiar a la música de batalla más alto."
 
-SOUNDTRACK_ESCALATE_BATTLE = "Escalate Battle Music"
-SOUNDTRACK_ESCALATE_BATTLE_TIP = "If during a battle a stronger enemy is detected, allows the music to switch to the higher battle music."
+SOUNDTRACK_BATTLE_CD = "Batalla reutilizacion"
+SOUNDTRACK_BATTLE_CD_TIP = "El tiempo que toma para la música de batalla para detener cuando se separan de la batalla."
 
-SOUNDTRACK_BATTLE_CD = "Battle Cooldown"
-SOUNDTRACK_BATTLE_CD_TIP = "The time it takes for battle music to stop when disengaged from battle."
+SOUNDTRACK_LOOP_MUSIC = "Música continua"
+SOUNDTRACK_LOOP_MUSIC_TIP = "Activar reproducción de música continua"
 
-SOUNDTRACK_LOOP_MUSIC = "Loop Music"
-SOUNDTRACK_LOOP_MUSIC_TIP = "Enable to continuously play background music. This is the same setting exposed in the default Sound options."
+SOUNDTRACK_MAX_SILENCE = "Máximo Silencio"
+SOUNDTRACK_MAX_SILENCE_TIP = "El importe máximo de silencio para insertar entre las canciones o la música de zona."
 
-SOUNDTRACK_MAX_SILENCE = "Maximum Silence"
-SOUNDTRACK_MAX_SILENCE_TIP = "The maximum amount of silence to insert between tracks for zone music. Increase this value if you wish the music would take a break once in a while."
+SOUNDTRACK_PROJECT = "Proyecto"
+SOUNDTRACK_PROJECT_TIP = "Proyecto de Soundtrack por instalar o deinstalar."
 
-SOUNDTRACK_PROJECT = "Project"
-SOUNDTRACK_PROJECT_TIP = "Soundtrack Project to load or remove from Soundtrack"
+SOUNDTRACK_PROJECT_LOAD = "Instalar proyecto"
+SOUNDTRACK_PROJECT_LOAD_TIP = "Instalar configuración de evento-canción de proyecto."
 
-SOUNDTRACK_PROJECT_LOAD = "Load Project"
-SOUNDTRACK_PROJECT_LOAD_TIP = "Loads a project's event-track settings into Soundtrack"
+SOUNDTRACK_PROJECT_REMOVE = "Desinstalar proyecto"
+SOUNDTRACK_PROJECT_REMOVE_TIP = "Desinstalar configuración de evento-canción de proyecto."
 
-SOUNDTRACK_PROJECT_REMOVE = "Remove Project"
-SOUNDTRACK_PROJECT_REMOVE_TIP = "Removes a project's event-track settings from Soundtrack"
+SOUNDTRACK_ENABLE_MUSIC = "Activar toda la música"
+SOUNDTRACK_ENABLE_MUSIC_TIP = "Activar o desactivar toda la música de Soundtrack."
 
-SOUNDTRACK_ENABLE_MUSIC = "Enable Music"
-SOUNDTRACK_ENABLE_MUSIC_TIP = "Master toggle to turn off all music. Use this to temporarily disable all of Soundtrack's music."
+SOUNDTRACK_ENABLE_ZONE_MUSIC = "Activar la música de Zone"
+SOUNDTRACK_ENABLE_ZONE_MUSIC_TIP = "Activar o desactivar la música de Zone."
 
-SOUNDTRACK_ENABLE_ZONE_MUSIC = "Enable Zone Music"
-SOUNDTRACK_ENABLE_ZONE_MUSIC_TIP = "Enable zone music. Use this to temporarily stop all zone music from playing."
+SOUNDTRACK_ENABLE_BATTLE_MUSIC = "Activar la música de Battle"
+SOUNDTRACK_ENABLE_BATTLE_MUSIC_TIP = "Activar o desactivar la música de Battle."
 
-SOUNDTRACK_ENABLE_BATTLE_MUSIC = "Enable Battle Music"
-SOUNDTRACK_ENABLE_BATTLE_MUSIC_TIP = "Enable battle music. Use this to temporarily stop all battle music."
+SOUNDTRACK_ENABLE_MISC_MUSIC = "Activar la música de Misc"
+SOUNDTRACK_ENABLE_MISC_MUSIC_TIP = "Activar o desactivar la música de Misc."
 
-SOUNDTRACK_ENABLE_MISC_MUSIC = "Enable Misc Music"
-SOUNDTRACK_ENABLE_MISC_MUSIC_TIP = "Enable misc music. Use this to temporarily turn off all misc music."
-
-SOUNDTRACK_ENABLE_CUSTOM_MUSIC = "Enable Custom Music"
-SOUNDTRACK_ENABLE_CUSTOM_MUSIC_TIP = "Enable custom music. Use this to temporarily turn off all custom music."
+SOUNDTRACK_ENABLE_CUSTOM_MUSIC = "Activar la música de Custom"
+SOUNDTRACK_ENABLE_CUSTOM_MUSIC_TIP = "Activar o desactivar la música de Custom."
 
 
 -- Other
-SOUNDTRACK_NO_TRACKS_PLAYING = "No tracks playing"
-SOUNDTRACK_NO_EVENT_PLAYING = "No event playing"
-SOUNDTRACK_NOW_PLAYING = "Now playing"
-SOUNDTRACK_MINIMAP_BUTTON_HIDDEN = "The minimap button was hidden. You can access Soundtrack's UI by using the /soundtrack command."
+SOUNDTRACK_NO_TRACKS_PLAYING = "No hay canción que suena"
+SOUNDTRACK_NO_EVENT_PLAYING = "No hay juego evento"
+SOUNDTRACK_NOW_PLAYING = "Jugando ahora"
+SOUNDTRACK_MINIMAP_BUTTON_HIDDEN = "El botón del minimapa se ocultaba. Puede acceder a la interfaz de usuario Soundtrack con /soundtrack o /st."
 
-SOUNDTRACK_REMOVE_QUESTION =  "Do you want to remove this?"
-SOUNDTRACK_PURGE_EVENTS_QUESTION = "MyTracks.lua changed.\n\nPurge obsolete tracks?"
-SOUNDTRACK_GEN_LIBRARY = "Exit the game, run GenerateMyLibrary.py, and reenter game to create MyTracks.lua for Soundtrack to work properly."
-SOUNDTRACK_NO_MYTRACKS = "MyTracks.lua not found.\n\nRun Soundtrack without MyTracks.lua?"
-SOUNDTRACK_ERROR_LOADING = "Cannot load MyTracks.lua. You probably forgot to run GenerateMyLibrary.py. Read the setup instructions for more details."
+SOUNDTRACK_REMOVE_QUESTION =  "¿Quieres eliminar este?"
+SOUNDTRACK_PURGE_EVENTS_QUESTION = "MyTracks.lua cambiado.\n\n¿Eliminar pistas obsoleto?"
+SOUNDTRACK_GEN_LIBRARY = "Salir del juego, ejecutar GenerateMyLibrary.py, y volver a entrar al juego de crear MyTracks.lua de Soundtrack para funcionar correctamente"
+SOUNDTRACK_NO_MYTRACKS = "MyTracks.lua no encontrado.\n\n¿Ejecutar Soundtrack sin MyTracks.lua?"
+SOUNDTRACK_ERROR_LOADING = "No se puede instalar MyTracks.lua. Probablemente se olvidó de ejecutar GenerateMyLibrary.py. Lea las instrucciones de configuración para más detalles."
 
 
 end
