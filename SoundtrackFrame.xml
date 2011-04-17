@@ -1451,7 +1451,7 @@
                                 SoundtrackFrameEditCustomEventButton_OnClick();
                             </OnClick>
                             <OnEnter>
-                                Soundtrack.ShowTip(self, SOUNDTRACK_EDIT_CUSTOM, SOUNDTRACK_EDIT_CUSTROM_TIP);
+                                Soundtrack.ShowTip(self, SOUNDTRACK_EDIT_CUSTOM, SOUNDTRACK_EDIT_CUSTOM_TIP);
                             </OnEnter>
                             <OnLeave>
                                 Soundtrack.HideTip();
