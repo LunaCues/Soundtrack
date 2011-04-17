@@ -147,23 +147,35 @@ SOUNDTRACK_SWING_CRIT = "Combat/Swing Crit"
 SOUNDTRACK_SWING_HIT = "Combat/Swing"
 SOUNDTRACK_VICTORY = "Combat/Victory"
 
+local n
+
 SOUNDTRACK_DK = "Death Knight"
 SOUNDTRACK_DK_CHANGE = "Death Knight/Change Presence"
 
 SOUNDTRACK_DRUID = "Druid"
 SOUNDTRACK_DRUID_CHANGE = "Druid/Change Form"
-SOUNDTRACK_DRUID_AQUATIC = "Druid/Aquatic Form"
-SOUNDTRACK_DRUID_BEAR = "Druid/Bear Form"
-SOUNDTRACK_DRUID_CAT = "Druid/Cat Form"
-SOUNDTRACK_DRUID_DASH = "Druid/Dash"
-SOUNDTRACK_DRUID_FLIGHT = "Druid/Flight Form"
-SOUNDTRACK_DRUID_MOONKIN = "Druid/Moonkin Form"
-SOUNDTRACK_DRUID_PROWL = "Druid/Prowl"
-SOUNDTRACK_DRUID_TRAVEL = "Druid/Travel Form"
-SOUNDTRACK_DRUID_TREE = "Druid/Tree of Life Form"
+n = GetSpellInfo(1066)
+SOUNDTRACK_DRUID_AQUATIC = "Druid/"..n
+n = GetSpellInfo(5487)
+SOUNDTRACK_DRUID_BEAR = "Druid/"..n
+n = GetSpellInfo(768)
+SOUNDTRACK_DRUID_CAT = "Druid/"..n
+n = GetSpellInfo(1850)
+SOUNDTRACK_DRUID_DASH = "Druid/"..n
+n = GetSpellInfo(33943)
+SOUNDTRACK_DRUID_FLIGHT = "Druid/"..n
+n = GetSpellInfo(24858)
+SOUNDTRACK_DRUID_MOONKIN = "Druid/"..n
+n = GetSpellInfo(5215)
+SOUNDTRACK_DRUID_PROWL = "Druid/"..n
+n = GetSpellInfo(783)
+SOUNDTRACK_DRUID_TRAVEL = "Druid/"..n
+n = GetSpellInfo(65139)
+SOUNDTRACK_DRUID_TREE = "Druid/"..n
 
 SOUNDTRACK_HUNTER = "Hunter"
-SOUNDTRACK_HUNTER_CAMO = "Hunter/Camouflage"
+n = GetSpellInfo(51755)
+SOUNDTRACK_HUNTER_CAMO = "Hunter/"..n
 
 SOUNDTRACK_MAGE = "Mage"
 
@@ -171,16 +183,19 @@ SOUNDTRACK_PALADIN = "Paladin"
 SOUNDTRACK_PALADIN_CHANGE = "Paladin/Change Aura"
 
 SOUNDTRACK_PRIEST = "Priest"
-SOUNDTRACK_PRIEST_CHANGE = "Priest/Change Form"
+SOUNDTRACK_PRIEST_CHANGE = "Priest/Change Forma"
 
 SOUNDTRACK_ROGUE = "Rogue"
-SOUNDTRACK_ROGUE_CHANGE = "Rogue/Change Stealth"
-SOUNDTRACK_ROGUE_SPRINT = "Rogue/Sprint"
-SOUNDTRACK_ROGUE_STEALTH = "Rogue/Stealth"
+n = GetSpellInfo(2983)
+SOUNDTRACK_ROGUE_SPRINT = "Rogue/"..n
+n = GetSpellInfo(1784)
+SOUNDTRACK_ROGUE_STEALTH = "Rogue/"..n
+SOUNDTRACK_ROGUE_CHANGE = "Rogue/Change "..n
 
 SOUNDTRACK_SHAMAN = "Shaman"
 SOUNDTRACK_SHAMAN_CHANGE = "Shaman/Change Form"
-SOUNDTRACK_SHAMAN_GHOST_WOLF = "Shaman/Ghost Wolf"
+n = GetSpellInfo(2645)
+SOUNDTRACK_SHAMAN_GHOST_WOLF = "Shaman/"..n
 
 SOUNDTRACK_WARLOCK = "Warlock"
 

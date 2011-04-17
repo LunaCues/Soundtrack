@@ -146,23 +146,33 @@ SOUNDTRACK_SWING_HIT = "Combat/Swing"
 SOUNDTRACK_VICTORY = "Combat/Victory"
 
 
-SOUNDTRACK_DK = "Death Knight"
-SOUNDTRACK_DK_CHANGE = "Death Knight/Change Presence"
+SOUNDTRACK_DK = "Todesritter"
+SOUNDTRACK_DK_CHANGE = "Todesritter/Change Presence"
 
 SOUNDTRACK_DRUID = "Druide"
 SOUNDTRACK_DRUID_CHANGE = "Druide/Change Form"
-SOUNDTRACK_DRUID_AQUATIC = "Druide/Aquatic Form"
-SOUNDTRACK_DRUID_BEAR = "Druide/Bear Form"
-SOUNDTRACK_DRUID_CAT = "Druide/Cat Form"
-SOUNDTRACK_DRUID_DASH = "Druide/Dash"
-SOUNDTRACK_DRUID_FLIGHT = "Druide/Flight Form"
-SOUNDTRACK_DRUID_MOONKIN = "Druide/Moonkin Form"
-SOUNDTRACK_DRUID_PROWL = "Druide/Prowl"
-SOUNDTRACK_DRUID_TRAVEL = "Druide/Travel Form"
-SOUNDTRACK_DRUID_TREE = "Druide/Tree of Life Form"
+n = GetSpellInfo(1066)
+SOUNDTRACK_DRUID_AQUATIC = "Druide/"..n
+n = GetSpellInfo(5487)
+SOUNDTRACK_DRUID_BEAR = "Druide/"..n
+n = GetSpellInfo(768)
+SOUNDTRACK_DRUID_CAT = "Druide/"..n
+n = GetSpellInfo(1850)
+SOUNDTRACK_DRUID_DASH = "Druide/"..n
+n = GetSpellInfo(33943)
+SOUNDTRACK_DRUID_FLIGHT = "Druide/"..n
+n = GetSpellInfo(24858)
+SOUNDTRACK_DRUID_MOONKIN = "Druide/"..n
+n = GetSpellInfo(5215)
+SOUNDTRACK_DRUID_PROWL = "Druide/"..n
+n = GetSpellInfo(783)
+SOUNDTRACK_DRUID_TRAVEL = "Druide/"..n
+n = GetSpellInfo(65139)
+SOUNDTRACK_DRUID_TREE = "Druide/"..n
 
 SOUNDTRACK_HUNTER = "Jäger"
-SOUNDTRACK_HUNTER_CAMO = "Jäger/Camouflage"
+n = GetSpellInfo(51755)
+SOUNDTRACK_HUNTER_CAMO = "Jäger/"..n
 
 SOUNDTRACK_MAGE = "Magier"
 
@@ -173,13 +183,16 @@ SOUNDTRACK_PRIEST = "Priester"
 SOUNDTRACK_PRIEST_CHANGE = "Priester/Change Form"
 
 SOUNDTRACK_ROGUE = "Schurke"
-SOUNDTRACK_ROGUE_CHANGE = "Schurke/Change Stealth"
-SOUNDTRACK_ROGUE_SPRINT = "Schurke/Sprint"
-SOUNDTRACK_ROGUE_STEALTH = "Schurke/Stealth"
+n = GetSpellInfo(2983)
+SOUNDTRACK_ROGUE_SPRINT = "Schurke/"..n
+n = GetSpellInfo(1784)
+SOUNDTRACK_ROGUE_STEALTH = "Schurke/"..n
+SOUNDTRACK_ROGUE_CHANGE = "Schurke/Change "..n
 
 SOUNDTRACK_SHAMAN = "Schamane"
 SOUNDTRACK_SHAMAN_CHANGE = "Schamane/Change Form"
-SOUNDTRACK_SHAMAN_GHOST_WOLF = "Schamane/Ghost Wolf"
+n = GetSpellInfo(2645)
+SOUNDTRACK_SHAMAN_GHOST_WOLF = "Schamane/"..n
 
 SOUNDTRACK_WARLOCK = "Hexenmeister"
 
@@ -187,6 +200,7 @@ SOUNDTRACK_WARRIOR = "Krieger"
 SOUNDTRACK_WARRIOR_CHANGE = "Krieger/Change Stance"
 
 -- Old misc events
+--[[
 SOUNDTRACK_FLIGHT_OLD = "Flight Path"
 SOUNDTRACK_DEATH_OLD = "Death"
 SOUNDTRACK_GHOST_OLD = "Ghost"
@@ -220,7 +234,7 @@ SOUNDTRACK_DOT_HIT_OLD = "Spell DoT"
 SOUNDTRACK_SWING_CRIT_OLD = "Swing Crit"
 SOUNDTRACK_SWING_HIT_OLD = "Swing"
 SOUNDTRACK_VICTORY_OLD = "Victory"
-
+--]]
 
 
 SOUNDTRACK_REMOVE_MISC = "Remove Misc. Event"
