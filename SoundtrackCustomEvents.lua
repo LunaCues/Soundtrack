@@ -199,7 +199,8 @@ hooksecurefunc("JumpOrAscendStart",
 	end
 );
 
-function Soundtrack.CustomEvents.Initialize(self)
+-- MiscEvents
+function Soundtrack.MiscEvents.Initialize(self)
 
 	Soundtrack.TraceCustom("Initializing misc. events...")
 	
@@ -800,6 +801,13 @@ function Soundtrack.CustomEvents.Initialize(self)
 	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_VICTORY_OLD, SOUNDTRACK_VICTORY)
 	--]]
 	
+    Soundtrack_SortEvents(ST_MISC)
+end
+-- CustomEvents
+function Soundtrack.CustomEvents.Initialize(self)
+
+	Soundtrack.TraceCustom("Initializing misc. events...")
+
 	-- Make sure there are events for each customevent
 	for k,v in pairs(Soundtrack_CustomEvents) do
 	    Soundtrack.AddEvent(ST_CUSTOM, k, v.priority, v.continuous, v.soundEffect)
@@ -808,16 +816,35 @@ function Soundtrack.CustomEvents.Initialize(self)
 		end
 	end 
 	
-    Soundtrack_SortEvents(ST_MISC)
     Soundtrack_SortEvents(ST_CUSTOM)
 end
 
+-- MiscEvents
+function Soundtrack.MiscEvents.OnLoad(self)
+	self:RegisterEvent("VARIABLES_LOADED")
+end
+-- CustomEvents
 function Soundtrack.CustomEvents.OnLoad(self)
 	self:RegisterEvent("VARIABLES_LOADED")
 end
 
-
 -- nil triggers are called at each update.
+-- MiscEvents
+function Soundtrack.MiscEvents.OnUpdate(self, elapsed)    
+    
+
+    if Soundtrack.Settings.EnableMiscMusic then
+        for k,v in pairs(Soundtrack_MiscEvents) do
+            if v.eventtype == "Update Script" then
+				local hasTracks = SoundtrackEvents_EventHasTracks(ST_MISC, k)
+				if hasTracks then
+					v.script();
+				end
+            end
+        end
+    end
+end
+-- CustomEvents
 function Soundtrack.CustomEvents.OnUpdate(self, elapsed)    
        
     if Soundtrack.Settings.EnableCustomMusic then
@@ -831,23 +858,15 @@ function Soundtrack.CustomEvents.OnUpdate(self, elapsed)
         end
     end
 
-    if Soundtrack.Settings.EnableMiscMusic then
-        for k,v in pairs(Soundtrack_MiscEvents) do
-            if v.eventtype == "Update Script" then
-				local hasTracks = SoundtrackEvents_EventHasTracks(ST_MISC, k)
-				if hasTracks then
-					v.script();
-				end
-            end
-        end
-    end
 end
 
-function Soundtrack.CustomEvents.OnEvent(self, event, ...)
-	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = ... -- select(1, ...)
+
+-- MiscEvents
+function Soundtrack.MiscEvents.OnEvent(self, event, ...)
+	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = select(1, ...)
 	
 	if event == "VARIABLES_LOADED" then	
-		Soundtrack.CustomEvents.Initialize(self)
+		Soundtrack.MiscEvents.Initialize(self)
     end
 	
 	Soundtrack.TraceCustom(event)
@@ -882,41 +901,6 @@ function Soundtrack.CustomEvents.OnEvent(self, event, ...)
     -- Handle custom buff events
     elseif event == "UNIT_AURA" or event == "UPDATE_SHAPESHIFT_FORM" then 
 		if arg1 == "player" then
-			if Soundtrack.Settings.EnableCustomMusic then
-				for k,v in pairs(Soundtrack_CustomEvents) do
-					if v.eventtype == "Buff" then
-						local buffActive = Soundtrack.IsBuffActive(v.buffTexture)
-						local hasTracks = SoundtrackEvents_EventHasTracks(ST_CUSTOM, k)
-						if not v.active and buffActive then
-							v.active = true
-							if hasTracks then
-								Soundtrack_Custom_PlayEvent(ST_CUSTOM, k)
-							end
-						elseif v.active and not buffActive then
-							v.active = false
-							if hasTracks then
-								Soundtrack_Custom_StopEvent(ST_CUSTOM, k)
-							end
-						end
-					end
-					if v.eventtype == "Debuff" then
-						local debuffActive = Soundtrack.IsDebuffActive(v.debuffTexture)
-						local hasTracks = SoundtrackEvents_EventHasTracks(ST_CUSTOM, k)
-						if not v.active and debuffActive then
-							v.active = true
-							if hasTracks then
-								Soundtrack_Custom_PlayEvent(ST_CUSTOM, k)
-							end
-						elseif v.active and not debuffActive then
-							v.active = false
-							if hasTracks then
-								Soundtrack_Custom_StopEvent(ST_CUSTOM, k)
-							end
-						end
-					end
-				end
-			end
-			--]]
 			if Soundtrack.Settings.EnableMiscMusic then
 				for k,v in pairs(Soundtrack_MiscEvents) do
 					if v.eventtype == "Buff" then
@@ -954,21 +938,6 @@ function Soundtrack.CustomEvents.OnEvent(self, event, ...)
 		end
     end
     
-    -- Handle custom events
-    if Soundtrack.Settings.EnableCustomMusic then
-        for k,v in pairs(Soundtrack_CustomEvents) do
-            if v.eventtype == "Event Script" then
-                if event == v.trigger then
-					--[[
-					local hasTracks = SoundtrackEvents_EventHasTracks(ST_CUSTOM, k)
-					if hasTracks then --]]
-						RunScript(v.script)
-					--end
-                end
-            end
-        end
-    end
-	--]]
     
     if Soundtrack.Settings.EnableMiscMusic then
         for k,v in pairs(Soundtrack_MiscEvents) do
@@ -983,4 +952,64 @@ function Soundtrack.CustomEvents.OnEvent(self, event, ...)
             end
         end
     end
+end
+-- CustomEvents
+function Soundtrack.CustomEvents.OnEvent(self, event, ...)
+	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = select(1, ...)
+
+	if event == "VARIABLES_LOADED" then	
+		Soundtrack.CustomEvents.Initialize(self)
+    end
+	
+	if event == "UNIT_AURA" or event == "UPDATE_SHAPESHIFT_FORM" then
+		if arg1 == "player" then
+			if Soundtrack.Settings.EnableCustomMusic then
+				for k,v in pairs(Soundtrack_CustomEvents) do
+					if v.eventtype == "Buff" then
+						local buffActive = Soundtrack.IsBuffActive(v.buffTexture)
+						local hasTracks = SoundtrackEvents_EventHasTracks(ST_CUSTOM, k)
+						if not v.active and buffActive then
+							v.active = true
+							if hasTracks then
+								Soundtrack_Custom_PlayEvent(ST_CUSTOM, k)
+							end
+						elseif v.active and not buffActive then
+							v.active = false
+							if hasTracks then
+								Soundtrack_Custom_StopEvent(ST_CUSTOM, k)
+							end
+						end
+					end
+					if v.eventtype == "Debuff" then
+						local debuffActive = Soundtrack.IsDebuffActive(v.debuffTexture)
+						local hasTracks = SoundtrackEvents_EventHasTracks(ST_CUSTOM, k)
+						if not v.active and debuffActive then
+							v.active = true
+							if hasTracks then
+								Soundtrack_Custom_PlayEvent(ST_CUSTOM, k)
+							end
+						elseif v.active and not debuffActive then
+							v.active = false
+							if hasTracks then
+								Soundtrack_Custom_StopEvent(ST_CUSTOM, k)
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	
+    -- Handle custom events
+    if Soundtrack.Settings.EnableCustomMusic then
+        for k,v in pairs(Soundtrack_CustomEvents) do
+            if v.eventtype == "Event Script" then
+                if event == v.trigger then
+					RunScript(v.script)
+                end
+            end
+        end
+    end
+	--]]
+	
 end
