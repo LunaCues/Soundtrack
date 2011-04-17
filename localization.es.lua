@@ -110,7 +110,7 @@ SOUNDTRACK_MOUNT_GROUND = "Estatus/Montura suelo"
 SOUNDTRACK_STEALTHED = "Estatus/Sigilo"
 SOUNDTRACK_SWIMMING = "Estatus/Natacion"
 -- Added 1/17/2011
-SOUNDTRACK_CINEMATIC = "Estatus/Cinematográfico"
+SOUNDTRACK_CINEMATIC = "Estatus/Cinematografico"
 
 SOUNDTRACK_GROUP_EVENTS = "Grupo y autonomos"
 SOUNDTRACK_ACHIEVEMENT = "Grupo y autonomos/Achievement"
