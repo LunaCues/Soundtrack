@@ -12,7 +12,6 @@ local function debug(msg)
 end
 
 Soundtrack.CustomEvents = {
-    BuffEvents = {}
 }
 
 Soundtrack.ActionHouse = false
@@ -200,7 +199,7 @@ hooksecurefunc("JumpOrAscendStart",
 );
 
 -- MiscEvents
-function Soundtrack.MiscEvents.Initialize(self)
+function Soundtrack.CustomEvents.MiscInitialize(self)
 
 	Soundtrack.TraceCustom("Initializing misc. events...")
 	
@@ -804,7 +803,7 @@ function Soundtrack.MiscEvents.Initialize(self)
     Soundtrack_SortEvents(ST_MISC)
 end
 -- CustomEvents
-function Soundtrack.CustomEvents.Initialize(self)
+function Soundtrack.CustomEvents.CustomInitialize(self)
 
 	Soundtrack.TraceCustom("Initializing misc. events...")
 
@@ -820,17 +819,17 @@ function Soundtrack.CustomEvents.Initialize(self)
 end
 
 -- MiscEvents
-function Soundtrack.MiscEvents.OnLoad(self)
+function Soundtrack.CustomEvents.MiscOnLoad(self)
 	self:RegisterEvent("VARIABLES_LOADED")
 end
 -- CustomEvents
-function Soundtrack.CustomEvents.OnLoad(self)
+function Soundtrack.CustomEvents.CustomOnLoad(self)
 	self:RegisterEvent("VARIABLES_LOADED")
 end
 
 -- nil triggers are called at each update.
 -- MiscEvents
-function Soundtrack.MiscEvents.OnUpdate(self, elapsed)    
+function Soundtrack.CustomEvents.MiscOnUpdate(self, elapsed)    
     
 
     if Soundtrack.Settings.EnableMiscMusic then
@@ -845,7 +844,7 @@ function Soundtrack.MiscEvents.OnUpdate(self, elapsed)
     end
 end
 -- CustomEvents
-function Soundtrack.CustomEvents.OnUpdate(self, elapsed)    
+function Soundtrack.CustomEvents.CustomOnUpdate(self, elapsed)    
        
     if Soundtrack.Settings.EnableCustomMusic then
         for k,v in pairs(Soundtrack_CustomEvents) do
@@ -862,11 +861,11 @@ end
 
 
 -- MiscEvents
-function Soundtrack.MiscEvents.OnEvent(self, event, ...)
+function Soundtrack.CustomEvents.MiscOnEvent(self, event, ...)
 	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = select(1, ...)
 	
 	if event == "VARIABLES_LOADED" then	
-		Soundtrack.MiscEvents.Initialize(self)
+		Soundtrack.CustomEvents.MiscInitialize(self)
     end
 	
 	Soundtrack.TraceCustom(event)
@@ -954,11 +953,11 @@ function Soundtrack.MiscEvents.OnEvent(self, event, ...)
     end
 end
 -- CustomEvents
-function Soundtrack.CustomEvents.OnEvent(self, event, ...)
+function Soundtrack.CustomEvents.CustomOnEvent(self, event, ...)
 	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = select(1, ...)
 
 	if event == "VARIABLES_LOADED" then	
-		Soundtrack.CustomEvents.Initialize(self)
+		Soundtrack.CustomEvents.CustomInitialize(self)
     end
 	
 	if event == "UNIT_AURA" or event == "UPDATE_SHAPESHIFT_FORM" then
