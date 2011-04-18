@@ -17,6 +17,7 @@ SoundtrackProject.xml
 SoundtrackFrame.xml
 SoundtrackBattleFrame.xml
 SoundtrackCustomFrame.xml
+SoundtrackMiscFrame.xml
 SoundtrackDanceFrame.xml
 SoundtrackMountFrame.xml
 SoundtrackZoneFrame.xml
