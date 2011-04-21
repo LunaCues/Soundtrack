@@ -382,4 +382,12 @@ SOUNDTRACK_NO_MYTRACKS = "MyTracks.lua no encontrado.\n\n¿Ejecutar Soundtrack si
 SOUNDTRACK_ERROR_LOADING = "No se puede instalar MyTracks.lua. Probablemente se olvido de ejecutar GenerateMyLibrary.py. Lea las instrucciones de configuracion para más detalles."
 
 
+SOUNDTRACK_COPY_BUTTON = "Copy"
+SOUNDTRACK_COPY_TRACKS = "Copy Tracks"
+SOUNDTRACK_COPY_TRACKS_TIP = "Copy the tracks from the selected event."
+
+SOUNDTRACK_PASTE_BUTTON = "Paste"
+SOUNDTRACK_PASTE_TRACKS = "Paste Tracks"
+SOUNDTRACK_PASTE_TRACKS_TIP = "Paste the tracks that you copied to the selected event."
+
 end
