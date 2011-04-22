@@ -363,7 +363,16 @@ function Soundtrack.Events.Add(eventTableName, eventName, trackName)
     end
     
     if trackName then
-        table.insert(eventTable[eventName].tracks, trackName)
+		trackNotListed = true
+		for i=0, #(eventTable[eventName].tracks) do
+			if trackName == eventTable[eventName].tracks[i] then 
+				trackNotListed = false 
+				break
+			end
+		end
+		if trackNotListed then
+			table.insert(eventTable[eventName].tracks, trackName)
+		end
     end
 end
 
