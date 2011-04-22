@@ -111,7 +111,7 @@ function Soundtrack.IsBuffActive(buffTexture)
 		if icon == nil then
 			return nil  -- all buffs checked, buff not found
 		elseif string.lower(icon) == string.lower(buffTexture) then
-			--Soundtrack.Trace("Buff: "..string.lower(icon) .. " " .. spellId)
+			Soundtrack.Trace("Buff: "..string.lower(icon) .. " " .. spellId)
 	        return spellId
 	    end
 	end
@@ -126,7 +126,7 @@ function Soundtrack.IsDebuffActive(buffTexture)
 	    if icon == nil then
 			return nil
 		elseif string.lower(icon) == string.lower(buffTexture) then
-			--Soundtrack.Trace("Debuff: "..string.lower(icon) .. " " .. spellId)
+			Soundtrack.Trace("Debuff: "..string.lower(icon) .. " " .. spellId)
 	        return spellId
 	    end
 	end
@@ -807,6 +807,8 @@ function Soundtrack.CustomEvents.CustomInitialize(self)
 
 	Soundtrack.TraceCustom("Initializing misc. events...")
 
+	self:RegisterEvent("UNIT_AURA")
+	
 	-- Make sure there are events for each customevent
 	for k,v in pairs(Soundtrack_CustomEvents) do
 	    Soundtrack.AddEvent(ST_CUSTOM, k, v.priority, v.continuous, v.soundEffect)
@@ -942,11 +944,10 @@ function Soundtrack.CustomEvents.MiscOnEvent(self, event, ...)
         for k,v in pairs(Soundtrack_MiscEvents) do
             if v.eventtype == "Event Script" then
                 if event == v.trigger then
-					--[[
 					local hasTracks = SoundtrackEvents_EventHasTracks(ST_MISC, k) 
 					if hasTracks then --]]
 						v.script();
-					--end
+					end
                 end
             end
         end
@@ -960,7 +961,7 @@ function Soundtrack.CustomEvents.CustomOnEvent(self, event, ...)
 		Soundtrack.CustomEvents.CustomInitialize(self)
     end
 	
-	if event == "UNIT_AURA" or event == "UPDATE_SHAPESHIFT_FORM" then
+	if event == "UNIT_AURA" then
 		if arg1 == "player" then
 			if Soundtrack.Settings.EnableCustomMusic then
 				for k,v in pairs(Soundtrack_CustomEvents) do
@@ -1004,7 +1005,10 @@ function Soundtrack.CustomEvents.CustomOnEvent(self, event, ...)
         for k,v in pairs(Soundtrack_CustomEvents) do
             if v.eventtype == "Event Script" then
                 if event == v.trigger then
-					RunScript(v.script)
+					local hasTracks = SoundtrackEvents_EventHasTracks(ST_MISC, k) 
+					if hasTracks then --]]
+						RunScript(v.script)
+					end
                 end
             end
         end
