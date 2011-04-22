@@ -1226,7 +1226,86 @@
                             </OnShow>
                         </Scripts>
                     </Frame>
-                    <Button name="SoundtrackFrameAddPlaylistButton" inherits="UIPanelButtonTemplate" text="Add">
+                    <Button name="SoundtrackFrameCopyCopiedTracksButton" inherits="UIPanelButtonTemplate" text="Copy">
+						<Size>
+                            <AbsDimension x="75" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SoundtrackFrameEventList">
+                                <Offset>
+                                    <AbsDimension x="5" y="-40"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+							<OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_COPY_BUTTON);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrameCopyCopiedTracksButton_OnClick();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_COPY_TRACKS, SOUNDTRACK_COPY_TRACKS_TIP);
+							</OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+					</Button>
+					<Button name="SoundtrackFramePasteCopiedTracksButton" inherits="UIPanelButtonTemplate" text="Paste">
+						<Size>
+                            <AbsDimension x="75" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="SoundtrackFrameCopyCopiedTracksButton">
+                                <Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+							<OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_PASTE_BUTTON);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFramePasteCopiedTracksButton_OnClick();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_PASTE_TRACKS, SOUNDTRACK_PASTE_TRACKS_TIP);
+							</OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+					</Button>
+					<Button name="SoundtrackFrameClearCopiedTracksButton" inherits="UIPanelButtonTemplate" text="Paste">
+						<Size>
+                            <AbsDimension x="75" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SoundtrackFrameCopyCopiedTracksButton">
+                                <Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+							<OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_CLEAR_BUTTON);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrameClearCopiedTracksButton_OnClick();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_CLEAR_TRACKS, SOUNDTRACK_CLEAR_TRACKS_TIP);
+							</OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+					</Button>
+					
+					<Button name="SoundtrackFrameAddPlaylistButton" inherits="UIPanelButtonTemplate" text="Add">
                         <Size>
                             <AbsDimension x="50" y="22"/>
                         </Size>

@@ -2241,44 +2241,91 @@ function SoundtrackFrameSaveCustomEventButton_OnClick()
     Soundtrack.TraceFrame("Saving " .. SoundtrackFrame_SelectedEvent)
     local customEvent = Soundtrack_CustomEvents[SoundtrackFrame_SelectedEvent]
     
-    customEvent.priority = tonumber(_G["SoundtrackFrame_Priority"]:GetText())
-    customEvent.continuous = _G["SoundtrackFrame_CustomContinuous"]:GetChecked()
-    
+    customEvent.priority = tonumber(getglobal("SoundtrackFrame_Priority"):GetText())
+    customEvent.continuous = getglobal("SoundtrackFrame_ContinuousCheckBox"):GetChecked()
+
     local eventTable = Soundtrack.Events.GetTable("Custom")
     if (eventTable[SoundtrackFrame_SelectedEvent] ~= nil) then
-        eventTable[SoundtrackFrame_SelectedEvent].priority = customEvent.priority
-        eventTable[SoundtrackFrame_SelectedEvent].continuous = customEvent.continuous
+		if eventTable[SoundtrackFrame_SelectedEvent].priority == nil then
+			eventTable[SoundtrackFrame_SelectedEvent].priority = customEvent.priority
+		end
+		if eventTable[SoundtrackFrame_SelectedEvent].continuous == nil then
+			eventTable[SoundtrackFrame_SelectedEvent].continuous = customEvent.continuous
+		end
+		if eventTable[SoundtrackFrame_SelectedEvent].soundEffect == nil then
+			eventTable[SoundtrackFrame_SelectedEvent].soundEffect = customEvent.soundEffect
+		end
     end
     
     local eventType = customEvent.type
+	Soundtrack.TraceFrame(customEvent.type);
     if eventType == "Event Script" then
-        customEvent.trigger = _G["SoundtrackFrame_EventTrigger"]:GetText()   
-        customEvent.script = _G["SoundtrackFrame_EventScript"]:GetText()
+		customEvent.eventtype = "Event Script";
+        customEvent.trigger = getglobal("SoundtrackFrame_EventTrigger"):GetText()
+		Soundtrack.CustomEvents.RegisterTrigger(_G["SoundtrackCustomDUMMY"], customEvent.trigger)
     elseif eventType == "Buff" then
-        customEvent.buffTexture = _G["SoundtrackFrame_EventTrigger"]:GetText()
-        customEvent.script = _G["SoundtrackFrame_EventScript"]:GetText()
+		customEvent.eventtype = "Buff";
+        customEvent.buffTexture = getglobal("SoundtrackFrame_EventTrigger"):GetText()
+		Soundtrack.TraceFrame(customEvent.buffTexture)
+	elseif eventType == "Debuff" then
+		customEvent.eventtype = "Debuff";
+		customEvent.debuffTexture = getglobal("SoundtrackFrame_EventTrigger"):GetText()
+		Soundtrack.TraceFrame(customEvent.debuffTexture)
     elseif eventType == "Update Script" then
-        customEvent.script = _G["SoundtrackFrame_EventScript"]:GetText()
+		customEvent.eventtype = "Update Script";
     end
-    customEvent.script = _G["SoundtrackFrame_EventScript"]:GetText() 
+    customEvent.script = getglobal("SoundtrackFrame_EventScript"):GetText() 
     
     
-    _G["SoundtrackFrameRightPanelEditEvent"]:Hide()
-    _G["SoundtrackFrameRightPanelTracks"]:Show()
+    getglobal("SoundtrackFrameRightPanelEditEvent"):Hide()
+    getglobal("SoundtrackFrameRightPanelTracks"):Show()
 end
 
 function SoundtrackFrameDeleteCustomEventButton_OnClick()
-
-    for i=1, #(Soundtrack_CustomEvents) do
-        if Soundtrack_CustomEvents[i] == SoundtrackFrame_SelectedEvent then
-            table.remove(Soundtrack_CustomEvents, i)
-            Soundtrack.TraceFrame("Deleted custom event: " .. SoundtrackFrame_SelectedEvent)
-        end
-    end
-	--]]
-    Soundtrack_CustomEvents[SoundtrackFrame_SelectedEvent] = nil
-    Soundtrack.Events.DeleteEvent("Custom", SoundtrackFrame_SelectedEvent)
+	if SoundtrackFrame_SelectedEvent then
+		StaticPopup_Show("SOUNDTRACK_DELETE_CUSTOM_POPUP")
+	end
 end
+function SoundtrackFrame_DeleteCustom(eventName)
+	Soundtrack_CustomEvents[SoundtrackFrame_SelectedEvent] = nil
+    Soundtrack.Events.DeleteEvent("Custom", eventName)
+	SoundtrackFrame_RefreshEvents()
+end
+StaticPopupDialogs["SOUNDTRACK_DELETE_CUSTOM_POPUP"] = {
+    text = SOUNDTRACK_REMOVE_QUESTION,
+    button1 = TEXT(ACCEPT),
+    button2 = TEXT(CANCEL),
+    OnAccept = function() 
+		SoundtrackFrame_DeleteCustom(SoundtrackFrame_SelectedEvent)
+    end,
+	enterClicksFirstButton = 1,
+    timeout = 0,
+    whileDead = 1,
+    hideOnEscape = 1
+}
+
+function SoundtrackFrameDeleteMiscEventButton_OnClick()
+	if SoundtrackFrame_SelectedEvent then
+		StaticPopup_Show("SOUNDTRACK_DELETE_MISC_POPUP")
+	end
+end
+function SoundtrackFrame_DeleteMisc(eventName)
+    Soundtrack.Events.DeleteEvent("Misc", eventName)
+	SoundtrackFrame_RefreshEvents()
+end
+StaticPopupDialogs["SOUNDTRACK_DELETE_MISC_POPUP"] = {
+    text = SOUNDTRACK_REMOVE_QUESTION,
+    button1 = TEXT(ACCEPT),
+    button2 = TEXT(CANCEL),
+    OnAccept = function() 
+		SoundtrackFrame_DeleteMisc(SoundtrackFrame_SelectedEvent)
+    end,
+	enterClicksFirstButton = 1,
+    timeout = 0,
+    whileDead = 1,
+    hideOnEscape = 1
+}
+
 
 function serialize (o)
   if type(o) == "number" then
@@ -2318,8 +2365,60 @@ function SoundtrackFrameImportSettings_OnClick()
     --RunScript(text)
 end
 
+
 function SoundtrackFrameDeleteTargetButton_OnClick()
-    Soundtrack.TraceFrame("Deleting " .. SoundtrackFrame_SelectedEvent)
-    Soundtrack.Events.DeleteEvent("Boss", SoundtrackFrame_SelectedEvent)
-    SoundtrackFrame_RefreshEvents()
+	if SoundtrackFrame_SelectedEvent then
+		StaticPopup_Show("SOUNDTRACK_DELETE_TARGET_POPUP")
+	end
 end
+function SoundtrackFrame_DeleteTarget(eventName)
+    Soundtrack.TraceFrame("Deleting " .. SoundtrackFrame_SelectedEvent)
+    Soundtrack.Events.DeleteEvent("Boss", eventName)
+	SoundtrackFrame_RefreshEvents()
+end
+StaticPopupDialogs["SOUNDTRACK_DELETE_TARGET_POPUP"] = {
+    text = SOUNDTRACK_REMOVE_QUESTION,
+    button1 = TEXT(ACCEPT),
+    button2 = TEXT(CANCEL),
+    OnAccept = function() 
+		SoundtrackFrame_DeleteTarget(SoundtrackFrame_SelectedEvent)
+    end,
+	enterClicksFirstButton = 1,
+    timeout = 0,
+    whileDead = 1,
+    hideOnEscape = 1
+}
+
+Copied_tracks = {}
+
+function SoundtrackFrameCopyCopiedTracksButton_OnClick()
+	if SoundtrackFrame_SelectedEvent then
+		Copied_tracks = {}
+		local eventTable = Soundtrack.Events.GetTable(SEVT.SelectedEventsTable)
+		local event = eventTable[SoundtrackFrame_SelectedEvent]
+		for i=0, #(event.tracks) do
+			Copied_tracks[i] = event.tracks[i]
+		end
+		SoundtrackFrame_RefreshEvents()
+		print("# selected: ",#(event.tracks))
+		print("# copied: ",#(Copied_tracks))
+	end
+end
+
+function SoundtrackFramePasteCopiedTracksButton_OnClick()
+	if SoundtrackFrame_SelectedEvent then
+		for i=0, #(Copied_tracks) do
+			Soundtrack.Events.Add(SEVT.SelectedEventsTable, SoundtrackFrame_SelectedEvent, Copied_tracks[i])
+		end
+		SoundtrackFrame_RefreshEvents()
+		local eventTable = Soundtrack.Events.GetTable(SEVT.SelectedEventsTable)
+		local event = eventTable[SoundtrackFrame_SelectedEvent]
+		print("# selected: ",#(event.tracks))
+		print("# copied: ",#(Copied_tracks))
+	end
+end
+
+function SoundtrackFrameClearCopiedTracksButton_OnClick()
+	Copied_tracks = {}
+	print("# copied: ",#(Copied_tracks))
+end	
