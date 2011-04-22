@@ -240,24 +240,24 @@ SOUNDTRACK_REMOVE_MISC_TIP = "Supprime l'evenement selectionne misc."
 
 
 -- Custom Event Tab
-SOUNDTRACK_ADD_CUSTOM = "Ajouter un evenement coutume"
-SOUNDTRACK_ADD_CUSTOM_TIP = "Cree un nouvel evenement sur mesure. Les evenements coutumes sont des evenements que vous pouvez definir vous-meme a travers une variete de methodes, y compris de script."
+SOUNDTRACK_ADD_CUSTOM = "Ajouter un evenement personalise"
+SOUNDTRACK_ADD_CUSTOM_TIP = "Cree un nouvel evenement personalise. Les evenements personalises sont des evenements que vous pouvez definir vous-meme a travers une variete de methodes de  scripts."
 
-SOUNDTRACK_EDIT_CUSTOM = "Edit evenement coutume"
-SOUNDTRACK_EDIT_CUSTOM_TIP = "Passe a l'interface d'edition d'evenements personnalises de sorte que vous pouvez regler l'evenement selectionne coutume."
+SOUNDTRACK_EDIT_CUSTOM = "Editer l'evenement personalise"
+SOUNDTRACK_EDIT_CUSTOM_TIP = "Passe a l'interface d'edition d'evenements personnalise de sorte que vous pouvez regler l'evenement selectionne comme bon vous semble."
 
-SOUNDTRACK_REMOVE_CUSTOM = "Supprimer evenement coutume"
-SOUNDTRACK_REMOVE_CUSTOM_TIP = "Supprime l'evenement selectionne coutume."
+SOUNDTRACK_REMOVE_CUSTOM = "Supprimer evenement personnalise"
+SOUNDTRACK_REMOVE_CUSTOM_TIP = "Supprime l'evenement selectionne personnalise."
 
-SOUNDTRACK_RANDOM = "Meler"
-SOUNDTRACK_SOUND_EFFECT = "Effet sonore"
+SOUNDTRACK_RANDOM = "Aleatoire"
+SOUNDTRACK_SOUND_EFFECT = "Effet Sonore"
 SOUNDTRACK_CUSTOM_CONTINUOUS = "Continu"
-SOUNDTRACK_CUSTOM_CONTINUOUS_TIP = "Determine si cet evenement sera une boucle ou jouer une fois. Quand un evenement joue en permanence, il peut etre arrete par son propre script, ou par un autre evenement de la remplacer."
+SOUNDTRACK_CUSTOM_CONTINUOUS_TIP = "Determine si cet evenement sera une boucle ou joue une fois. Quand un evenement se lit en permanence, il peut etre arrete par son propre script, ou par un autre evenement remplace."
 
 SOUNDTRACK_EVENT_TYPE = "Type d'evenement"
-SOUNDTRACK_EVENT_TYPE_TIP = "Le type d'evenement affecte la façon dont l'evenement coutume est edite."
+SOUNDTRACK_EVENT_TYPE_TIP = "Le type d'evenement affecte la façon dont l'evenement personnalise est modifie."
 
-SOUNDTRACK_ENTER_CUSTOM_NAME = "Entrez le nom d'evenement d'coutume:"
+SOUNDTRACK_ENTER_CUSTOM_NAME = "Entrez le nom de l'evenement personnalise:"
 
 
 
@@ -377,12 +377,16 @@ SOUNDTRACK_NO_MYTRACKS = "MyTracks.lua introuvable.\n\n Executer Soundtrack sans
 SOUNDTRACK_ERROR_LOADING = "Impossible de charger MyTracks.lua. Vous avez probablement oublie d'executer GenerateMyLibrary.py. Lisez les instructions d'installation pour plus de details."
 
 
-SOUNDTRACK_COPY_BUTTON = "Copy"
-SOUNDTRACK_COPY_TRACKS = "Copy Tracks"
-SOUNDTRACK_COPY_TRACKS_TIP = "Copy the tracks from the selected event."
+SOUNDTRACK_COPY_BUTTON = "Copier"
+SOUNDTRACK_COPY_TRACKS = "Cop. Pistes"
+SOUNDTRACK_COPY_TRACKS_TIP = "Copier les pistes de l'evenement selectionne."
 
-SOUNDTRACK_PASTE_BUTTON = "Paste"
-SOUNDTRACK_PASTE_TRACKS = "Paste Tracks"
-SOUNDTRACK_PASTE_TRACKS_TIP = "Paste the tracks that you copied to the selected event."
+SOUNDTRACK_PASTE_BUTTON = "Coller"
+SOUNDTRACK_PASTE_TRACKS = "Coll. Pistes"
+SOUNDTRACK_PASTE_TRACKS_TIP = "Coller les pistes de l'evenement selectionne."
+
+SOUNDTRACK_CLEAR_BUTTON = "Effacer"
+SOUNDTRACK_CLEAR_TRACKS = "Eff. Pistes"
+SOUNDTRACK_CLEAR_TRACKS_TIP = "Effacer les pistes copiees."
 
 end

@@ -387,4 +387,8 @@ SOUNDTRACK_PASTE_BUTTON = "Paste"
 SOUNDTRACK_PASTE_TRACKS = "Paste Tracks"
 SOUNDTRACK_PASTE_TRACKS_TIP = "Paste the tracks that you copied to the selected event."
 
+SOUNDTRACK_CLEAR_BUTTON = "Clear"
+SOUNDTRACK_CLEAR_TRACKS = "Clear Copied Tracks"
+SOUNDTRACK_CLEAR_TRACKS_TIP = "Clear the tracks that you copied."
+
 end
