@@ -2400,8 +2400,6 @@ function SoundtrackFrameCopyCopiedTracksButton_OnClick()
 			Copied_tracks[i] = event.tracks[i]
 		end
 		SoundtrackFrame_RefreshEvents()
-		print("# selected: ",#(event.tracks))
-		print("# copied: ",#(Copied_tracks))
 	end
 end
 
@@ -2411,14 +2409,9 @@ function SoundtrackFramePasteCopiedTracksButton_OnClick()
 			Soundtrack.Events.Add(SEVT.SelectedEventsTable, SoundtrackFrame_SelectedEvent, Copied_tracks[i])
 		end
 		SoundtrackFrame_RefreshEvents()
-		local eventTable = Soundtrack.Events.GetTable(SEVT.SelectedEventsTable)
-		local event = eventTable[SoundtrackFrame_SelectedEvent]
-		print("# selected: ",#(event.tracks))
-		print("# copied: ",#(Copied_tracks))
 	end
 end
 
 function SoundtrackFrameClearCopiedTracksButton_OnClick()
 	Copied_tracks = {}
-	print("# copied: ",#(Copied_tracks))
 end	
