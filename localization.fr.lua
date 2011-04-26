@@ -365,10 +365,10 @@ SOUNDTRACK_ENABLE_CUSTOM_MUSIC_TIP = "Activer la musique personnalisee. Utilisez
 
 
 -- Other
-SOUNDTRACK_NO_TRACKS_PLAYING = "Aucun piste en lecture"
+SOUNDTRACK_NO_TRACKS_PLAYING = "Aucune piste en lecture"
 SOUNDTRACK_NO_EVENT_PLAYING = "Aucun evenment en lecture"
 SOUNDTRACK_NOW_PLAYING = "Lecture en cours"
-SOUNDTRACK_MINIMAP_BUTTON_HIDDEN = "Le bouton minimap etait cache. Vous pouvez acceder a l'interface utilisateur de Soundtrack en utilisant la commande /soundtrack ou /st."
+SOUNDTRACK_MINIMAP_BUTTON_HIDDEN = "Le bouton minimap est cache. Vous pouvez acceder a l'interface utilisateur de Soundtrack en utilisant la commande /soundtrack ou /st."
 
 SOUNDTRACK_REMOVE_QUESTION =  "Voulez-vous le supprimer ?"
 SOUNDTRACK_PURGE_EVENTS_QUESTION = "MyTracks.lua  a change.\n\n Retirer pistes obsoletes ?"
@@ -385,8 +385,8 @@ SOUNDTRACK_PASTE_BUTTON = "Coller"
 SOUNDTRACK_PASTE_TRACKS = "Coll. Pistes"
 SOUNDTRACK_PASTE_TRACKS_TIP = "Coller les pistes de l'evenement selectionne."
 
-SOUNDTRACK_CLEAR_BUTTON = "Effacer"
-SOUNDTRACK_CLEAR_TRACKS = "Eff. Pistes"
-SOUNDTRACK_CLEAR_TRACKS_TIP = "Effacer les pistes copiees."
+SOUNDTRACK_CLEAR_BUTTON = "Nett."
+SOUNDTRACK_CLEAR_TRACKS = "Nett. Pistes"
+SOUNDTRACK_CLEAR_TRACKS_TIP = "Nettoyer les pistes copiees."
 
 end
