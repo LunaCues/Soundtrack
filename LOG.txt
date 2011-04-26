@@ -62,3 +62,16 @@ Changed Soundtrack Project load and print messages.
 Added a new stack level for sound effects
 Added SoundtrackLevels.lua for stack levels
 Modified order of importance for combat events.
+
+2.0.3 release
+French localization fixed (thanks to momokies)
+
+2.0.4 release
+Updated TOC number for 4.1.
+Added Copy, Paste, and Clear buttons.
+Readded Custom events.
+Split Custom and Misc event frames.
+Removed accented letters from localizations.
+Spanish localization now loads for esES or esMX.
+Using GetSpellInfo for spell names in all locales.
+
