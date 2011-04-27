@@ -26,6 +26,14 @@ function Soundtrack_Library_AddProjectTrack(trackName, _length, _title, _artist,
 	Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, projectTrack = true}
 end
 
+function Soundtrack_Library_AddProjectTrackMp3(trackName, _length, _title, _artist, _album)
+	Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, projectTrack = true, mp3 = true}
+end
+
+function Soundtrack_Library_AddProjectTrackOgg(trackName, _length, _title, _artist, _album)
+	Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, projectTrack = true, ogg = true}
+end
+
 
 function Soundtrack.Library.StopMusic()
 	-- Remove the playback continuity timers
@@ -115,7 +123,13 @@ function Soundtrack.Library.PlayTrack(trackName, soundEffect)
     if nextTrackInfo.defaultTrack then
         nextFileName = "Sound\\Music\\" .. trackName .. ".mp3"
     elseif nextTrackInfo.projectTrack then
-		nextFileName = "Interface\\Addons\\"..trackName..".mp3"
+		if ogg then
+			nextFileName = "Interface\\Addons\\"..trackName..".ogg"
+		elseif mp3 then
+			nextFileName = "Interface\\Addons\\"..trackName..".mp3"
+		else
+			nextFileName = "Interface\\Addons\\"..trackName..".mp3"
+		end
 	else
         --nextFileName = "Interface\\AddOns\\Soundtrack\\Music\\"..trackName..".mp3"
 		nextFileName = "Interface\\AddOns\\SoundtrackMusic\\"..trackName..".mp3"
