@@ -17,6 +17,16 @@ function Soundtrack.Library.AddTrack(trackName, _length, _title, _artist, _album
     --Soundtrack.SortTracks()
 end
 
+function Soundtrack.Library.AddTrackMp3(trackName, _length, _title, _artist, _album)
+    Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, mp3 = true }
+    --Soundtrack.SortTracks()
+end
+
+function Soundtrack.Library.AddTrackOgg(trackName, _length, _title, _artist, _album)
+    Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, ogg = true }
+    --Soundtrack.SortTracks()
+end
+
 function Soundtrack.Library.AddDefaultTrack(trackName, _length, _title, _artist, _album)             
     Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, defaultTrack = true }
     --Soundtrack.SortTracks()
@@ -131,8 +141,13 @@ function Soundtrack.Library.PlayTrack(trackName, soundEffect)
 			nextFileName = "Interface\\Addons\\"..trackName..".mp3"
 		end
 	else
-        --nextFileName = "Interface\\AddOns\\Soundtrack\\Music\\"..trackName..".mp3"
-		nextFileName = "Interface\\AddOns\\SoundtrackMusic\\"..trackName..".mp3"
+		if ogg then
+			nextFileName = "Interface\\AddOns\\SoundtrackMusic\\"..trackName..".ogg"
+		elseif mp3 then
+			nextFileName = "Interface\\AddOns\\SoundtrackMusic\\"..trackName..".mp3"
+		else
+			nextFileName = "Interface\\AddOns\\SoundtrackMusic\\"..trackName..".mp3"
+		end
     end        
     
     -- Everything ok, play the track
