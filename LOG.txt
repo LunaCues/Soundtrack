@@ -75,3 +75,7 @@ Removed accented letters from localizations.
 Spanish localization now loads for esES or esMX.
 Using GetSpellInfo for spell names in all locales.
 
+2.0.5 release
+GenerateMyLibraryWindows.jar replaces accented letters with unaccented letters.
+GenerateMyLibraryWindows.jar announces unsupported audio file errors.
+GenerateMyLibrary.py and GenerateMyLibraryManager.py now run in IDLE.
