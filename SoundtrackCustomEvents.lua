@@ -5,7 +5,7 @@
     Functions that manage misc. and custom events.
 ]]
 
-arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21
+local arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21
 
 local function debug(msg)
 	Soundtrack.Util.DebugPrint("[Custom]: ".. msg, 0.6, 0.6, 1.0)

@@ -185,7 +185,9 @@ function GetGroupEnemyLevel()
                 local unitName = UnitName(target)
                 local bossEvent = bossTable[unitName]
                 if bossEvent then
-					if SoundtrackEvents_EventHasTracks(ST_BOSS, unitName) then
+					if UnitHealth(target)/UnitHealthMax(target) < .3 then
+						Soundtrack.PlayEvent(ST_BATTLE, SOUNDTRACK_BOSS_LOW_HEALTH)
+					elseif SoundtrackEvents_EventHasTracks(ST_BOSS, unitName) then
 						Soundtrack.PlayEvent(ST_BOSS, unitName)
 					else
 						Soundtrack.PlayEvent(ST_BATTLE, SOUNDTRACK_BOSS_BATTLE)
@@ -283,28 +285,45 @@ local currentBattleTypeIndex = 0 -- Used to determine battle priorities and esca
 
 local function StartVictoryMusic()
     if hostileDeathCount > 0 then
-		local victoryEvent = Soundtrack.GetEvent(ST_MISC, SOUNDTRACK_VICTORY)
-		if victoryEvent.soundEffect == true then
-			Soundtrack.PlayEvent(ST_MISC, SOUNDTRACK_VICTORY)
-			Soundtrack.StopEventAtLevel(ST_BATTLE_LVL)
-			Soundtrack.StopEventAtLevel(ST_BOSS_LVL)
+		local battleEventName = Soundtrack.Events.Stack[ST_BATTLE_LVL].eventName
+		local bossEventName = Soundtrack.Events.Stack[ST_BOSS_LVL].eventName
+		if bossEventName ~= nil then
+			local victoryEvent = Soundtrack.GetEvent(ST_MISC, SOUNDTRACK_VICTORY_BOSS)
+			if victoryEvent.soundEffect == true then
+				Soundtrack.PlayEvent(ST_MISC, SOUNDTRACK_VICTORY_BOSS)
+				Soundtrack.StopEventAtLevel(ST_BATTLE_LVL)
+				Soundtrack.StopEventAtLevel(ST_BOSS_LVL)
+			else
+				Soundtrack.StopEventAtLevel(ST_BATTLE_LVL)
+				Soundtrack.StopEventAtLevel(ST_BOSS_LVL)
+				Soundtrack.PlayEvent(ST_MISC, SOUNDTRACK_VICTORY_BOSS)
+			end
+		elseif battleEventName ~= SOUNDTRACK_CRITTER and battleEventName ~= SOUNDTRACK_UNKNOWN_BATTLE then
+			local victoryEvent = Soundtrack.GetEvent(ST_MISC, SOUNDTRACK_VICTORY)
+			if victoryEvent.soundEffect == true then
+				Soundtrack.PlayEvent(ST_MISC, SOUNDTRACK_VICTORY)
+				Soundtrack.StopEventAtLevel(ST_BATTLE_LVL)
+				Soundtrack.StopEventAtLevel(ST_BOSS_LVL)
+			else
+				Soundtrack.StopEventAtLevel(ST_BATTLE_LVL)
+				Soundtrack.StopEventAtLevel(ST_BOSS_LVL)
+				Soundtrack.PlayEvent(ST_MISC, SOUNDTRACK_VICTORY)
+			end
 		else
 			Soundtrack.StopEventAtLevel(ST_BATTLE_LVL)
 			Soundtrack.StopEventAtLevel(ST_BOSS_LVL)
-			Soundtrack.PlayEvent(ST_MISC, SOUNDTRACK_VICTORY)
 		end
-		hostileDeathCount = 0
-    else
+	else
 		Soundtrack.StopEventAtLevel(ST_BATTLE_LVL)
 		Soundtrack.StopEventAtLevel(ST_BOSS_LVL)
-        Soundtrack.StopEvent(ST_MISC, SOUNDTRACK_VICTORY)
-    end
+	end
+	hostileDeathCount = 0
 end
 
 local function StopCombatMusic()
     Soundtrack.TraceBattle("Stop Combat Music")
-    currentBattleTypeIndex = 0 -- we are out of battle
     StartVictoryMusic()
+    currentBattleTypeIndex = 0 -- we are out of battle
 end
 
 
@@ -479,12 +498,15 @@ function Soundtrack.BattleEvents.Initialize(self)
 	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_ELITE_MOB .."/5 Impossible", ST_BATTLE_LVL, true)
 	
 	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_BOSS_BATTLE, ST_BOSS_LVL, true)
-    Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_WORLD_BOSS_BATTLE, ST_BATTLE_LVL, true)
-    Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_PVP_BATTLE, ST_BATTLE_LVL, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUDNTRACK_BOSS_LOW_HEALTH, ST_BOSS_LVL, true)
+    Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_WORLD_BOSS_BATTLE, ST_BOSS_LVL, true)
+    Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_PVP_BATTLE, ST_BOSS_LVL, true)
 
+	
 	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_RARE, ST_BOSS_LVL, true)
 	
     Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_VICTORY, ST_BATTLE_LVL, false, true)
+	Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_VICTORY_BOSS, ST_BOSS_LVL, false, true)
     Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_DEATH, ST_DEATH_LVL, true, false)
     Soundtrack.AddEvent(ST_MISC, SOUNDTRACK_GHOST, ST_DEATH_LVL, true, false)
 	
