@@ -71,6 +71,7 @@ SOUNDTRACK_CRITTER = "Critter"
 
 SOUNDTRACK_RARE = "Rare"
 SOUNDTRACK_BOSS_BATTLE = "Batalla Repujado"
+SOUNDTRACK_BOSS_LOW_HEALTH = "Batalla Repujado Low Health"
 SOUNDTRACK_WORLD_BOSS_BATTLE = "Batalla Repujado del Mundo"
 SOUNDTRACK_PVP_BATTLE = "Batalla JcJ"
 
@@ -146,6 +147,7 @@ SOUNDTRACK_DOT_HIT = "Combate/Spell DoT"
 SOUNDTRACK_SWING_CRIT = "Combate/Swing Crit"
 SOUNDTRACK_SWING_HIT = "Combate/Swing"
 SOUNDTRACK_VICTORY = "Combate/Victoria"
+SOUNDTRACK_VICTORY_BOSS = "Combate/Victoria, Repujado"
 
 local n
 

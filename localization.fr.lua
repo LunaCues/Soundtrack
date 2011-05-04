@@ -67,6 +67,7 @@ SOUNDTRACK_CRITTER = "Bestiole"
 
 SOUNDTRACK_RARE = "Rare"
 SOUNDTRACK_BOSS_BATTLE = "Combat Boss"
+SOUNDTRACK_BOSS_LOW_HEALTH = "Combat Boss Low Health"
 SOUNDTRACK_WORLD_BOSS_BATTLE = "Combat World Boss"
 SOUNDTRACK_PVP_BATTLE = "Combat PvP"
 
@@ -142,6 +143,7 @@ SOUNDTRACK_DOT_HIT = "Combat/Spell DoT"
 SOUNDTRACK_SWING_CRIT = "Combat/Swing Crit"
 SOUNDTRACK_SWING_HIT = "Combat/Swing"
 SOUNDTRACK_VICTORY = "Combat/Victoire"
+SOUNDTRACK_VICTORY_BOSS = "Combat/Victoire, Boss"
 
 local n
 
