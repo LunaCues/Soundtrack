@@ -114,7 +114,40 @@ local function SoundtrackBattle_BossHasTracks(eventName)
 		if trackList then
 			local numTracks = table.getn(trackList)
 			if numTracks >= 1 then
-				Soundtrack.TraceBattle(eventName.." has tracks.")
+				return true
+			end
+		end
+	end
+	return false
+end
+
+local function SoundtrackBattle_BattleHasTracks(eventName)
+	if eventName == nil then
+		return false
+	end
+	local eventTable = Soundtrack.Events.GetTable(ST_BATTLE)
+	if eventTable[eventName] then
+		local trackList = eventTable[eventName].tracks
+		if trackList then
+			local numTracks = table.getn(trackList)
+			if numTracks >= 1 then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+local function SoundtrackBattle_MiscHasTracks(eventName)
+	if eventName == nil then
+		return false
+	end
+	local eventTable = Soundtrack.Events.GetTable(ST_MISC)
+	if eventTable[eventName] then
+		local trackList = eventTable[eventName].tracks
+		if trackList then
+			local numTracks = table.getn(trackList)
+			if numTracks >= 1 then
 				return true
 			end
 		end
@@ -164,6 +197,9 @@ function GetGroupEnemyLevel()
     local highestDifficulty = 1
     local highestClassification = 1
     local pvpEnabled = false
+	local isBoss = false
+	local bossName = nil
+	local hasLowHealth = false
     
     local bossTable = nil
 	local bossEventName = Soundtrack.Events.Stack[ST_BOSS_LVL].eventName
@@ -178,27 +214,27 @@ function GetGroupEnemyLevel()
         local unitExists = UnitExists(target)
         local unitIsEnemy = not UnitIsFriend("player", target)
         local unitIsAlive = not UnitIsDeadOrGhost(target)
-        
-        if unitExists and unitIsEnemy and unitIsAlive then
+        local unitAffectingCombat = UnitAffectingCombat(target)
+		
+        if unitExists and unitIsEnemy and unitIsAlive and unitAffectingCombat then
             
             if bossTable then
                 local unitName = UnitName(target)
                 local bossEvent = bossTable[unitName]
                 if bossEvent then
-					if UnitHealth(target)/UnitHealthMax(target) < .3 then
-						Soundtrack.PlayEvent(ST_BATTLE, SOUNDTRACK_BOSS_LOW_HEALTH)
-					elseif SoundtrackEvents_EventHasTracks(ST_BOSS, unitName) then
-						Soundtrack.PlayEvent(ST_BOSS, unitName)
-					else
-						Soundtrack.PlayEvent(ST_BATTLE, SOUNDTRACK_BOSS_BATTLE)
+					isBoss = true
+					if SoundtrackEvents_EventHasTracks(ST_BOSS, unitName) then
+						bossName = unitName
+					end
+					if UnitHealth(target)/UnitHealthMax(target) < .2 then
+						hasLowHealth = true
 					end
 				end
             end
             
-            
             -- Check for pvp
             if not pvpEnabled then
-                pvpEnabled = UnitIsPlayer("target") and UnitCanAttack("player", "target")
+                pvpEnabled = UnitIsPlayer(target) and UnitCanAttack("player", target)
             end
             
             -- Get the target level
@@ -214,6 +250,9 @@ function GetGroupEnemyLevel()
             
             -- Get the target classification
 			local unitClass = UnitCreatureType(target)
+			if unitClass == "worldboss" and UnitHealth(target)/UnitHealthMax(target) < .2 then
+				hasLowHealth = true
+			end
 			if unitClass ~= "Critter" then
 				unitClass = UnitClassification(target)
 			end
@@ -233,14 +272,14 @@ function GetGroupEnemyLevel()
     local classificationText = GetClassificationText(highestClassification)
     local difficultyText = GetDifficultyText(highestDifficulty)
     Soundtrack.TraceBattle("Mob detected: Difficulty: "..difficultyText..", Classification: "..classificationText)
-    return classificationText, difficultyText, pvpEnabled
+    return classificationText, difficultyText, pvpEnabled, isBoss, bossName, hasLowHealth
 end
 
 
 -- When the player is engaged in battle, this determines 
 -- the type of battle.
 local function GetBattleType()
-    local classification, difficulty, pvpEnabled = GetGroupEnemyLevel()
+    local classification, difficulty, pvpEnabled, isBoss, bossName, hasLowHealth = GetGroupEnemyLevel()
 
     if pvpEnabled then
         return SOUNDTRACK_PVP_BATTLE
@@ -249,8 +288,10 @@ local function GetBattleType()
 			return SOUNDTRACK_UNKNOWN_BATTLE
 		end
         local eventName = classification
-        if classification == "worldboss" then
-            return SOUNDTRACK_WORLD_BOSS_BATTLE  -- "World Boss Battle"
+		if isBoss then
+			return SOUNDTRACK_BOSS_BATTLE, bossName, hasLowHealth
+        elseif classification == "worldboss" then
+			return SOUNDTRACK_WORLD_BOSS_BATTLE  -- "World Boss Battle"
         elseif classification == "rareelite" or
                classification == "rare" then
             return SOUNDTRACK_RARE  -- "Rare"
@@ -344,19 +385,28 @@ local function IsPlayerReallyDead()
 end
 
 local function AnalyzeBattleSituation() 
-
-    local battleType = GetBattleType()
+    local battleType, bossName, hasLowHealth = GetBattleType()
     local battleTypeIndex = Soundtrack.IndexOf(battleEvents, battleType)
     -- If we're in cooldown, but a higher battle is already playing, keep that one, 
     -- otherwise we can escalate the battle music.
-    Soundtrack.TraceBattle("CurrentBattleTypeIndex: "..currentBattleTypeIndex.."  BattleTypeIndex: "..battleTypeIndex)
+    Soundtrack.TraceBattle("CurrentBattleTypeIndex: "..currentBattleTypeIndex.."  BattleType: "..battleType)
     if Soundtrack.Settings.EscalateBattleMusic then Soundtrack.TraceBattle("EscalateBattleMusic enabled") end
 	
     -- If we are out of combat, we play the battle event.
     -- If we are in combat, we only escalate if option is turned on
-    if currentBattleTypeIndex == 0 or 
-       (Soundtrack.Settings.EscalateBattleMusic and battleTypeIndex > currentBattleTypeIndex) then
-        Soundtrack.PlayEvent(ST_BATTLE, battleType)
+    if currentBattleTypeIndex == 0 or battleType == SOUNDTRACK_BOSS_BATTLE or
+		(Soundtrack.Settings.EscalateBattleMusic and battleTypeIndex > currentBattleTypeIndex) then
+		if battleType == SOUNDTRACK_BOSS_BATTLE then
+			if hasLowHealth and SoundtrackBattle_BattleHasTracks(SOUNDTRACK_BOSS_LOW_HEALTH) then 
+				Soundtrack.PlayEvent(ST_BATTLE, SOUNDTRACK_BOSS_LOW_HEALTH) 
+			elseif bossName ~= nil then
+				Soundtrack.PlayEvent(ST_BOSS, bossName)
+			else
+				Soundtrack.PlayEvent(ST_BATTLE, battleType)
+			end
+		else
+			Soundtrack.PlayEvent(ST_BATTLE, battleType)
+		end
         currentBattleTypeIndex = battleTypeIndex
     end
 end
@@ -376,7 +426,7 @@ function Soundtrack.BattleEvents.OnLoad(self)
 end
 
 local delayTime = 0
-local updateTime = .2
+local updateTime = .3
 
 function Soundtrack.BattleEvents.OnUpdate(self, elapsed)
 	local currentTime = GetTime()
@@ -498,10 +548,9 @@ function Soundtrack.BattleEvents.Initialize(self)
 	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_ELITE_MOB .."/5 Impossible", ST_BATTLE_LVL, true)
 	
 	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_BOSS_BATTLE, ST_BOSS_LVL, true)
-	Soundtrack.AddEvent(ST_BATTLE, SOUDNTRACK_BOSS_LOW_HEALTH, ST_BOSS_LVL, true)
+	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_BOSS_LOW_HEALTH, ST_BOSS_LVL, true)
     Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_WORLD_BOSS_BATTLE, ST_BOSS_LVL, true)
     Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_PVP_BATTLE, ST_BOSS_LVL, true)
-
 	
 	Soundtrack.AddEvent(ST_BATTLE, SOUNDTRACK_RARE, ST_BOSS_LVL, true)
 	
@@ -544,14 +593,10 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    false,
 	    function()
 	        if arg2 == "SWING_DAMAGE" and arg5 == UnitName("player") then	
-				if arg15 == nil then
+				if arg16 == nil then
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SWING_HIT)
-				else 
-					local eventTable = Soundtrack.Events.GetTable(ST_MISC) 
-					local numTracks = table.getn(eventTable[SOUNDTRACK_SWING_CRIT].tracks)
-					if numTracks == 0 then
-						Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SWING_HIT)
-					end
+				elseif arg16 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_SWING_CRIT) == false then
+					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SWING_HIT)
 				end
 			end
 	    end,
@@ -581,14 +626,10 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    false,
 	    function()
 	        if arg2 == "SPELL_DAMAGE" and arg5 == UnitName("player") then
-				if arg18 == nil then
+				if arg19 == nil then
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SPELL_HIT)
-				else
-					local eventTable = Soundtrack.Events.GetTable(ST_MISC) 
-					local numTracks = table.getn(eventTable[SOUNDTRACK_SPELL_CRIT].tracks)
-					if numTracks == 0 then
-						Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SPELL_HIT)
-					end
+				elseif arg19 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_SPELL_CRIT) == false then
+					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SPELL_HIT)
 				end
 			end
 	    end,
@@ -618,14 +659,10 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    false,
 	    function()
 	        if arg2 == "SPELL_PERIODIC_DAMAGE" and arg5 == UnitName("player") then
-				if arg18 == nil then
+				if arg19 == nil then
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_DOT_HIT)
-				else
-					local eventTable = Soundtrack.Events.GetTable(ST_MISC) 
-					local numTracks = table.getn(eventTable[SOUNDTRACK_DOT_CRIT].tracks)
-					if numTracks == 0 then
-						Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_DOT_HIT)
-					end
+				elseif arg19 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_DOT_CRIT) == false then
+					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_DOT_HIT)
 				end
 			end
 	    end,
@@ -641,7 +678,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    false,
 	    function()
 	        if arg2 == "SPELL_HEAL" and arg5 == UnitName("player") and arg16 == 1 then 
-					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HEAL_CRIT)
+				Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HEAL_CRIT)
 			end
 	    end,
 		true
@@ -655,14 +692,10 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    false,
 	    function()
 	        if arg2 == "SPELL_HEAL" and arg5 == UnitName("player") then 
-				if arg15 == nil then 
+				if arg16 == nil then 
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HEAL_HIT)
-				else
-					local eventTable = Soundtrack.Events.GetTable(ST_MISC) 
-					local numTracks = table.getn(eventTable[SOUNDTRACK_HEAL_CRIT].tracks)
-					if numTracks == 0 then
-						Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HEAL_HIT)
-					end
+				elseif arg16 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_HEAL_CRIT) == false then
+					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HEAL_HIT)
 				end
 			end
 	    end,
@@ -678,7 +711,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    false,
 	    function()
 	        if arg2 == "SPELL_PERIODIC_HEAL" and arg5 == UnitName("player") and arg16 == 1 then 
-					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HOT_CRIT)
+				Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HOT_CRIT)
 			end
 	    end,
 		true
@@ -692,14 +725,10 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    false,
 	    function()
 	        if arg2 == "SPELL_PERIODIC_HEAL" and arg5 == UnitName("player") then 
-				if arg15 == nil then 
+				if arg16 == nil then 
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HOT_HIT)
-				else
-					local eventTable = Soundtrack.Events.GetTable(ST_MISC) 
-					local numTracks = table.getn(eventTable[SOUNDTRACK_HOT_CRIT].tracks)
-					if numTracks == 0 then
-						Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HOT_HIT)
-					end
+				elseif arg16 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_HOT_CRIT) == false then
+					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HOT_HIT)
 				end
 			end
 	    end,
@@ -729,14 +758,10 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    false,
 	    function()
 	        if arg2 == "RANGE_DAMAGE" and arg5 == UnitName("player") then
-				if arg18 == nil then
+				if arg19 == nil then
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_RANGE_HIT)
-				else 
-					local eventTable = Soundtrack.Events.GetTable(ST_MISC) 
-					local numTracks = table.getn(eventTable[SOUNDTRACK_RANGE_CRIT].tracks)
-					if numTracks == 0 then
-						Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_RANGE_HIT)
-					end
+				elseif arg19 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_RANGE_CRIT) == false then
+					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_RANGE_HIT)
 				end
 			end
 	    end,
