@@ -26,6 +26,7 @@ Soundtrack_Tracks = nil
 Soundtrack_SortedTracks = {}
 
 local _SuspendSorting = false
+local _TracksLoaded = false
 
 function Soundtrack.IsNullOrEmpty(text)
     return not text or text == ""
@@ -334,9 +335,10 @@ local function OnVariablesLoaded(self)
     -- Load tracks in generated script if available
     Soundtrack_LoadDefaultTracks()
 
-	if Soundtrack_LoadMyTracks then
+	if Soundtrack_LoadMyTracks and not _TracksLoaded then
         Soundtrack_LoadMyTracks()
 		Soundtrack.Settings.UseDefaultLoadMyTracks = false;
+		_TracksLoaded = true
 	elseif not Soundtrack_LoadMyTracks and not Soundtrack.Settings.UseDefaultLoadMyTracks then 
 		StaticPopup_Show("ST_NO_LOADMYTRACKS_POPUP");
 		error(SOUNDTRACK_ERROR_LOADING) 
