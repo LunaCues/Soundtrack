@@ -133,17 +133,17 @@ function Soundtrack.Library.PlayTrack(trackName, soundEffect)
     if nextTrackInfo.defaultTrack then
         nextFileName = "Sound\\Music\\" .. trackName .. ".mp3"
     elseif nextTrackInfo.projectTrack then
-		if ogg then
+		if nextTrackInfo.ogg then
 			nextFileName = "Interface\\Addons\\"..trackName..".ogg"
-		elseif mp3 then
+		elseif nextTrackInfo.mp3 then
 			nextFileName = "Interface\\Addons\\"..trackName..".mp3"
 		else
 			nextFileName = "Interface\\Addons\\"..trackName..".mp3"
 		end
 	else
-		if ogg then
+		if nextTrackInfo.ogg then
 			nextFileName = "Interface\\AddOns\\SoundtrackMusic\\"..trackName..".ogg"
-		elseif mp3 then
+		elseif nextTrackInfo.mp3 then
 			nextFileName = "Interface\\AddOns\\SoundtrackMusic\\"..trackName..".mp3"
 		else
 			nextFileName = "Interface\\AddOns\\SoundtrackMusic\\"..trackName..".mp3"
