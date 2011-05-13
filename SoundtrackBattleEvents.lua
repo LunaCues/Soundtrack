@@ -214,10 +214,10 @@ function GetGroupEnemyLevel()
         local unitExists = UnitExists(target)
         local unitIsEnemy = not UnitIsFriend("player", target)
         local unitIsAlive = not UnitIsDeadOrGhost(target)
-        local unitAffectingCombat = UnitAffectingCombat(target)
 		
-        if unitExists and unitIsEnemy and unitIsAlive and unitAffectingCombat then
+        if unitExists and unitIsEnemy and unitIsAlive then
             
+			
             if bossTable then
                 local unitName = UnitName(target)
                 local bossEvent = bossTable[unitName]
@@ -250,13 +250,14 @@ function GetGroupEnemyLevel()
             
             -- Get the target classification
 			local unitClass = UnitCreatureType(target)
-			if unitClass == "worldboss" and UnitHealth(target)/UnitHealthMax(target) < .2 then
-				hasLowHealth = true
-			end
 			if unitClass ~= "Critter" then
 				unitClass = UnitClassification(target)
+				if unitClass == "worldboss" and UnitHealth(target)/UnitHealthMax(target) < .2 then
+					hasLowHealth = true
+				end
 			end
             local classificationLevel = GetClassificationLevel(unitClass)
+			Soundtrack.TraceBattle("classificationLevel: "..classificationLevel..", "..unitClass..", "..target)
             if classificationLevel > highestClassification then
                 highestClassification = classificationLevel
             end
@@ -271,7 +272,7 @@ function GetGroupEnemyLevel()
     
     local classificationText = GetClassificationText(highestClassification)
     local difficultyText = GetDifficultyText(highestDifficulty)
-    Soundtrack.TraceBattle("Mob detected: Difficulty: "..difficultyText..", Classification: "..classificationText)
+    Soundtrack.TraceBattle("Difficulty: "..difficultyText..", "..highestClassification.." "..classificationText)
     return classificationText, difficultyText, pvpEnabled, isBoss, bossName, hasLowHealth
 end
 
@@ -291,7 +292,7 @@ local function GetBattleType()
 		if isBoss then
 			return SOUNDTRACK_BOSS_BATTLE, bossName, hasLowHealth
         elseif classification == "worldboss" then
-			return SOUNDTRACK_WORLD_BOSS_BATTLE  -- "World Boss Battle"
+			return SOUNDTRACK_WORLD_BOSS_BATTLE, hasLowHealth  -- "World Boss Battle"
         elseif classification == "rareelite" or
                classification == "rare" then
             return SOUNDTRACK_RARE  -- "Rare"
@@ -396,7 +397,7 @@ local function AnalyzeBattleSituation()
     -- If we are in combat, we only escalate if option is turned on
     if currentBattleTypeIndex == 0 or battleType == SOUNDTRACK_BOSS_BATTLE or
 		(Soundtrack.Settings.EscalateBattleMusic and battleTypeIndex > currentBattleTypeIndex) then
-		if battleType == SOUNDTRACK_BOSS_BATTLE then
+		if battleType == SOUNDTRACK_BOSS_BATTLE or battleType == SOUNDTRACK_WORLD_BOSS then
 			if hasLowHealth and SoundtrackBattle_BattleHasTracks(SOUNDTRACK_BOSS_LOW_HEALTH) then 
 				Soundtrack.PlayEvent(ST_BATTLE, SOUNDTRACK_BOSS_LOW_HEALTH) 
 			elseif bossName ~= nil then
