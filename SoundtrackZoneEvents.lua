@@ -13,11 +13,11 @@ Soundtrack.ZoneEvents =
 -- Finds the continent name, based on the zone name
 local function FindContinentByZone(zoneName)
     -- TODO : Search zone list instead of relying on map
-	if zoneName == nil then return nil end
+	--if zoneName == nil then return nil end
 	
-    local eventTable = Soundtrack.Events.GetTable("Zone");
+    --local eventTable = Soundtrack.Events.GetTable("Zone");
 
-	inInstance, instanceType = IsInInstance();
+	local inInstance, instanceType = IsInInstance();
 	if inInstance then
 		if instanceType == "arena" or instanceType == "pvp" then
 			return "PvP";
@@ -27,6 +27,29 @@ local function FindContinentByZone(zoneName)
 		end
 	end
 	
+	-- Find the current continent
+	-- Save current map (in case world map is open)
+	local areaid = GetCurrentMapAreaID()
+	SetMapToCurrentZone()
+	local continentValue = GetCurrentMapContinent()
+	-- Will need to update this for new continents in future expansions
+	local con1, con2, con3, con4, con5, con6, con7, con8, con9, con10 = GetMapContinents()
+	-- Reset map
+	SetMapByID(areaid)
+	
+	if continentValue==1 then return con1
+	elseif continentValue==2 then return con2
+	elseif continentValue==3 then return con3
+	elseif continentValue==4 then return con4
+	elseif continentValue==5 then return con5
+	elseif continentValue==6 then return con6
+	elseif continentValue==7 then return con7
+	elseif continentValue==8 then return con8
+	elseif continentValue==9 then return con9
+	elseif continentValue==10 then return con10
+	end
+	
+	--[[
     if eventTable then 
         for k, v in pairs(eventTable) do
             -- Find tracks to remove
@@ -38,7 +61,8 @@ local function FindContinentByZone(zoneName)
             end
         end
     end
-    return "Instances";  -- Uncategorized stuff, usually is outside part of an instance
+	--]]
+    return "Uncategorized";  -- Uncategorized stuff, usually is outside part of an instance
 end
 
 -- After migration, zone events have no priorities set. We only
