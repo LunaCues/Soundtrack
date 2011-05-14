@@ -143,7 +143,8 @@ local _DefaultSettings =
 	LockNowPlayingFrame = false,
 	LockPlaybackControls = false,
 	HideControlButtons = false,
-	PlaybackButtonsPosition = "LEFT";
+	PlaybackButtonsPosition = "LEFT",
+	LowHealthPercent = .25;
 }
 
 
