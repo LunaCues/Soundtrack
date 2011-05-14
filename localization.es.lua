@@ -340,6 +340,9 @@ SOUNDTRACK_ESCALATE_BATTLE_TIP = "Si durante una batalla se detecta a un enemigo
 SOUNDTRACK_BATTLE_CD = "Batalla reutilizacion"
 SOUNDTRACK_BATTLE_CD_TIP = "El tiempo que toma para la musica de batalla para detener cuando se separan de la batalla."
 
+SOUNDTRACK_LOW_HEALTH_PERCENT = "Boss Low Health %"
+SOUNDTRACK_LOW_HEALTH_PERCENT_TIP = "The amount of health when Boss and World Boss events switch to Boss Low Health."
+
 SOUNDTRACK_LOOP_MUSIC = "Musica continua"
 SOUNDTRACK_LOOP_MUSIC_TIP = "Activar reproduccion de musica continua"
 

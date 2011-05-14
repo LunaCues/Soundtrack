@@ -335,6 +335,9 @@ SOUNDTRACK_ESCALATE_BATTLE_TIP = "Si au cours d'une bataille un ennemi plus fort
 SOUNDTRACK_BATTLE_CD = "Silence Combat"
 SOUNDTRACK_BATTLE_CD_TIP = "Le temps qu'il faut pour la musique de combat pour arreter au desengagement de la bataille."
 
+SOUNDTRACK_LOW_HEALTH_PERCENT = "Boss Low Health %"
+SOUNDTRACK_LOW_HEALTH_PERCENT_TIP = "The amount of health when Boss and World Boss events switch to Boss Low Health."
+
 SOUNDTRACK_LOOP_MUSIC = "Musique en boucle"
 SOUNDTRACK_LOOP_MUSIC_TIP = "Activer la lecture en boucle pour les pistes en arr. plan. C'est le meme parametre expose dans les options de son par defaut."
 

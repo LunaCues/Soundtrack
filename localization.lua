@@ -341,6 +341,9 @@ SOUNDTRACK_ESCALATE_BATTLE_TIP = "If during a battle a stronger enemy is detecte
 SOUNDTRACK_BATTLE_CD = "Battle Cooldown"
 SOUNDTRACK_BATTLE_CD_TIP = "The time it takes for battle music to stop when disengaged from battle."
 
+SOUNDTRACK_LOW_HEALTH_PERCENT = "Boss Low Health %"
+SOUNDTRACK_LOW_HEALTH_PERCENT_TIP = "The amount of health when Boss and World Boss events switch to Boss Low Health."
+
 SOUNDTRACK_LOOP_MUSIC = "Loop Music"
 SOUNDTRACK_LOOP_MUSIC_TIP = "Enable to continuously play background music. This is the same setting exposed in the default Sound options."
 
