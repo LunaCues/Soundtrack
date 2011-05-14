@@ -86,4 +86,5 @@ Added boss low health percent dropdown in Options tab.
 Added Ogg support to GenerateMyLibraryWindows.jar.
 Changed report feature; now report current song in two lines.
 Changed victory music; normal/elite mob victory, and bosses/pvp/rare victory.
+Changed how continents are found for adding zones.
 Updated arguments for 4.1 COMBAT_LOG_EVENT_UNFILTERED changes.
