@@ -1599,6 +1599,37 @@ function SoundtrackFrame_IsTrackActive(trackName)
 end
 
 
+local lowhealthpercents = { 0, .05, .1, .15, .20, .25, .3, .35, .4, .45, .5 }
+
+local function GetLowHealthPercents()
+	return {
+		"0%",
+		"5%",
+		"10%",
+		"15%",
+		"20%",
+		"25%",
+		"30%",
+		"35%",
+		"40%",
+		"45%",
+		"50%",
+	}
+end
+
+local function GetCurrentLowHealthPercent()
+    local i
+    for i=1, #(lowhealthpercents), 1 do
+        if (Soundtrack.Settings.LowHealthPercent == lowhealthpercents[i]) then
+            return i
+        end
+    end
+    
+    return 0
+end
+
+
+
 local cooldowns = { 0, 1, 2, 3, 5, 10, 15, 30 }
 
 local function GetBattleCooldowns()
@@ -1829,6 +1860,49 @@ function SoundtrackFrame_BattleCooldownDropDown_OnClick(self)
     -- Save settings.
     Soundtrack.Settings.BattleCooldown = cooldowns[SoundtrackFrame.selectedCooldown]
 end
+
+
+-- Low Health Percent
+
+function SoundtrackFrame_LowHealthPercentDropDown_OnLoad(self)
+    SoundtrackFrame.selectedLowHealthPercent = GetCurrentLowHealthPercent()
+    UIDropDownMenu_SetSelectedID(SoundtrackFrame_LowHealthPercentDropDown, SoundtrackFrame.selectedLowHealthPercent)
+    UIDropDownMenu_Initialize(SoundtrackFrame_LowHealthPercentDropDown, SoundtrackFrame_LowHealthPercentDropDown_Initialize)
+    UIDropDownMenu_SetWidth(SoundtrackFrame_LowHealthPercentDropDown, 130)
+end
+
+function SoundtrackFrame_LowHealthPercentDropDown_LoadPercents(lowHealthTexts)
+    local currentLowHealthPercent = SoundtrackFrame.selectedLowHealthPercent
+    local info
+    
+    for i=1, #(lowHealthTexts), 1 do
+        local checked = nil
+        if ( currentLowHealthPercent == i ) then
+            checked = 1
+			UIDropDownMenu_SetText(SoundtrackFrame_LowHealthPercentDropDown, lowHealthTexts[i])
+        end
+
+        info = {}
+        info.text = lowHealthTexts[i]
+        info.func = SoundtrackFrame_LowHealthPercentDropDown_OnClick
+        info.checked = checked
+        UIDropDownMenu_AddButton(info)
+    end
+end
+
+function SoundtrackFrame_LowHealthPercentDropDown_Initialize()
+    SoundtrackFrame_LowHealthPercentDropDown_LoadPercents(GetLowHealthPercents())    
+end
+
+function SoundtrackFrame_LowHealthPercentDropDown_OnClick(self)
+    UIDropDownMenu_SetSelectedID(SoundtrackFrame_LowHealthPercentDropDown, self:GetID())
+    SoundtrackFrame.selectedLowHealthPercent = self:GetID()
+    -- Save settings.
+    Soundtrack.Settings.LowHealthPercent = lowhealthpercents[SoundtrackFrame.selectedLowHealthPercent]
+end
+
+-- end low health percent
+
 
 
 function SoundtrackFrame_EventTypeDropDown_OnLoad(self)

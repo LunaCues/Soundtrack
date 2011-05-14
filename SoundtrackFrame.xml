@@ -2619,7 +2619,7 @@
                             <Anchors>
                                 <Anchor point="TOPLEFT">
                                     <Offset>
-                                        <AbsDimension x="300" y="-300"/>
+                                        <AbsDimension x="300" y="-320"/>
                                     </Offset>
                                 </Anchor>
                             </Anchors>
@@ -2896,7 +2896,7 @@
                         <Anchors>
                             <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_AutoEscalateBattleMusic" relativePoint="BOTTOMLEFT">
                                 <Offset>
-                                    <AbsDimension x="0" y="-21"/>
+                                    <AbsDimension x="0" y="-15"/>
                                 </Offset>
                             </Anchor>
                         </Anchors>
@@ -2930,9 +2930,47 @@
                         </Scripts>
                     </Frame>
 
-                    <CheckButton name="SoundtrackFrame_LoopMusic" inherits="OptionsCheckButtonTemplate">
+					<Frame name="SoundtrackFrame_LowHealthPercentDropDown" inherits="UIDropDownMenuTemplate" enableMouse="true">
                         <Anchors>
                             <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_BattleCooldownDropDown" relativePoint="BOTTOMLEFT">
+                                <Offset>
+                                    <AbsDimension x="0" y="-15"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Layers>
+                            <Layer level="BACKGROUND">
+                                <FontString name="$parentLabel" inherits="GameFontHighlightSmall" text="Boss Low Health Percent">
+                                    <Anchors>
+                                        <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+                                            <Offset>
+                                                <AbsDimension x="21" y="0"/>
+                                            </Offset>
+                                        </Anchor>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Scripts>
+                            <OnLoad>
+								_G[self:GetName().."Label"]:SetText(SOUNDTRACK_LOW_HEALTH_PERCENT);
+                                SoundtrackFrame_LowHealthPercentDropDown_OnLoad(self);
+                            </OnLoad>
+                            <OnShow>
+                                SoundtrackFrame_LowHealthPercentDropDown_OnLoad(self);
+                            </OnShow>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_LOW_HEALTH_PERCENT, SOUNDTRACK_LOW_HEALTH_PERCENT_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </Frame>
+					
+                    <CheckButton name="SoundtrackFrame_LoopMusic" inherits="OptionsCheckButtonTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_LowHealthPercentDropDown" relativePoint="BOTTOMLEFT">
                                 <Offset>
                                     <AbsDimension x="0" y="-10"/>
                                 </Offset>
