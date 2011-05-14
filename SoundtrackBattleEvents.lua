@@ -226,7 +226,7 @@ function GetGroupEnemyLevel()
 					if SoundtrackEvents_EventHasTracks(ST_BOSS, unitName) then
 						bossName = unitName
 					end
-					if UnitHealth(target)/UnitHealthMax(target) < .2 then
+					if UnitHealth(target)/UnitHealthMax(target) < Soundtrack.Settings.LowHealthPercent then
 						hasLowHealth = true
 					end
 				end
@@ -252,7 +252,7 @@ function GetGroupEnemyLevel()
 			local unitClass = UnitCreatureType(target)
 			if unitClass ~= "Critter" then
 				unitClass = UnitClassification(target)
-				if unitClass == "worldboss" and UnitHealth(target)/UnitHealthMax(target) < .2 then
+				if unitClass == "worldboss" and UnitHealth(target)/UnitHealthMax(target) < Soundtrack.Settings.LowHealthPercent then
 					hasLowHealth = true
 				end
 			end
