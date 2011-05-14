@@ -2,15 +2,11 @@
 	<Script>
 		function ST_Report(title, artist, album, channel, extra)
 			if channel == "WHISPER" or channel == "CHANNEL" then
-				SendChatMessage(title, channel, nil, extra)
-				SendChatMessage(artist, channel, nil, extra)
-				SendChatMessage(album, channel, nil, extra)
-			else if channel == "CHANNEL" then
-				SendChatMessage("Soundtrack - \'"..title.."\', \'"..artist.."\', \'"..album, channel, nil, extra)
+				SendChatMessage("Soundtrack - \""..title.."\"", channel, nil, extra)
+				SendChatMessage("\""..artist.."\",  \""..album.."\"", channel, nil, extra)
 			else
-				SendChatMessage(title, channel, nil, nil)
-				SendChatMessage(artist, channel, nil, nil)
-				SendChatMessage(album, channel, nil, nil)
+				SendChatMessage("Soundtrack - \""..title.."\"", channel, nil, nil)
+				SendChatMessage("\""..artist.."\",  \""..album.."\"", channel, nil, nil)
 			end
 		end
     </Script>	
