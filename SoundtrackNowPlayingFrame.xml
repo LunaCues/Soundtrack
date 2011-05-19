@@ -9,12 +9,8 @@
 			TrackTextBG1:SetText("|cff444444"..title);
 			AlbumTextBG1:SetText("|cff444444"..album);
 			ArtistTextBG1:SetText("|cff444444"..artist);
-			if UIFrameIsFading(NowPlayingTextFrame) then
-				UIFrameFlashRemoveFrame(NowPlayingTextFrame);
-				NowPlayingTextFrame:SetAlpha(1);
-			end 
+			UIFrameFlashStop(NowPlayingTextFrame);
 			UIFrameFlash(NowPlayingTextFrame, 1, 1, 10, false, 8, 0);
-			-- FadingFrame_Show();
 		end
     end
   </Script>
