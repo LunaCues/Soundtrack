@@ -2619,7 +2619,7 @@
                             <Anchors>
                                 <Anchor point="TOPLEFT">
                                     <Offset>
-                                        <AbsDimension x="300" y="-320"/>
+                                        <AbsDimension x="300" y="-350"/>
                                     </Offset>
                                 </Anchor>
                             </Anchors>
@@ -2892,9 +2892,29 @@
                             </OnLeave>
                         </Scripts>
                     </CheckButton>
-                    <Frame name="SoundtrackFrame_BattleCooldownDropDown" inherits="UIDropDownMenuTemplate" enableMouse="true">
+					<CheckButton name="SoundtrackFrame_YourEnemyLevelOnly" inherits="OptionsCheckButtonTemplate">
                         <Anchors>
                             <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_AutoEscalateBattleMusic" relativePoint="BOTTOMLEFT">
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_YOUR_ENEMY_LEVEL)
+                            </OnLoad>
+                            <OnClick>
+                                Soundtrack.Settings.YourEnemyLevelOnly = not Soundtrack.Settings.YourEnemyLevelOnly
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_YOUR_ENEMY_LEVEL, SOUNDTRACK_YOUR_ENEMY_LEVEL_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </CheckButton>
+                    <Frame name="SoundtrackFrame_BattleCooldownDropDown" inherits="UIDropDownMenuTemplate" enableMouse="true">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="SoundtrackFrame_YourEnemyLevelOnly" relativePoint="BOTTOMLEFT">
                                 <Offset>
                                     <AbsDimension x="0" y="-15"/>
                                 </Offset>
