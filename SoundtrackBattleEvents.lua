@@ -87,8 +87,8 @@ local function GetClassificationText(classificationLevel)
     return classifications[classificationLevel]
 end
 
--- Returns the difficulty of a target based on the level of the mob, compared
--- to the players level. (also known as the color of the mob).
+-- Returns the difficulty of a target based on the level of the mob, 
+-- compared to the players level. (also known as the color of the mob).
 local function GetDifficulty(target, targetLevel)
     local playerLevel = UnitLevel("player")
     if UnitIsTrivial(target) then 
@@ -162,7 +162,7 @@ function GetGroupEnemyLevel()
 
     local prefix
     local total
-    if GetNumRaidMembers() > 0 then
+	if GetNumRaidMembers() > 0 then
         prefix = "raid"
         total = GetNumRaidMembers()
     else
@@ -170,27 +170,36 @@ function GetGroupEnemyLevel()
         total = GetNumPartyMembers()
     end
     
-    -- add your party/raid members
+    -- create table of units
     local units = {} 
-    table.insert(units, "player") -- you
-    if total > 0 then
-        local index
-        for index = 1, total do 
-            table.insert(units, prefix..index) 
-        end
-    end
+	
+	-- add you!
+    table.insert(units, "player")
     
-    -- add your party/raid pets
+	-- add your party/raid members
+	if not Soundtrack.Settings.YourEnemyLevelOnly then
+		if total > 0 then
+			local index
+			for index = 1, total do 
+				table.insert(units, prefix..index) 
+			end
+		end
+	end
+    
+    -- add your pet
     if UnitExists("pet") then
         table.insert(units, "pet")
     end
     
-    local index
-    for index = 0, total do
-        if UnitExists(prefix.."pet"..index) then 
-            table.insert(units, prefix.."pet"..index) 
-        end
-    end
+    -- add your party/raid pets
+	if not Soundtrack.Settings.YourEnemyLevelOnly then
+		local index
+		for index = 0, total do
+			if UnitExists(prefix.."pet"..index) then 
+				table.insert(units, prefix.."pet"..index) 
+			end
+		end
+	end
     
     local unit
     local highestlevel = 1
@@ -208,7 +217,7 @@ function GetGroupEnemyLevel()
 	if bossEventName == nil or (bossEventName and not bossHasTracks) then
         bossTable = Soundtrack.Events.GetTable(ST_BOSS)
     end
-    
+	
     for index,unit in ipairs(units) do
         local target = unit .. "target"
         local unitExists = UnitExists(target)
@@ -216,29 +225,24 @@ function GetGroupEnemyLevel()
         local unitIsAlive = not UnitIsDeadOrGhost(target)
 		
         if unitExists and unitIsEnemy and unitIsAlive then
-            
+            local unitName = UnitName(target)
+			local bossEvent = bossTable[unitName]
+			local unitHealthPercent = UnitHealth(target)/UnitHealthMax(target)
+			local unitIsPlayer = UnitIsPlayer(target)
+			local unitCanAttack = UnitCanAttack("player", target)
+			local targetlevel = UnitLevel(target)
+			local unitIsCritter = UnitCreatureType(target)
+			local unitClass = UnitClassification(target)
+            local classificationLevel = GetClassificationLevel(unitClass)
+            local difficultyLevel = GetDifficulty(target, targetlevel)
 			
-            if bossTable then
-                local unitName = UnitName(target)
-                local bossEvent = bossTable[unitName]
-                if bossEvent then
-					isBoss = true
-					if SoundtrackEvents_EventHasTracks(ST_BOSS, unitName) then
-						bossName = unitName
-					end
-					if UnitHealth(target)/UnitHealthMax(target) < Soundtrack.Settings.LowHealthPercent then
-						hasLowHealth = true
-					end
-				end
-            end
-            
+			
             -- Check for pvp
             if not pvpEnabled then
-                pvpEnabled = UnitIsPlayer(target) and UnitCanAttack("player", target)
+                pvpEnabled = unitIsPlayer and unitCanAttack
             end
             
             -- Get the target level
-            local targetlevel = UnitLevel(target)
             if targetlevel then
                 if targetlevel == -1 then 
                     targetlevel = UnitLevel("player") + 10 -- at least 10 levels higher
@@ -249,23 +253,38 @@ function GetGroupEnemyLevel()
             end
             
             -- Get the target classification
-			local unitClass = UnitCreatureType(target)
-			if unitClass ~= "Critter" then
-				unitClass = UnitClassification(target)
-				if unitClass == "worldboss" and UnitHealth(target)/UnitHealthMax(target) < Soundtrack.Settings.LowHealthPercent then
+			if unitIsCritter ~= "Critter" then
+				if unitClass == "worldboss" and unitHealthPercent < Soundtrack.Settings.LowHealthPercent then
 					hasLowHealth = true
 				end
+			else
+				unitClass = unitIsCritter
 			end
-            local classificationLevel = GetClassificationLevel(unitClass)
-			Soundtrack.TraceBattle("classificationLevel: "..classificationLevel..", "..unitClass..", "..target)
+			
             if classificationLevel > highestClassification then
                 highestClassification = classificationLevel
             end
             
 			-- Get target difficulty
-            difficultyLevel = GetDifficulty(target, targetlevel)
             if difficultyLevel > highestDifficulty then
                 highestDifficulty = difficultyLevel
+            end
+			
+			-- Check if in the boss table
+            if bossTable then
+                if bossEvent then
+					Soundtrack.TraceBattle(unitName.." is a boss.")
+					isBoss = true
+					if SoundtrackEvents_EventHasTracks(ST_BOSS, unitName) then
+						bossName = unitName
+					end
+					if unitHealthPercent < Soundtrack.Settings.LowHealthPercent then
+						hasLowHealth = true
+					end
+					if bossEvent.worldboss then
+						unitClass = "worldboss"
+					end
+				end
             end
         end
     end
@@ -289,10 +308,10 @@ local function GetBattleType()
 			return SOUNDTRACK_UNKNOWN_BATTLE
 		end
         local eventName = classification
-		if isBoss then
+		if isBoss and classification ~= "worldboss" then
 			return SOUNDTRACK_BOSS_BATTLE, bossName, hasLowHealth
         elseif classification == "worldboss" then
-			return SOUNDTRACK_WORLD_BOSS_BATTLE, hasLowHealth  -- "World Boss Battle"
+			return SOUNDTRACK_WORLD_BOSS_BATTLE, bossName, hasLowHealth  -- "World Boss Battle"
         elseif classification == "rareelite" or
                classification == "rare" then
             return SOUNDTRACK_RARE  -- "Rare"
@@ -421,13 +440,14 @@ function Soundtrack.BattleEvents.OnLoad(self)
     self:RegisterEvent("PLAYER_UNGHOST")
     self:RegisterEvent("PLAYER_ALIVE")
     self:RegisterEvent("PLAYER_DEAD")
-    --self:RegisterEvent("UNIT_AURA")  -- Used for FeignDeath check only
+    --self:RegisterEvent("UNIT_AURA")  -- Used for FeignDeath check
     self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	self:RegisterEvent("VARIABLES_LOADED")
 end
 
 local delayTime = 0
-local updateTime = .3
+local updateTime = .2
 
 function Soundtrack.BattleEvents.OnUpdate(self, elapsed)
 	local currentTime = GetTime()
@@ -516,7 +536,22 @@ function Soundtrack.BattleEvents.OnEvent(self, event, ...)
             Soundtrack.PlayEvent(ST_MISC, SOUNDTRACK_DEATH)
         end
 		currentBattleTypeIndex = 0 -- out of combat
-    end
+    elseif event == "ZONE_CHANGED_NEW_AREA" then
+		Soundtrack.TraceBattle("ZONE_CHANGED_NEW_AREA")
+		local inInstance, instanceType = IsInInstance();
+		if inInstance and (instanceType == "party" or instanceType == "raid") then
+			local _, _, encountersTotal, _ = GetInstanceLockTimeRemaining()
+			for i=1, encountersTotal, 1 do
+				local bossName, _, _ = GetInstanceLockTimeRemainingEncounter(i)
+				Soundtrack.AddEvent(ST_BOSS, bossName, ST_BOSS_LVL, true)
+				local bossTable = Soundtrack.Events.GetTable(ST_BOSS)
+				local bossEvent = bossTable[bossName]
+				if instanceType == "raid" then
+					bossEvent.worldboss = true
+				end
+			end
+		end
+	end 
 end
 
 function Soundtrack.BattleEvents.RegisterEventScript(self, name, tableName, _trigger, _priority, _continuous, _script, _soundEffect)
