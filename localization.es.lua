@@ -337,6 +337,9 @@ SOUNDTRACK_AUTO_ADD_ZONES_TIP = "Añadir nuevas zonas a la lista de eventos de zo
 SOUNDTRACK_ESCALATE_BATTLE = "Escalar la musica de batalla"
 SOUNDTRACK_ESCALATE_BATTLE_TIP = "Si durante una batalla se detecta a un enemigo más fuerte, permite que la musica para cambiar a la musica de batalla más alto."
 
+SOUNDTRACK_YOUR_ENEMY_LEVEL = "Your Enemy Level Only"
+SOUNDTRACK_YOUR_ENEMY_LEVEL_TIP = "Only use you and your pet's target to calculate current enemy level."
+
 SOUNDTRACK_BATTLE_CD = "Batalla reutilizacion"
 SOUNDTRACK_BATTLE_CD_TIP = "El tiempo que toma para la musica de batalla para detener cuando se separan de la batalla."
 

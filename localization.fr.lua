@@ -332,6 +332,9 @@ SOUNDTRACK_AUTO_ADD_ZONES_TIP = "Ajoute de nouvelles zones a la liste des evenem
 SOUNDTRACK_ESCALATE_BATTLE = "Escalade Musique Combat"
 SOUNDTRACK_ESCALATE_BATTLE_TIP = "Si au cours d'une bataille un ennemi plus fort est detecte, la musique permet de passer a la musique de l'ennemi."
 
+SOUNDTRACK_YOUR_ENEMY_LEVEL = "Your Enemy Level Only"
+SOUNDTRACK_YOUR_ENEMY_LEVEL_TIP = "Only use you and your pet's target to calculate current enemy level."
+
 SOUNDTRACK_BATTLE_CD = "Silence Combat"
 SOUNDTRACK_BATTLE_CD_TIP = "Le temps qu'il faut pour la musique de combat pour arreter au desengagement de la bataille."
 
