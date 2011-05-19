@@ -76,9 +76,11 @@ SOUNDTRACK_REMOVE_BATTLE_TIP = "Supprime l'evenement selectionne de bataille."
 
 
 -- Bosses Tab
-SOUNDTRACK_ADD_TARGET = "Ajouter la cible"
+SOUNDTRACK_ADD_TARGET = "Ajouter la cible en Boss"
 SOUNDTRACK_ADD_TARGET_TIP = "Ajoute la cible a la liste, ou entrez le nom d'un PNJ pour l'ajouter a la liste."
 SOUNDTRACK_ADD_BOSS_TIP = "Ajouter nom du mob:"
+
+SOUNDTRACK_ADD_TARGET_WORLD_BOSS = "Ajouter la cible en World Boss"
 
 SOUNDTRACK_REMOVE_TARGET = "Supprimer cible"
 SOUNDTRACK_REMOVE_TARGET_TIP = "Supprime le mob cible sur la liste."
