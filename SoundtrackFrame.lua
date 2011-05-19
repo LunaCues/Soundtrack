@@ -852,7 +852,7 @@ function SoundtrackFrameAddZoneButton_OnClick()
     SoundtrackFrame_RefreshEvents()
 end
 
-function SoundtrackFrameAddTargetButton_OnClick()
+function SoundtrackFrameAddBossTargetButton_OnClick()
     local targetName = UnitName("target")
     if targetName then
         SoundtrackFrame_AddNamedBoss(targetName)
@@ -897,6 +897,58 @@ function SoundtrackFrame_AddNamedBoss(targetName)
     SoundtrackFrame_SelectedEvent = targetName
     SoundtrackFrame_RefreshEvents()
 end
+
+
+function SoundtrackFrameAddWorldBossTargetButton_OnClick()
+    local targetName = UnitName("target")
+    if targetName then
+        SoundtrackFrame_AddNamedWorldBoss(targetName)
+    else
+        StaticPopup_Show("SOUNDTRACK_ADD_WORLD_BOSS")
+    end
+end
+StaticPopupDialogs["SOUNDTRACK_ADD_WORLD_BOSS"] = {
+    text = SOUNDTRACK_ADD_BOSS_TIP,
+    button1 = TEXT(ACCEPT),
+    button2 = TEXT(CANCEL),
+    hasEditBox = 1,
+    maxLetters = 100,
+    OnAccept = function(self)
+        local editBox = _G[self:GetName().."EditBox"]
+        SoundtrackFrame_AddNamedWorldBoss(editBox:GetText())
+    end,
+    OnShow = function(self)
+        _G[self:GetName().."EditBox"]:SetFocus()
+    end,
+    OnHide = function(self)
+        if ( ChatFrame1EditBox:IsVisible() ) then
+            ChatFrame1EditBox:SetFocus()
+        end
+        _G[self:GetName().."EditBox"]:SetText("")
+    end,
+    EditBoxOnEnterPressed = function(self)
+        local editBox = _G[self:GetName().."EditBox"]
+        SoundtrackFrame_AddNamedWorldBoss(editBox:GetText())
+        self:Hide()
+    end,
+    EditBoxOnEscapePressed = function(self)
+        self:Hide()
+    end,
+    timeout = 0,
+    exclusive = 1,
+    whileDead = 1,
+    hideOnEscape = 0
+}
+function SoundtrackFrame_AddNamedWorldBoss(targetName)
+    Soundtrack.AddEvent("Boss", targetName, ST_BOSS_LVL, true)
+	local bossTable = Soundtrack.Events.GetTable(ST_BOSS)
+	local bossEvent = bossTable[targetName]
+	bossEvent.worldboss = true
+    SoundtrackFrame_SelectedEvent = targetName
+    SoundtrackFrame_RefreshEvents()
+end
+
+
 
 -- Added by Lunaqua
 function SoundtrackFrameRemoveZoneButton_OnClick()
@@ -1284,10 +1336,12 @@ function SoundtrackFrame_OnTabChanged()
         
         
         if SEVT.SelectedEventsTable == "Boss" then
-            SoundtrackFrameAddTargetButton:Show()
+            SoundtrackFrameAddBossTargetButton:Show()
+            SoundtrackFrameAddWorldBossTargetButton:Show()
             SoundtrackFrameDeleteTargetButton:Show()
         else
-            SoundtrackFrameAddTargetButton:Hide()
+            SoundtrackFrameAddBossTargetButton:Hide()
+            SoundtrackFrameAddWorldBossTargetButton:Hide()
             SoundtrackFrameDeleteTargetButton:Hide()
         end
         

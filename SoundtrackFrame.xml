@@ -1228,12 +1228,12 @@
                     </Frame>
                     <Button name="SoundtrackFrameCopyCopiedTracksButton" inherits="UIPanelButtonTemplate" text="Copy">
 						<Size>
-                            <AbsDimension x="75" y="22"/>
+                            <AbsDimension x="65" y="22"/>
                         </Size>
                         <Anchors>
                             <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SoundtrackFrameEventList">
                                 <Offset>
-                                    <AbsDimension x="5" y="-40"/>
+                                    <AbsDimension x="5" y="-60"/>
                                 </Offset>
                             </Anchor>
                         </Anchors>
@@ -1254,7 +1254,7 @@
 					</Button>
 					<Button name="SoundtrackFramePasteCopiedTracksButton" inherits="UIPanelButtonTemplate" text="Paste">
 						<Size>
-                            <AbsDimension x="75" y="22"/>
+                            <AbsDimension x="65" y="22"/>
                         </Size>
                         <Anchors>
                             <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="SoundtrackFrameCopyCopiedTracksButton">
@@ -1280,10 +1280,10 @@
 					</Button>
 					<Button name="SoundtrackFrameClearCopiedTracksButton" inherits="UIPanelButtonTemplate" text="Paste">
 						<Size>
-                            <AbsDimension x="75" y="22"/>
+                            <AbsDimension x="65" y="22"/>
                         </Size>
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SoundtrackFrameCopyCopiedTracksButton">
+                            <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="SoundtrackFramePasteCopiedTracksButton">
                                 <Offset>
                                     <AbsDimension x="0" y="0"/>
                                 </Offset>
@@ -1436,7 +1436,7 @@
                             </OnLeave>
                         </Scripts>
                     </Button>
-                    <Button name="SoundtrackFrameAddTargetButton" inherits="UIPanelButtonTemplate" text="Add Target">
+                    <Button name="SoundtrackFrameAddBossTargetButton" inherits="UIPanelButtonTemplate" text="Add Boss">
                         <Size>
                             <AbsDimension x="50" y="22"/>
                         </Size>
@@ -1452,10 +1452,36 @@
                                 _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ADD_BUTTON);
                             </OnLoad>
                             <OnClick>
-                                SoundtrackFrameAddTargetButton_OnClick();
+                                SoundtrackFrameAddBosTargetButton_OnClick();
                             </OnClick>
                             <OnEnter>
                                 Soundtrack.ShowTip(self, SOUNDTRACK_ADD_TARGET, SOUNDTRACK_ADD_TARGET_TIP)
+                            </OnEnter>
+                            <OnLeave>
+                                Soundtrack.HideTip();
+                            </OnLeave>
+                        </Scripts>
+                    </Button>
+                    <Button name="SoundtrackFrameAddWorldBossTargetButton" inherits="UIPanelButtonTemplate" text="Add World Boss">
+                        <Size>
+                            <AbsDimension x="50" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="RIGHT" relativePoint="LEFT" relativeTo="SoundtrackFrameAddBossTargetButton">
+                                <Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+							<OnLoad>
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ADD_BUTTON);
+                            </OnLoad>
+                            <OnClick>
+                                SoundtrackFrameAddWorldBosTargetButton_OnClick();
+                            </OnClick>
+                            <OnEnter>
+                                Soundtrack.ShowTip(self, SOUNDTRACK_ADD_TARGET_WORLD_BOSS, SOUNDTRACK_ADD_TARGET_TIP)
                             </OnEnter>
                             <OnLeave>
                                 Soundtrack.HideTip();
@@ -1467,7 +1493,7 @@
                             <AbsDimension x="75" y="22"/>
                         </Size>
                         <Anchors>
-                            <Anchor point="RIGHT" relativeTo="SoundtrackFrameAddTargetButton" relativePoint="LEFT">
+                            <Anchor point="RIGHT" relativeTo="SoundtrackFrameAddWorldBossTargetButton" relativePoint="LEFT">
                                 <Offset>
                                     <AbsDimension x="0" y="0"/>
                                 </Offset>
