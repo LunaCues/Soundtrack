@@ -144,7 +144,8 @@ local _DefaultSettings =
 	LockPlaybackControls = false,
 	HideControlButtons = false,
 	PlaybackButtonsPosition = "LEFT",
-	LowHealthPercent = .25;
+	LowHealthPercent = .25,
+	YourEnemyLevelOnly = false;
 }
 
 
