@@ -72,6 +72,7 @@ SOUNDTRACK_CRITTER = "Critter"
 SOUNDTRACK_RARE = "Rare"
 SOUNDTRACK_BOSS_BATTLE = "Boss Battle"
 SOUNDTRACK_BOSS_LOW_HEALTH = "Boss Low Health"
+SOUNDTRACK_LOW_HEALTH = "Low Health"
 SOUNDTRACK_WORLD_BOSS_BATTLE = "World Boss Battle"
 SOUNDTRACK_PVP_BATTLE = "PvP Battle"
 
@@ -80,11 +81,12 @@ SOUNDTRACK_REMOVE_BATTLE_TIP = "Removes the selected battle event."
 
 
 -- Bosses Tab
-SOUNDTRACK_ADD_TARGET = "Add Target as Boss"
+SOUNDTRACK_ADD_TARGET_PARTY_BUTTON = "Add Party"
+SOUNDTRACK_ADD_TARGET_RAID_BUTTON = "Add Raid"
+SOUNDTRACK_ADD_TARGET_PARTY = "Add Target as Party Boss"
+SOUNDTRACK_ADD_TARGET_RAID = "Add Target as Raid Boss"
 SOUNDTRACK_ADD_TARGET_TIP = "Adds the currently targeted mob to the list, or enter the name of a mob to add to the list."
 SOUNDTRACK_ADD_BOSS_TIP = "Add named mob:"
-
-SOUNDTRACK_ADD_TARGET_WORLD_BOSS = "Add Target as World Boss"
 
 SOUNDTRACK_REMOVE_TARGET = "Remove Target"
 SOUNDTRACK_REMOVE_TARGET_TIP = "Removes the selected mob from the list."

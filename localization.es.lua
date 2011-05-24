@@ -52,7 +52,7 @@ SOUNDTRACK_REMOVE_TRACK = "Eliminar cancion"
 
 
 -- Button Names
-SOUNDTRACK_ADD_BUTTON = "Sumar"
+SOUNDTRACK_ADD_BUTTON = "Adjuntar"
 SOUNDTRACK_REMOVE_BUTTON = "Alejar"
 SOUNDTRACK_EDIT_BUTTON = "Editar"
 SOUNDTRACK_RENAME_BUTTON = "Llamar"
@@ -72,6 +72,7 @@ SOUNDTRACK_CRITTER = "Critter"
 SOUNDTRACK_RARE = "Rare"
 SOUNDTRACK_BOSS_BATTLE = "Batalla Repujado"
 SOUNDTRACK_BOSS_LOW_HEALTH = "Batalla Repujado Low Health"
+SOUNDTRACK_LOW_HEALTH = "Low Health"
 SOUNDTRACK_WORLD_BOSS_BATTLE = "Batalla Repujado del Mundo"
 SOUNDTRACK_PVP_BATTLE = "Batalla JcJ"
 
@@ -80,11 +81,13 @@ SOUNDTRACK_REMOVE_BATTLE_TIP = "Removes the selected battle event."
 
 
 -- Bosses Tab
-SOUNDTRACK_ADD_TARGET = "Add Target as Repujado"
+SOUNDTRACK_ADD_TARGET_PARTY_BUTTON = "Adjuntar Party"
+SOUNDTRACK_ADD_TARGET_RAID_BUTTON = "Adjuntar Raid"
+SOUNDTRACK_ADD_TARGET_PARTY = "Adjuntar el objetivo en Repujado Party"
+SOUNDTRACK_ADD_TARGET_RAID = "Adjuntar el objetivo en Repujado Raid"
+SOUNDTRACK_ADD_TARGET = "Adjuntar el objetivo as Repujado"
 SOUNDTRACK_ADD_TARGET_TIP = "Adds the currently targeted mob to the list, or enter the name of a mob to add to the list."
 SOUNDTRACK_ADD_BOSS_TIP = "Add named mob:"
-
-SOUNDTRACK_ADD_TARGET_WORLD_BOSS = "Add Target as Repujado del Mundo"
 
 SOUNDTRACK_REMOVE_TARGET = "Remove Target"
 SOUNDTRACK_REMOVE_TARGET_TIP = "Removes the selected mob from the list."
