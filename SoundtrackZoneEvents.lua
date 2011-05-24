@@ -32,10 +32,9 @@ local function FindContinentByZone(zoneName)
 	local areaid = GetCurrentMapAreaID()
 	SetMapToCurrentZone()
 	local continentValue = GetCurrentMapContinent()
+	SetMapByID(areaid)
 	-- Will need to update this for new continents in future expansions
 	local con1, con2, con3, con4, con5, con6, con7, con8, con9, con10 = GetMapContinents()
-	-- Reset map
-	SetMapByID(areaid)
 	
 	if continentValue==1 then return con1
 	elseif continentValue==2 then return con2
