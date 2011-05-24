@@ -1436,9 +1436,9 @@
                             </OnLeave>
                         </Scripts>
                     </Button>
-                    <Button name="SoundtrackFrameAddBossTargetButton" inherits="UIPanelButtonTemplate" text="Add Boss">
+                    <Button name="SoundtrackFrameAddBossTargetButton" inherits="UIPanelButtonTemplate" text="Add Party Boss">
                         <Size>
-                            <AbsDimension x="50" y="22"/>
+                            <AbsDimension x="100" y="22"/>
                         </Size>
                         <Anchors>
                             <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="SoundtrackFrameEventList">
@@ -1449,25 +1449,25 @@
                         </Anchors>
                         <Scripts>
 							<OnLoad>
-                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ADD_BUTTON);
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ADD_TARGET_PARTY_BUTTON);
                             </OnLoad>
                             <OnClick>
                                 SoundtrackFrameAddBosTargetButton_OnClick();
                             </OnClick>
                             <OnEnter>
-                                Soundtrack.ShowTip(self, SOUNDTRACK_ADD_TARGET, SOUNDTRACK_ADD_TARGET_TIP)
+                                Soundtrack.ShowTip(self, SOUNDTRACK_ADD_TARGET_PARTY, SOUNDTRACK_ADD_TARGET_TIP)
                             </OnEnter>
                             <OnLeave>
                                 Soundtrack.HideTip();
                             </OnLeave>
                         </Scripts>
                     </Button>
-                    <Button name="SoundtrackFrameAddWorldBossTargetButton" inherits="UIPanelButtonTemplate" text="Add World Boss">
+                    <Button name="SoundtrackFrameAddWorldBossTargetButton" inherits="UIPanelButtonTemplate" text="Add Raid Boss">
                         <Size>
-                            <AbsDimension x="50" y="22"/>
+                            <AbsDimension x="100" y="22"/>
                         </Size>
                         <Anchors>
-                            <Anchor point="RIGHT" relativePoint="LEFT" relativeTo="SoundtrackFrameAddBossTargetButton">
+                            <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="SoundtrackFrameAddBossTargetButton">
                                 <Offset>
                                     <AbsDimension x="0" y="0"/>
                                 </Offset>
@@ -1475,13 +1475,13 @@
                         </Anchors>
                         <Scripts>
 							<OnLoad>
-                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ADD_BUTTON);
+                                _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ADD_TARGET_RAID_BUTTON);
                             </OnLoad>
                             <OnClick>
                                 SoundtrackFrameAddWorldBosTargetButton_OnClick();
                             </OnClick>
                             <OnEnter>
-                                Soundtrack.ShowTip(self, SOUNDTRACK_ADD_TARGET_WORLD_BOSS, SOUNDTRACK_ADD_TARGET_TIP)
+                                Soundtrack.ShowTip(self, SOUNDTRACK_ADD_TARGET_RAID, SOUNDTRACK_ADD_TARGET_TIP)
                             </OnEnter>
                             <OnLeave>
                                 Soundtrack.HideTip();
@@ -1493,7 +1493,7 @@
                             <AbsDimension x="75" y="22"/>
                         </Size>
                         <Anchors>
-                            <Anchor point="RIGHT" relativeTo="SoundtrackFrameAddWorldBossTargetButton" relativePoint="LEFT">
+                            <Anchor point="RIGHT" relativeTo="SoundtrackFrameAddBossTargetButton" relativePoint="LEFT">
                                 <Offset>
                                     <AbsDimension x="0" y="0"/>
                                 </Offset>
