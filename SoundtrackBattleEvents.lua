@@ -417,8 +417,14 @@ local function AnalyzeBattleSituation()
     if currentBattleTypeIndex == 0 or battleType == SOUNDTRACK_BOSS_BATTLE or
 		(Soundtrack.Settings.EscalateBattleMusic and battleTypeIndex > currentBattleTypeIndex) then
 		if battleType == SOUNDTRACK_BOSS_BATTLE or battleType == SOUNDTRACK_WORLD_BOSS then
-			if hasLowHealth and SoundtrackBattle_BattleHasTracks(SOUNDTRACK_BOSS_LOW_HEALTH) then 
-				Soundtrack.PlayEvent(ST_BATTLE, SOUNDTRACK_BOSS_LOW_HEALTH) 
+			if hasLowHealth and 
+			  (SoundtrackBattle_BattleHasTracks(SOUNDTRACK_BOSS_LOW_HEALTH) or 
+			  SoundtrackBattle_BossHasTracks(bossName.." "..SOUNDTRACK_LOW_HEALTH) ) then 
+				if SoundtrackBattle_BossHasTracks(bossName.." "..SOUNDTRACK_LOW_HEALTH) then
+					Soundtrack.PlayEvent(ST_BOSS, bossName.." "..SOUNDTRACK_LOW_HEALTH)
+				else
+					Soundtrack.PlayEvent(ST_BATTLE, SOUNDTRACK_BOSS_LOW_HEALTH) 
+				end
 			elseif bossName ~= nil then
 				Soundtrack.PlayEvent(ST_BOSS, bossName)
 			else
@@ -504,8 +510,10 @@ function Soundtrack.BattleEvents.OnEvent(self, event, ...)
 		else
 			if Soundtrack.Settings.EnableMiscMusic then
 				for k,v in pairs(Soundtrack_BattleEvents) do
-					RunScript(v.script)
-					v.script()
+					if SoundtrackBattle_MiscHasTracks(v) then
+						--RunScript(v.script)
+						v.script()
+					end
 				end
 			end
 		end
@@ -543,11 +551,15 @@ function Soundtrack.BattleEvents.OnEvent(self, event, ...)
 			local _, _, encountersTotal, _ = GetInstanceLockTimeRemaining()
 			for i=1, encountersTotal, 1 do
 				local bossName, _, _ = GetInstanceLockTimeRemainingEncounter(i)
+				local lowhealthbossname = bossName.." "..SOUNDTRACK_LOW_HEALTH
 				Soundtrack.AddEvent(ST_BOSS, bossName, ST_BOSS_LVL, true)
+				Soundtrack.AddEvent(ST_BOSS, lowhealthbossname, ST_BOSS_LVL, true)
 				local bossTable = Soundtrack.Events.GetTable(ST_BOSS)
 				local bossEvent = bossTable[bossName]
+				local bossEventLowHealth = bossTable[lowhealthbossname]
 				if instanceType == "raid" then
 					bossEvent.worldboss = true
+					lowhealthbossname.worldboss = true
 				end
 			end
 		end
