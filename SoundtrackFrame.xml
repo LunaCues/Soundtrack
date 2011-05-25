@@ -1233,7 +1233,7 @@
                         <Anchors>
                             <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="SoundtrackFrameEventList">
                                 <Offset>
-                                    <AbsDimension x="5" y="-60"/>
+                                    <AbsDimension x="5" y="-75"/>
                                 </Offset>
                             </Anchor>
                         </Anchors>
@@ -1307,7 +1307,7 @@
 					
 					<Button name="SoundtrackFrameAddPlaylistButton" inherits="UIPanelButtonTemplate" text="Add">
                         <Size>
-                            <AbsDimension x="50" y="22"/>
+                            <AbsDimension x="100" y="22"/>
                         </Size>
                         <Anchors>
                             <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="SoundtrackFrameEventList">
@@ -1359,7 +1359,7 @@
                     </Button> <--> 
 					<Button name="SoundtrackFrameDeletePlaylistButton" inherits="UIPanelButtonTemplate" text="Remove">
                         <Size>
-                            <AbsDimension x="75" y="22"/>
+                            <AbsDimension x="100" y="22"/>
                         </Size>
                         <Anchors>
 							<!--><Anchor point="RIGHT" relativeTo="SoundtrackFrameRenamePlaylistButton" relativePoint="LEFT"><-->
@@ -1386,7 +1386,7 @@
                     </Button>                    
                     <Button name="SoundtrackFrameAddZoneButton" inherits="UIPanelButtonTemplate" text="Add">
                         <Size>
-                            <AbsDimension x="50" y="22"/>
+                            <AbsDimension x="100" y="22"/>
                         </Size>
                         <Anchors>
                             <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="SoundtrackFrameEventList">
@@ -1412,7 +1412,7 @@
                     </Button>
 					<Button name="SoundtrackFrameRemoveZoneButton" inherits="UIPanelButtonTemplate" text="Remove">
                         <Size>
-                            <AbsDimension x="75" y="22"/>
+                            <AbsDimension x="100" y="22"/>
                         </Size>
                         <Anchors>
                             <Anchor point="RIGHT" relativeTo="SoundtrackFrameAddZoneButton" relativePoint="LEFT">
@@ -1438,7 +1438,7 @@
                     </Button>
                     <Button name="SoundtrackFrameAddBossTargetButton" inherits="UIPanelButtonTemplate" text="Add Party Boss">
                         <Size>
-                            <AbsDimension x="100" y="22"/>
+                            <AbsDimension x="110" y="22"/>
                         </Size>
                         <Anchors>
                             <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="SoundtrackFrameEventList">
@@ -1452,7 +1452,7 @@
                                 _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ADD_TARGET_PARTY_BUTTON);
                             </OnLoad>
                             <OnClick>
-                                SoundtrackFrameAddBosTargetButton_OnClick();
+                                SoundtrackFrameAddBossTargetButton_OnClick();
                             </OnClick>
                             <OnEnter>
                                 Soundtrack.ShowTip(self, SOUNDTRACK_ADD_TARGET_PARTY, SOUNDTRACK_ADD_TARGET_TIP)
@@ -1464,7 +1464,7 @@
                     </Button>
                     <Button name="SoundtrackFrameAddWorldBossTargetButton" inherits="UIPanelButtonTemplate" text="Add Raid Boss">
                         <Size>
-                            <AbsDimension x="100" y="22"/>
+                            <AbsDimension x="110" y="22"/>
                         </Size>
                         <Anchors>
                             <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="SoundtrackFrameAddBossTargetButton">
@@ -1478,7 +1478,7 @@
                                 _G[self:GetName().."Text"]:SetText(SOUNDTRACK_ADD_TARGET_RAID_BUTTON);
                             </OnLoad>
                             <OnClick>
-                                SoundtrackFrameAddWorldBosTargetButton_OnClick();
+                                SoundtrackFrameAddWorldBossTargetButton_OnClick();
                             </OnClick>
                             <OnEnter>
                                 Soundtrack.ShowTip(self, SOUNDTRACK_ADD_TARGET_RAID, SOUNDTRACK_ADD_TARGET_TIP)
@@ -1490,7 +1490,7 @@
                     </Button>
                     <Button name="SoundtrackFrameDeleteTargetButton" inherits="UIPanelButtonTemplate" text="Delete">
                         <Size>
-                            <AbsDimension x="75" y="22"/>
+                            <AbsDimension x="90" y="22"/>
                         </Size>
                         <Anchors>
                             <Anchor point="RIGHT" relativeTo="SoundtrackFrameAddBossTargetButton" relativePoint="LEFT">
@@ -1516,7 +1516,7 @@
                     </Button>
                     <Button name="SoundtrackFrameAddCustomEventButton" inherits="UIPanelButtonTemplate" text="Add">
                         <Size>
-                            <AbsDimension x="50" y="22"/>
+                            <AbsDimension x="100" y="22"/>
                         </Size>
                         <Anchors>
                             <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="SoundtrackFrameEventList">
@@ -1542,10 +1542,13 @@
                     </Button>
                     <Button name="SoundtrackFrameEditCustomEventButton" inherits="UIPanelButtonTemplate" text="Edit">
                         <Size>
-                            <AbsDimension x="70" y="22"/>
+                            <AbsDimension x="100" y="22"/>
                         </Size>
                         <Anchors>
-                            <Anchor point="RIGHT" relativeTo="SoundtrackFrameAddCustomEventButton" relativePoint="LEFT">
+                            <Anchor point="TOPRIGHT" relativeTo="SoundtrackFrameAddCustomEventButton" relativePoint="BOTTOMRIGHT">
+                                <Offset>
+                                    <AbsDimension x="-50" y="0"/>
+                                </Offset>
                             </Anchor>
                         </Anchors>
                         <Scripts>
@@ -1565,13 +1568,10 @@
                     </Button>
                     <Button name="SoundtrackFrameDeleteCustomEventButton" inherits="UIPanelButtonTemplate" text="Delete">
                         <Size>
-                            <AbsDimension x="75" y="22"/>
+                            <AbsDimension x="100" y="22"/>
                         </Size>
                         <Anchors>
-                            <Anchor point="RIGHT" relativeTo="SoundtrackFrameEditCustomEventButton" relativePoint="LEFT">
-                                <Offset>
-                                    <AbsDimension x="0" y="0"/>
-                                </Offset>
+                            <Anchor point="RIGHT" relativeTo="SoundtrackFrameAddCustomEventButton" relativePoint="LEFT">
                             </Anchor>
                         </Anchors>
                         <Scripts>

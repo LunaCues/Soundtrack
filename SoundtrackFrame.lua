@@ -464,6 +464,7 @@ function SoundtrackFrame_RefreshOptionsFrame()
     SoundtrackFrame_ShowEventStack:SetChecked(s.ShowEventStack)
     SoundtrackFrame_AutoAddZones:SetChecked(s.AutoAddZones)
     SoundtrackFrame_AutoEscalateBattleMusic:SetChecked(s.EscalateBattleMusic)
+	SoundtrackFrame_YourEnemyLevelOnly:SetChecked(s.YourEnemyLevelOnly)
     
     SoundtrackFrame_EnableZoneMusic:SetChecked(s.EnableZoneMusic)
     SoundtrackFrame_EnableBattleMusic:SetChecked(s.EnableBattleMusic)
@@ -482,10 +483,14 @@ function SoundtrackFrame_RefreshOptionsFrame()
 end
 
 function SoundtrackFrame_ToggleLoopMusic()
-    if SoundtrackFrame_LoopMusic:GetChecked() == true then
-        SetCVar("Sound_ZoneMusicNoDelay", "1")
+    if SoundtrackFrame_LoopMusic:GetChecked() == 1 then
+        SetCVar("Sound_ZoneMusicNoDelay", 1, "SoundtrackSound_ZoneMusicNoDelay_1")
+		local cvar_LoopMusic = GetCVar("Sound_ZoneMusicNoDelay")
+		Soundtrack.TraceFrame("Sound_ZoneMusicNoDelay: " .. cvar_LoopMusic)
     else
-        SetCVar("Sound_ZoneMusicNoDelay", "0")
+        SetCVar("Sound_ZoneMusicNoDelay", 0, "SoundtrackSound_ZoneMusicNoDelay_0")
+		local cvar_LoopMusic = GetCVar("Sound_ZoneMusicNoDelay")
+		Soundtrack.TraceFrame("Sound_ZoneMusicNoDelay: " .. cvar_LoopMusic)
     end
 end
 
@@ -976,7 +981,7 @@ StaticPopupDialogs["SOUNDTRACK_REMOVE_ZONE_POPUP"] = {
 }
 
 
-function SoundtrackFrameAddPlaylistButton_OnClick()
+function SoundtrackFrameAddPlaylistButton_OnClick(self)
 	StaticPopup_Show("SOUNDTRACK_ADD_PLAYLIST_POPUP")
 end
 function SoundtrackFrame_AddPlaylist(playlistName)
@@ -2338,6 +2343,66 @@ function SoundtrackFrame_MoveAssignedTrack(direction)
 end
 
 function SoundtrackFrameAddCustomEventButton_OnClick(self)
+	StaticPopup_Show("SOUNDTRACK_ADD_CUSTOM_POPUP")
+end
+function SoundtrackFrame_AddCustomEvent(eventName, self)
+    _G["SoundtrackFrameRightPanelTracks"]:Hide()
+    _G["SoundtrackFrameRightPanelEditEvent"]:Show()
+	
+	if eventName == "" then
+		local name = "New Event"
+		local index = 1
+		
+		local indexedName = name .. " " .. index
+		
+		while Soundtrack.GetEvent("Custom", indexedName) ~= nil do
+			index = index + 1
+			indexedName = name .. " " .. index
+		end
+		
+		eventName = indexedName
+	end
+	
+    local script = "-- Custom script\n"
+		.. "Soundtrack_Custom_PlayEvent(\"Custom\", " .. eventName .. ") \n"
+		.. "Soundtrack_Custom_StopEvent(\"Custom\", " .. eventName .. ") \n"
+    
+    Soundtrack.CustomEvents.RegisterEventScript(self, eventName, "Custom", "UNIT_AURA", 4, true, script) 
+    SoundtrackFrame_SelectedEvent = eventName
+    SoundtrackFrame_RefreshEvents()
+    SoundtrackFrame_RefreshCustomEvent()
+end
+StaticPopupDialogs["SOUNDTRACK_ADD_CUSTOM_POPUP"] = {
+	text = SOUNDTRACK_ENTER_CUSTOM_NAME,
+	button1 = TEXT(ACCEPT),
+	button2 = TEXT(CANCEL),
+	hasEditBox = 1,
+	maxLetters = 100,
+	OnAccept = function(self)
+		local eventName = _G[self:GetName().."EditBox"]
+		SoundtrackFrame_AddCustomEvent(eventName:GetText(), self)
+	end,
+	OnShow = function(self)
+		_G[self:GetName().."EditBox"]:SetFocus()
+		_G[self:GetName().."EditBox"]:SetText("")
+	end,
+	OnHide = function(self)
+	end,
+	EditBoxOnEnterPressed = function(self)
+		local eventName = _G[self:GetName()]
+		SoundtrackFrame_AddCustomEvent(eventName:GetText(), self)
+		self:GetParent():Hide()
+	end,
+	EditBoxOnEscapePressed = function(self)
+		self:GetParent():Hide()
+	end,
+	timeout = 0,
+	exclusive = 1,
+	whileDead = 1,
+	hideOnEscape = 1
+}
+--[[
+function SoundtrackFrameAddCustomEventButton_OnClick(self)
     _G["SoundtrackFrameRightPanelTracks"]:Hide()
     _G["SoundtrackFrameRightPanelEditEvent"]:Show()
     
@@ -2361,7 +2426,7 @@ function SoundtrackFrameAddCustomEventButton_OnClick(self)
     SoundtrackFrame_RefreshEvents()
     SoundtrackFrame_RefreshCustomEvent()
 end
-
+--]]
 
 
 function SoundtrackFrameEditCustomEventButton_OnClick()
