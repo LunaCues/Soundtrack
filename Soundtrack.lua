@@ -145,7 +145,8 @@ local _DefaultSettings =
 	HideControlButtons = false,
 	PlaybackButtonsPosition = "LEFT",
 	LowHealthPercent = .25,
-	YourEnemyLevelOnly = false;
+	YourEnemyLevelOnly = false,
+	k = true;
 }
 
 
@@ -154,8 +155,13 @@ local _DefaultSettings =
 local function InitDefaultSettings()
     -- Add missing values
     for k,v in pairs(_DefaultSettings) do
-        if Soundtrack.Settings[k] == nil then 
-			Soundtrack.Settings[k] = v 
+		--[[if Soundtrack.Settings.k == nil then
+			Soundtrack.Settings.k = v
+		end
+		--]]
+        if Soundtrack.Settings[k] == nil then
+			print(k, Soundtrack.Settings[k])
+			Soundtrack.Settings[k] = v
 		end
     end
 	Soundtrack.Settings.getTime = GetTime();
@@ -369,7 +375,7 @@ local function OnVariablesLoaded(self)
         
     -- Remove obsolete predefined events
 	--PurgeEvents()
-	Soundtrack.Timers.AddTimer("PurgeEvents", 5, PurgeEvents)
+	Soundtrack.Timers.AddTimer("PurgeEvents", 10, PurgeEvents)
     
 
     -- sort all the tables
