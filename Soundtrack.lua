@@ -211,19 +211,18 @@ function Soundtrack.AddEvent(tableName, eventName, _priority, _continuous, _soun
 			event.soundEffect = _soundEffect
 		end
         return -- event is already registered
-    end
-    
-    Soundtrack.TraceEvents("AddEvent: " .. tableName .. ": " .. eventName)
-    
-    eventTable[eventName] = 
-    { 
-        tracks = {}, 
-        lastTrackIndex = 0, 
-        random = true, 
-        priority = _priority, 
-        continuous = _continuous,
-		soundEffect = _soundEffect
-    }  
+    else
+		Soundtrack.TraceEvents("AddEvent: " .. tableName .. ": " .. eventName)
+		eventTable[eventName] = 
+		{ 
+			tracks = {}, 
+			lastTrackIndex = 0, 
+			random = true, 
+			priority = _priority, 
+			continuous = _continuous,
+			soundEffect = _soundEffect
+		}  
+	end
 	
 	Soundtrack_SortEvents(tableName)
 end
