@@ -88,3 +88,14 @@ Changed report feature; now report current song in two lines.
 Changed victory music; normal/elite mob victory, and bosses/pvp/rare victory.
 Changed how continents are found for adding zones.
 Updated arguments for 4.1 COMBAT_LOG_EVENT_UNFILTERED changes.
+
+2.1 release
+Split Add Target button into Add Party and Add Raid buttons.
+Automatically add party and raid bosses to Soundtrack.  If the encounter name is not the same as the boss name, that boss (or bosses) must be added manually.
+Added individual boss low health events.  If the event does not exist, 
+Added "World Boss Low Health" event.
+Raid bosses (and anything added with the 'Add Raid' button) will default to the "World Boss Battle" and "World Boss Low Health" events if no music is selected.
+Resized buttons to fit names in other languages.
+Added option to check your enemy level only, instead of the group's enemy level.
+Creating a Custom Event will now prompt for a name first.
+If no name is given for a Custom Event or Playlist, it will create an event with a generic name.
