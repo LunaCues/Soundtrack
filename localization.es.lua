@@ -74,6 +74,7 @@ SOUNDTRACK_BOSS_BATTLE = "Batalla Repujado"
 SOUNDTRACK_BOSS_LOW_HEALTH = "Batalla Repujado Low Health"
 SOUNDTRACK_LOW_HEALTH = "Low Health"
 SOUNDTRACK_WORLD_BOSS_BATTLE = "Batalla Repujado del Mundo"
+SOUNDTRACK_WORLD_BOSS_LOW_HEALTH = "Batalla Repujado del Mundo Low Health"
 SOUNDTRACK_PVP_BATTLE = "Batalla JcJ"
 
 SOUNDTRACK_REMOVE_BATTLE = "Remove Battle Event"

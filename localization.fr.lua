@@ -70,6 +70,7 @@ SOUNDTRACK_BOSS_BATTLE = "Combat Boss"
 SOUNDTRACK_BOSS_LOW_HEALTH = "Combat Boss Low Health"
 SOUNDTRACK_LOW_HEALTH = "Low Health"
 SOUNDTRACK_WORLD_BOSS_BATTLE = "Combat World Boss"
+SOUNDTRACK_WORLD_BOSS_LOW_HEALTH = "Combat World Boss Low Health"
 SOUNDTRACK_PVP_BATTLE = "Combat PvP"
 
 SOUNDTRACK_REMOVE_BATTLE = "Supprimer l'evenement de bataille"
