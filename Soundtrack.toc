@@ -1,6 +1,6 @@
 ## Interface: 40100
 ## Title: Soundtrack
-## Version: 2.0
+## Version: 2.1
 ## Author: Anthony Brien, Katherine Beegle, FluffyBearLina, csciguy
 ## Notes: Music customization system.
 ## OptionalDeps: myAddOns
