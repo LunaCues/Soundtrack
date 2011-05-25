@@ -985,6 +985,19 @@ function SoundtrackFrameAddPlaylistButton_OnClick(self)
 	StaticPopup_Show("SOUNDTRACK_ADD_PLAYLIST_POPUP")
 end
 function SoundtrackFrame_AddPlaylist(playlistName)
+	if playlistName == "" then
+		local name = "New Event"
+		local index = 1
+		
+		local indexedName = name .. " " .. index
+		
+		while Soundtrack.GetEvent("Playlists", indexedName) ~= nil do
+			index = index + 1
+			indexedName = name .. " " .. index
+		end
+		
+		playlistName = indexedName
+	end
     Soundtrack.AddEvent("Playlists", playlistName, ST_PLAYLIST_LVL, true)
     SoundtrackFrame_SelectedEvent = playlistName
 	Soundtrack_SortEvents("Playlists")
