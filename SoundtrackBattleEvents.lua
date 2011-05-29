@@ -422,24 +422,42 @@ local function AnalyzeBattleSituation()
     if currentBattleTypeIndex == 0 or battleType == SOUNDTRACK_BOSS_BATTLE or battleType == SOUNDTRACK_WORLD_BOSS_BATTLE or
 	  (Soundtrack.Settings.EscalateBattleMusic and battleTypeIndex > currentBattleTypeIndex) then
 		if battleType == SOUNDTRACK_BOSS_BATTLE then
-			if hasLowHealth and SoundtrackBattle_BossHasTracks(bossName.." "..SOUNDTRACK_LOW_HEALTH) then
-				Soundtrack.PlayEvent(ST_BOSS, bossName.." "..SOUNDTRACK_LOW_HEALTH)
-			elseif hasLowHealth and SoundtrackBattle_BattleHasTracks(SOUNDTRACK_BOSS_LOW_HEALTH) then
-				Soundtrack.PlayEvent(ST_BATTLE, SOUNDTRACK_BOSS_LOW_HEALTH)
-			elseif SoundtrackBattle_BossHasTracks(bossName) then
-				Soundtrack.PlayEvent(ST_BOSS, bossName)
+			if bossName ~= nil then
+				local bossLowHealth =  bossName.." "..SOUNDTRACK_LOW_HEALTH
+				if hasLowHealth and SoundtrackBattle_BossHasTracks(bossLowHealth) then
+					Soundtrack.PlayEvent(ST_BOSS, bossLowHealth)
+				elseif hasLowHealth and SoundtrackBattle_BattleHasTracks(SOUNDTRACK_BOSS_LOW_HEALTH) then
+					Soundtrack.PlayEvent(ST_BATTLE, SOUNDTRACK_BOSS_LOW_HEALTH)
+				elseif SoundtrackBattle_BossHasTracks(bossName) then
+					Soundtrack.PlayEvent(ST_BOSS, bossName)
+				else
+					Soundtrack.PlayEvent(ST_BATTLE, battleType)
+				end
 			else
-				Soundtrack.PlayEvent(ST_BATTLE, battleType)
+				if hasLowHealth and SoundtrackBattle_BattleHasTracks(SOUNDTRACK_BOSS_LOW_HEALTH) then
+					Soundtrack.PlayEvent(ST_BATTLE, SOUNDTRACK_BOSS_LOW_HEALTH)
+				else
+					Soundtrack.PlayEvent(ST_BATTLE, battleType)
+				end
 			end
 		elseif battleType == SOUNDTRACK_WORLD_BOSS_BATTLE then
-			if hasLowHealth and SoundtrackBattle_BossHasTracks(bossName.." "..SOUNDTRACK_LOW_HEALTH) then
-				Soundtrack.PlayEvent(ST_BOSS, bossName.." "..SOUNDTRACK_LOW_HEALTH)
-			elseif hasLowHealth and SoundtrackBattle_BattleHasTracks(SOUNDTRACK_WORLD_BOSS_LOW_HEALTH) then
-				Soundtrack.PlayEvent(ST_BATTLE, SOUNDTRACK_WORLD_BOSS_LOW_HEALTH)
-			elseif SoundtrackBattle_BossHasTracks(bossName) then
-				Soundtrack.PlayEvent(ST_BOSS, bossName)
+			if bossName ~= nil then
+				local bossLowHealth =  bossName.." "..SOUNDTRACK_LOW_HEALTH
+				if hasLowHealth and SoundtrackBattle_BossHasTracks(bossLowHealth) then
+					Soundtrack.PlayEvent(ST_BOSS, bossLowHealth)
+				elseif hasLowHealth and SoundtrackBattle_BattleHasTracks(SOUNDTRACK_WORLD_BOSS_LOW_HEALTH) then
+					Soundtrack.PlayEvent(ST_BATTLE, SOUNDTRACK_WORLD_BOSS_LOW_HEALTH)
+				elseif SoundtrackBattle_BossHasTracks(bossName) then
+					Soundtrack.PlayEvent(ST_BOSS, bossName)
+				else
+					Soundtrack.PlayEvent(ST_BATTLE, battleType)
+				end
 			else
-				Soundtrack.PlayEvent(ST_BATTLE, battleType)
+				if hasLowHealth and SoundtrackBattle_BattleHasTracks(SOUNDTRACK_WORLD_BOSS_LOW_HEALTH) then
+					Soundtrack.PlayEvent(ST_BATTLE, SOUNDTRACK_WORLD_BOSS_LOW_HEALTH)
+				else
+					Soundtrack.PlayEvent(ST_BATTLE, battleType)
+				end
 			end
 		else
 			Soundtrack.PlayEvent(ST_BATTLE, battleType)
@@ -597,7 +615,7 @@ function Soundtrack.BattleEvents.OnEvent(self, event, ...)
 				local bossEventLowHealth = bossTable[lowhealthbossname]
 				if instanceType == "raid" then
 					bossEvent.worldboss = true
-					lowhealthbossname.worldboss = true
+					bossEventLowHealth.worldboss = true
 				end
 			end
 		end
