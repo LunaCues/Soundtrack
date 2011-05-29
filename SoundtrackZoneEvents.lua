@@ -31,24 +31,24 @@ local function FindContinentByZone(zoneName)
 	-- Save current map (in case world map is open)
 	local areaid = GetCurrentMapAreaID()
 	SetMapToCurrentZone()
-	local continentValue = GetCurrentMapContinent()
-	SetMapByID(areaid)
-	-- Will need to update this for new continents in future expansions
-	local con1, con2, con3, con4, con5, con6, con7, con8, con9, con10 = GetMapContinents()
 	
-	if continentValue==1 then return con1
-	elseif continentValue==2 then return con2
-	elseif continentValue==3 then return con3
-	elseif continentValue==4 then return con4
-	elseif continentValue==5 then return con5
-	elseif continentValue==6 then return con6
-	elseif continentValue==7 then return con7
-	elseif continentValue==8 then return con8
-	elseif continentValue==9 then return con9
-	elseif continentValue==10 then return con10
-	end
+	local continentValue = GetCurrentMapContinent()
+	local zoneValue = GetCurrentMapZone()
+	
+	SetMapByID(areaid)
+	
+	local continentNames = {GetMapContinents()}
+	local zoneNames = {GetMapZones(continentValue)}
+	
+	local continent = continentNames[continentValue]
+	local zone = zoneNames[zoneValue]
+	
+	return continent, zone
 	
 	--[[
+	/run cv=GetCurrentMapContinent();cn={GetMapContinents()};zv=GetCurrentMapZone();zn={GetMapZones(cv)};print(cn[cv]," ",zn[zv])
+	/run print(GetMapZones(GetCurrentMapContinent()))
+	
     if eventTable then 
         for k, v in pairs(eventTable) do
             -- Find tracks to remove
@@ -61,7 +61,8 @@ local function FindContinentByZone(zoneName)
         end
     end
 	--]]
-    return "Uncategorized";  -- Uncategorized stuff, usually is outside part of an instance
+   
+	--return "Uncategorized";  -- Uncategorized stuff, usually is outside part of an instance
 end
 
 -- After migration, zone events have no priorities set. We only
@@ -80,10 +81,21 @@ function Soundtrack_ZoneEvents_AddZones()
 	local zoneText = GetRealZoneText();
 	if zoneText == nil then return end
 	
-    local continentText = FindContinentByZone(zoneText);    
+    local continentText
+	continentText, zoneText = FindContinentByZone(zoneText);    
     local zoneSubText = GetSubZoneText();
     local minimapZoneText = GetMinimapZoneText();
     
+	if zoneName ~= zoneText then
+		if zoneSubText ~= nil and zoneSubText ~= "" then
+			minimapZoneText = zoneSubText
+		end
+		if zoneText ~= nil and zoneText ~= "" then
+			zoneSubText = zoneText
+		end
+		zoneText = zoneName
+	end
+	
 	--[[
     Soundtrack.TraceZones("continentText: " .. continentText);
     Soundtrack.TraceZones("zoneText: " .. zoneText);
@@ -166,9 +178,22 @@ local function OnZoneChanged()
     local zoneText = GetRealZoneText();
 	if zoneText == nil then return end
 	
-    local continentText = FindContinentByZone(zoneText);    
+    local continentText, zoneName = FindContinentByZone(zoneText); 
     local zoneSubText = GetSubZoneText();
     local minimapZoneText = GetMinimapZoneText();
+	
+	--print (continentText,",",zoneText,":",zoneName,",",zoneSubText,",",minimapZoneText)
+	if zoneName ~= zoneText then
+		if zoneSubText ~= nil and zoneSubText ~= "" then
+			--print ("minimapZoneText = zoneSubText")
+			minimapZoneText = zoneSubText
+		end
+		if zoneText ~= nil and zoneText ~= "" then
+			--print("zoneSubText = zoneText")
+			zoneSubText = zoneText
+		end
+		zoneText = zoneName
+	end
     
 	--[[
     Soundtrack.TraceZones("continentText: " .. continentText);
