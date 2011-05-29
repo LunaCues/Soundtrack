@@ -111,7 +111,6 @@ function Soundtrack.IsBuffActive(buffTexture)
 		if icon == nil then
 			return nil  -- all buffs checked, buff not found
 		elseif string.lower(icon) == string.lower(buffTexture) then
-			Soundtrack.Trace("Buff: "..string.lower(icon) .. " " .. spellId)
 	        return spellId
 	    end
 	end
