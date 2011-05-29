@@ -872,27 +872,22 @@ function Soundtrack.CustomEvents.MiscOnEvent(self, event, ...)
 	Soundtrack.TraceCustom(event)
 	
     if event == "AUCTION_HOUSE_SHOW" then
-		debug("AUCTION_HOUSE_SHOW")
         Soundtrack.AuctionHouse = true
     elseif event == "AUCTION_HOUSE_CLOSED" then
         Soundtrack.AuctionHouse = false
     elseif event == "BANKFRAME_OPENED" then
-		debug("BANKFRAME_OPENED")
         Soundtrack.Bank = true
     elseif event == "BANKFRAME_CLOSED" then
         Soundtrack.Bank = false
     elseif event == "MERCHANT_SHOW" then
-		debug("MERCHANT_SHOW")
         Soundtrack.Merchant = true
     elseif event == "MERCHANT_CLOSED" then
         Soundtrack.Merchant = false
 	elseif event == "BARBER_SHOP_OPEN" then
-		debug("BARBER_SHOP_OPEN")
 		Soundtrack.Barbershop = true
 	elseif event == "BARBER_SHOP_CLOSE" then
 		Soundtrack.Barbershop = false
     elseif event == "CINEMATIC_START" then
-		debug("CINEMATIC_START")
 		Soundtrack.Cinematic = true
 	elseif event == "CINEMATIC_STOP" then
 		Soundtrack.Cinematic = false
