@@ -82,8 +82,9 @@ local function DelayedPlayMusic()
    Soundtrack.Library.CurrentlyPlayingTrack = nextTrackName
    SetNowPlayingText(nextTrackInfo.title, nextTrackInfo.artist, nextTrackInfo.album)
    debug("PlayMusic(".. nextFileName ..")")
-   -- Soundtrack.Library.StopTrack()
+   -- Soundtrack.Library.StopTrack()]
    PlayMusic(nextFileName)
+   --Soundtrack.Library.PlayTrack(nextFileName, nil)
    SoundtrackFrame_TouchTracks()
 end
 
@@ -123,10 +124,12 @@ function Soundtrack.Library.PlayTrack(trackName, soundEffect)
     end
     
     -- Check if that track is already playing
-    if trackName == Soundtrack.Library.CurrentlyPlayingTrack then
+    --[[
+	if trackName == Soundtrack.Library.CurrentlyPlayingTrack then
         return
     end
-    
+    -]]
+	
     nextTrackInfo = Soundtrack_Tracks[trackName]
     
     -- TODO : Change DefaultScore name
