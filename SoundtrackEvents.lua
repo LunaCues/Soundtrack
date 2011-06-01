@@ -255,7 +255,7 @@ function Soundtrack.Events.OnStackChanged(forceRestart)
         -- There is something valid on the stack.
         local stackItem = Soundtrack.Events.Stack[validStackLevel]
         if not stackItem then
-            error("BAD DATA"..validStackLevel)
+            error("BAD DATA "..validStackLevel)
         end
         local tableName = Soundtrack.Events.Stack[validStackLevel].tableName
         local eventName = Soundtrack.Events.Stack[validStackLevel].eventName
