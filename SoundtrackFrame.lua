@@ -2377,8 +2377,8 @@ function SoundtrackFrame_AddCustomEvent(eventName, self)
 	end
 	
     local script = "-- Custom script\n"
-		.. "Soundtrack_Custom_PlayEvent(\"Custom\", " .. eventName .. ") \n"
-		.. "Soundtrack_Custom_StopEvent(\"Custom\", " .. eventName .. ") \n"
+		.. "Soundtrack_Custom_PlayEvent(\"Custom\", \"" .. eventName .. "\") \n"
+		.. "Soundtrack_Custom_StopEvent(\"Custom\", \"" .. eventName .. "\") \n"
     
     Soundtrack.CustomEvents.RegisterEventScript(self, eventName, "Custom", "UNIT_AURA", 4, true, script) 
     SoundtrackFrame_SelectedEvent = eventName
