@@ -2458,15 +2458,9 @@ function SoundtrackFrameSaveCustomEventButton_OnClick()
 
     local eventTable = Soundtrack.Events.GetTable("Custom")
     if (eventTable[SoundtrackFrame_SelectedEvent] ~= nil) then
-		if eventTable[SoundtrackFrame_SelectedEvent].priority == nil then
-			eventTable[SoundtrackFrame_SelectedEvent].priority = customEvent.priority
-		end
-		if eventTable[SoundtrackFrame_SelectedEvent].continuous == nil then
-			eventTable[SoundtrackFrame_SelectedEvent].continuous = customEvent.continuous
-		end
-		if eventTable[SoundtrackFrame_SelectedEvent].soundEffect == nil then
-			eventTable[SoundtrackFrame_SelectedEvent].soundEffect = customEvent.soundEffect
-		end
+		eventTable[SoundtrackFrame_SelectedEvent].priority = customEvent.priority
+		eventTable[SoundtrackFrame_SelectedEvent].continuous = customEvent.continuous
+		eventTable[SoundtrackFrame_SelectedEvent].soundEffect = customEvent.soundEffect
     end
     
     local eventType = customEvent.type
