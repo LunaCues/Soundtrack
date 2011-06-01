@@ -763,42 +763,6 @@ function Soundtrack.CustomEvents.MiscInitialize(self)
 	
 	Soundtrack.CustomEvents.RegisterBuffEvent(SOUNDTRACK_SHAMAN_GHOST_WOLF, ST_MISC, "Interface\\Icons\\Spell_Nature_SpiritWolf", ST_AURA_LVL, true, false)
 	
-	--[[
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_FLIGHT_OLD, SOUNDTRACK_FLIGHT)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_DEATH_OLD, SOUNDTRACK_DEATH)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_GHOST_OLD, SOUNDTRACK_GHOST)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_MOUNT_FLYING_OLD, SOUNDTRACK_MOUNT_FLYING)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_MOUNT_GROUND_OLD, SOUNDTRACK_MOUNT_GROUND)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_STEALTHED_OLD, SOUNDTRACK_STEALTHED)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_SWIMMING_OLD, SOUNDTRACK_SWIMMING)
-	
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_ACHIEVEMENT_OLD, SOUNDTRACK_ACHIEVEMENT)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_JOIN_PARTY_OLD, SOUNDTRACK_JOIN_PARTY)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_JOIN_RAID_OLD, SOUNDTRACK_JOIN_RAID)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_JUMP_OLD, SOUNDTRACK_JUMP)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_LEVEL_UP_OLD, SOUNDTRACK_LEVEL_UP)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_LFG_COMPLETE_OLD, SOUNDTRACK_LFG_COMPLETE)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_QUEST_COMPLETE_OLD, SOUNDTRACK_QUEST_COMPLETE)
-
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_AUCTION_HOUSE_OLD, SOUNDTRACK_AUCTION_HOUSE)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_BANK_OLD, SOUNDTRACK_BANK)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_MERCHANT_OLD, SOUNDTRACK_MERCHANT)
-
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_RANGE_CRIT_OLD, SOUNDTRACK_RANGE_CRIT)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_RANGE_HIT_OLD, SOUNDTRACK_RANGE_HIT)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_HEAL_CRIT_OLD, SOUNDTRACK_HEAL_CRIT)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_HEAL_HIT_OLD, SOUNDTRACK_HEAL_HIT)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_HOT_CRIT_OLD, SOUNDTRACK_HOT_CRIT)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_HOT_HIT_OLD, SOUNDTRACK_HOT_HIT)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_DOT_CRIT_OLD, SOUNDTRACK_DOT_CRIT)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_DOT_HIT_OLD, SOUNDTRACK_DOT_HIT)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_SPELL_CRIT_OLD, SOUNDTRACK_SPELL_CRIT)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_SPELL_HIT_OLD, SOUNDTRACK_SPELL_HIT)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_SWING_CRIT_OLD, SOUNDTRACK_SWING_CRIT)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_SWING_HIT_OLD, SOUNDTRACK_SWING_HIT)
-	Soundtrack.CustomEvents.RenameEvent(ST_MISC, SOUNDTRACK_VICTORY_OLD, SOUNDTRACK_VICTORY)
-	--]]
-	
     Soundtrack_SortEvents(ST_MISC)
 end
 -- CustomEvents
@@ -812,6 +776,7 @@ function Soundtrack.CustomEvents.CustomInitialize(self)
 	for k,v in pairs(Soundtrack_CustomEvents) do
 	    Soundtrack.AddEvent(ST_CUSTOM, k, v.priority, v.continuous, v.soundEffect)
 		if v.eventtype == "Event Script" then
+			print(k,v.trigger)
 			self:RegisterEvent(v.trigger)
 		end
 	end 
@@ -863,7 +828,7 @@ end
 
 -- MiscEvents
 function Soundtrack.CustomEvents.MiscOnEvent(self, event, ...)
-	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = select(1, ...)
+	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21 = select(1, ...)
 	
 	if event == "VARIABLES_LOADED" then	
 		Soundtrack.CustomEvents.MiscInitialize(self)
@@ -949,7 +914,7 @@ function Soundtrack.CustomEvents.MiscOnEvent(self, event, ...)
 end
 -- CustomEvents
 function Soundtrack.CustomEvents.CustomOnEvent(self, event, ...)
-	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20 = select(1, ...)
+	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21 = select(1, ...)
 
 	if event == "VARIABLES_LOADED" then	
 		Soundtrack.CustomEvents.CustomInitialize(self)
@@ -999,7 +964,7 @@ function Soundtrack.CustomEvents.CustomOnEvent(self, event, ...)
         for k,v in pairs(Soundtrack_CustomEvents) do
             if v.eventtype == "Event Script" then
                 if event == v.trigger then
-					local hasTracks = SoundtrackEvents_EventHasTracks(ST_MISC, k) 
+					local hasTracks = SoundtrackEvents_EventHasTracks(ST_CUSTOM, k) 
 					if hasTracks then --]]
 						RunScript(v.script)
 					end
