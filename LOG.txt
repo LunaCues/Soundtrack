@@ -99,3 +99,10 @@ Resized buttons to fit names in other languages.
 Added option to check your enemy level only, instead of the group's enemy level.
 Creating a Custom Event will now prompt for a name first.
 If no name is given for a Custom Event or Playlist, it will create an event with a generic name.
+
+2.1.1 release
+Removed some old debug statements, etc.
+Changed zone adding.  If zone text is not a zone, add as subzone of map zone.
+Fixed bossname string concat error.
+Fixed default event script.  Name of event now in double quotes, as a string should be.
+Fixed call to Custom table in custom event scripts.
