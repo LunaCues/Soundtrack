@@ -106,3 +106,8 @@ Changed zone adding.  If zone text is not a zone, add as subzone of map zone.
 Fixed bossname string concat error.
 Fixed default event script.  Name of event now in double quotes, as a string should be.
 Fixed call to Custom table in custom event scripts.
+
+2.1.1b release
+Fixed map zone check for instances and PvP areas.
+Fixed custom events on save will always override old priority, continuous, and sound effect settings.
+Fixed next button not playing a song because it was already playing.
