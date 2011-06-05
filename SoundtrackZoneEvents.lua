@@ -20,10 +20,10 @@ local function FindContinentByZone(zoneName)
 	local inInstance, instanceType = IsInInstance();
 	if inInstance then
 		if instanceType == "arena" or instanceType == "pvp" then
-			return "PvP";
+			return "PvP", nil;
 		end
 		if instanceType == "party" or instanceType == "raid" then
-			return "Instances";
+			return "Instances", nil;
 		end
 	end
 	
@@ -86,7 +86,7 @@ function Soundtrack_ZoneEvents_AddZones()
     local zoneSubText = GetSubZoneText();
     local minimapZoneText = GetMinimapZoneText();
     
-	if zoneName ~= zoneText then
+	if zoneName ~= nil and zoneName ~= zoneText then
 		if zoneSubText ~= nil and zoneSubText ~= "" then
 			minimapZoneText = zoneSubText
 		end
@@ -183,7 +183,7 @@ local function OnZoneChanged()
     local minimapZoneText = GetMinimapZoneText();
 	
 	--print (continentText,",",zoneText,":",zoneName,",",zoneSubText,",",minimapZoneText)
-	if zoneName ~= zoneText then
+	if zoneName ~= nil and zoneName ~= zoneText then
 		if zoneSubText ~= nil and zoneSubText ~= "" then
 			--print ("minimapZoneText = zoneSubText")
 			minimapZoneText = zoneSubText
