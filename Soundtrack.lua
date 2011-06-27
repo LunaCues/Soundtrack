@@ -487,10 +487,12 @@ function Soundtrack.PlayEvent(tableName, eventName, forceRestart)
         -- Sound effects are never added to the stack
         PlayRandomTrackByTable(tableName, eventName, offset)
     else
-        Soundtrack.Events.Stack[event.priority].tableName = tableName
-        Soundtrack.Events.Stack[event.priority].eventName = eventName
-        Soundtrack.Events.Stack[event.priority].offset = offset
-        Soundtrack.Events.OnStackChanged(forceRestart)
+		if Soundtrack_Events_GetEventAtStackLevel(event.priority) ~= eventName then
+			Soundtrack.Events.Stack[event.priority].tableName = tableName
+			Soundtrack.Events.Stack[event.priority].eventName = eventName
+			Soundtrack.Events.Stack[event.priority].offset = offset
+			Soundtrack.Events.OnStackChanged(forceRestart)
+		end
     end
 end
 
