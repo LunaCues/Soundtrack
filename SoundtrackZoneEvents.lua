@@ -5,6 +5,8 @@
     Functions that manage zone change events.
 ]]
 
+local ST_INSTANCES = "Instances"
+local ST_PVP = "PvP"
 
 Soundtrack.ZoneEvents = 
 {
@@ -20,10 +22,10 @@ local function FindContinentByZone(zoneName)
 	local inInstance, instanceType = IsInInstance();
 	if inInstance then
 		if instanceType == "arena" or instanceType == "pvp" then
-			return "PvP", nil;
+			return ST_PVP, nil;
 		end
 		if instanceType == "party" or instanceType == "raid" then
-			return "Instances", nil;
+			return ST_INSTANCES, nil;
 		end
 	end
 	
@@ -75,7 +77,6 @@ local function AssignPriority(tableName, eventName, priority)
 
 end
 
--- IsInInstance()
 
 function Soundtrack_ZoneEvents_AddZones()
 	local zoneText = GetRealZoneText();
@@ -182,14 +183,11 @@ local function OnZoneChanged()
     local zoneSubText = GetSubZoneText();
     local minimapZoneText = GetMinimapZoneText();
 	
-	--print (continentText,",",zoneText,":",zoneName,",",zoneSubText,",",minimapZoneText)
 	if zoneName ~= nil and zoneName ~= zoneText then
 		if zoneSubText ~= nil and zoneSubText ~= "" then
-			--print ("minimapZoneText = zoneSubText")
 			minimapZoneText = zoneSubText
 		end
 		if zoneText ~= nil and zoneText ~= "" then
-			--print("zoneSubText = zoneText")
 			zoneSubText = zoneText
 		end
 		zoneText = zoneName
@@ -237,7 +235,7 @@ local function OnZoneChanged()
     end
     
     Soundtrack.TraceZones("Zone: " .. zonePath);
-        
+	
     if zoneText4 then
         if Soundtrack.Settings.AutoAddZones then
 			local eventTable = Soundtrack.Events.GetTable(ST_ZONE)
@@ -245,8 +243,10 @@ local function OnZoneChanged()
 				Soundtrack.AddEvent(ST_ZONE, zoneText4, ST_MINIMAP_LVL, true)
 			end
         end
-		AssignPriority(ST_ZONE, zoneText4, ST_MINIMAP_LVL)
-        Soundtrack.PlayEvent(ST_ZONE, zoneText4);
+		if Soundtrack_Events_GetEventAtStackLevel(ST_MINIMAP_LVL) ~= zoneText4 then
+			AssignPriority(ST_ZONE, zoneText4, ST_MINIMAP_LVL)
+			Soundtrack.PlayEvent(ST_ZONE, zoneText4, false);
+		end
     else
         Soundtrack.StopEventAtLevel(ST_MINIMAP_LVL);
     end
@@ -258,8 +258,10 @@ local function OnZoneChanged()
 				Soundtrack.AddEvent(ST_ZONE, zoneText3, ST_SUBZONE_LVL, true)
 			end
         end
-		AssignPriority(ST_ZONE, zoneText3, ST_SUBZONE_LVL)
-        Soundtrack.PlayEvent(ST_ZONE, zoneText3);
+		if Soundtrack_Events_GetEventAtStackLevel(ST_SUBZONE_LVL) ~= zoneText3 then
+			AssignPriority(ST_ZONE, zoneText3, ST_SUBZONE_LVL)
+			Soundtrack.PlayEvent(ST_ZONE, zoneText3, false);
+		end
     else
         Soundtrack.StopEventAtLevel(ST_SUBZONE_LVL);
     end
@@ -271,8 +273,10 @@ local function OnZoneChanged()
 				Soundtrack.AddEvent(ST_ZONE, zoneText2, ST_ZONE_LVL, true)
 			end
         end
-		AssignPriority(ST_ZONE, zoneText2, ST_ZONE_LVL)
-        Soundtrack.PlayEvent(ST_ZONE, zoneText2);
+		if Soundtrack_Events_GetEventAtStackLevel(ST_ZONE_LVL) ~= zoneText2 then
+			AssignPriority(ST_ZONE, zoneText2, ST_ZONE_LVL)
+			Soundtrack.PlayEvent(ST_ZONE, zoneText2, false);
+		end
     else        
         Soundtrack.StopEventAtLevel(ST_ZONE_LVL);
     end
@@ -284,8 +288,10 @@ local function OnZoneChanged()
 				Soundtrack.AddEvent(ST_ZONE, zoneText1, ST_CONTINENT_LVL, true)
 			end
         end
-		AssignPriority(ST_ZONE, zoneText1, ST_CONTINENT_LVL)
-        Soundtrack.PlayEvent(ST_ZONE, zoneText1);
+		if Soundtrack_Events_GetEventAtStackLevel(ST_CONTINENT_LVL) ~= zoneText1 then
+			AssignPriority(ST_ZONE, zoneText1, ST_CONTINENT_LVL)
+			Soundtrack.PlayEvent(ST_ZONE, zoneText1, false);
+		end
     else        
         Soundtrack.StopEventAtLevel(ST_CONTINENT_LVL);
     end
@@ -296,11 +302,28 @@ function Soundtrack.ZoneEvents.OnLoad(self)
     self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
     self:RegisterEvent("ZONE_CHANGED")
     self:RegisterEvent("ZONE_CHANGED_INDOORS")
-    --self:RegisterEvent("PLAYER_REGEN_ENABLED")
-    self:RegisterEvent("MINIMAP_ZONE_CHANGED")
     self:RegisterEvent("VARIABLES_LOADED")
 end
     
+
+local delayTime = 0
+local updateTime = 1
+	
+function Soundtrack.ZoneEvents.OnUpdate(self)
+	
+	local currentTime = GetTime()
+	
+	if currentTime >= delayTime then
+		delayTime = currentTime + updateTime
+		
+		local inInstance, instanceType = IsInInstance();
+		if inInstance then
+			OnZoneChanged()
+		end
+    
+	end
+end	
+
 function Soundtrack.ZoneEvents.OnEvent(self, event, ...)
     if not Soundtrack.Settings.EnableZoneMusic then
         return
@@ -315,7 +338,6 @@ function Soundtrack.ZoneEvents.OnEvent(self, event, ...)
     if event == "ZONE_CHANGED" or 
        event == "ZONE_CHANGED_INDOORS" or
 	   event == "ZONE_CHANGED_NEW_AREA" or
-       event == "MINIMAP_ZONE_CHANGED" or
        event == "VARIABLES_LOADED" then
 		Soundtrack.TraceZones("Event: "..event);
         OnZoneChanged()
@@ -328,8 +350,8 @@ function Soundtrack.ZoneEvents.Initialize()
     
     local tableName = Soundtrack.Events.GetTable(ST_ZONE);
     
-    Soundtrack.AddEvent(ST_ZONE, "Instances", ST_CONTINENT_LVL, true);
-	Soundtrack.AddEvent(ST_ZONE, "PvP", ST_CONTINENT_LVL, true);
+    Soundtrack.AddEvent(ST_ZONE, ST_INSTANCES, ST_CONTINENT_LVL, true);
+	Soundtrack.AddEvent(ST_ZONE, ST_PVP, ST_CONTINENT_LVL, true);
 	Soundtrack.AddEvent(ST_ZONE, "Uncategorized", ST_CONTINENT_LVL, true);
     
     for i,continentName in ipairs(continentNames) do      

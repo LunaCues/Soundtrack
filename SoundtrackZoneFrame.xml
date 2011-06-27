@@ -3,6 +3,7 @@
 	
 	<Frame name="SoundtrackZoneDUMMY" parent="UIParent" hidden="false">
 		<Scripts>
+			<OnUpdate>Soundtrack.ZoneEvents.OnUpdate(self)</OnUpdate>
             <OnLoad>Soundtrack.ZoneEvents.OnLoad(self)</OnLoad>
             <OnEvent>Soundtrack.ZoneEvents.OnEvent(self, event, ...)</OnEvent>
         </Scripts>
