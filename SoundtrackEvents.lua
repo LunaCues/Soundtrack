@@ -228,6 +228,12 @@ Soundtrack.Events.Stack =
 	
 }
 
+function Soundtrack_Events_GetEventAtStackLevel(level)
+	local eventName = Soundtrack.Events.Stack[level].eventName
+	local tableName = Soundtrack.Events.Stack[level].tableName
+	return eventName, tableName
+end
+
 Soundtrack.Events.Paused = false
 
 -- Table of custom events defined by the user
