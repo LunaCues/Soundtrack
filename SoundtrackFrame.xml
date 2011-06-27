@@ -845,7 +845,7 @@
                 </Anchors>
                 <Scripts>
                     <OnClick>
-                        Soundtrack.StopEventAtLevel(Soundtrack.Events.GetCurrentStackLevel());
+                        Soundtrack.Events.PlaybackTrueStop()
                     </OnClick>
                     <OnEnter>
                         Soundtrack.ShowTip(self, SOUNDTRACK_STOP, SOUNDTRACK_STOP_TIP);
