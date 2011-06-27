@@ -9,6 +9,7 @@ if GetLocale() ~= "enUS" or
 SOUNDTRACK_DANCE_EMOTES = {};
 
 SOUNDTRACK_TITLE = "Soundtrack"
+BINDING_HEADER_SOUNDTRACK = SOUNDTRACK_TITLE
 
 
 -- Main Frame
