@@ -535,7 +535,7 @@ function Soundtrack.BattleEvents.OnUpdate(self, elapsed)
 end
     
 function Soundtrack.BattleEvents.OnEvent(self, event, ...)
-	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21 = select(1, ...)
+	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23 = select(1, ...)
 	
 	if event == "VARIABLES_LOADED" then
         Soundtrack.BattleEvents.Initialize(self)
@@ -683,7 +683,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    ST_SFX_LVL,
 	    false,
 	    function()
-	        if arg2 == "SWING_DAMAGE" and arg5 == UnitName("player") and arg16 == 1 then
+	        if arg2 == "SWING_DAMAGE" and arg5 == UnitName("player") and arg18 == 1 then
 				Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SWING_CRIT)
 			end
 	    end,
@@ -698,9 +698,9 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    false,
 	    function()
 	        if arg2 == "SWING_DAMAGE" and arg5 == UnitName("player") then	
-				if arg16 == nil then
+				if arg18 == nil then
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SWING_HIT)
-				elseif arg16 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_SWING_CRIT) == false then
+				elseif arg18 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_SWING_CRIT) == false then
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SWING_HIT)
 				end
 			end
@@ -716,7 +716,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    ST_SFX_LVL,
 	    false,
 	    function()
-	        if arg2 == "SPELL_DAMAGE" and arg5 == UnitName("player") and arg19 == 1 then
+	        if arg2 == "SPELL_DAMAGE" and arg5 == UnitName("player") and arg21 == 1 then
 				Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SPELL_CRIT)
 			end
 	    end,
@@ -731,9 +731,9 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    false,
 	    function()
 	        if arg2 == "SPELL_DAMAGE" and arg5 == UnitName("player") then
-				if arg19 == nil then
+				if arg21 == nil then
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SPELL_HIT)
-				elseif arg19 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_SPELL_CRIT) == false then
+				elseif arg21 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_SPELL_CRIT) == false then
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_SPELL_HIT)
 				end
 			end
@@ -749,7 +749,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    ST_SFX_LVL,
 	    false,
 	    function()
-	        if arg2 == "SPELL_PERIODIC_DAMAGE" and arg5 == UnitName("player") and arg19 == 1 then
+	        if arg2 == "SPELL_PERIODIC_DAMAGE" and arg5 == UnitName("player") and arg21 == 1 then
 				Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_DOT_CRIT)
 			end
 	    end,
@@ -764,9 +764,9 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    false,
 	    function()
 	        if arg2 == "SPELL_PERIODIC_DAMAGE" and arg5 == UnitName("player") then
-				if arg19 == nil then
+				if arg21 == nil then
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_DOT_HIT)
-				elseif arg19 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_DOT_CRIT) == false then
+				elseif arg21 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_DOT_CRIT) == false then
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_DOT_HIT)
 				end
 			end
@@ -782,7 +782,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    ST_SFX_LVL,
 	    false,
 	    function()
-	        if arg2 == "SPELL_HEAL" and arg5 == UnitName("player") and arg16 == 1 then 
+	        if arg2 == "SPELL_HEAL" and arg5 == UnitName("player") and arg18 == 1 then 
 				Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HEAL_CRIT)
 			end
 	    end,
@@ -797,9 +797,9 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    false,
 	    function()
 	        if arg2 == "SPELL_HEAL" and arg5 == UnitName("player") then 
-				if arg16 == nil then 
+				if arg18 == nil then 
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HEAL_HIT)
-				elseif arg16 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_HEAL_CRIT) == false then
+				elseif arg18 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_HEAL_CRIT) == false then
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HEAL_HIT)
 				end
 			end
@@ -815,7 +815,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    ST_SFX_LVL,
 	    false,
 	    function()
-	        if arg2 == "SPELL_PERIODIC_HEAL" and arg5 == UnitName("player") and arg16 == 1 then 
+	        if arg2 == "SPELL_PERIODIC_HEAL" and arg5 == UnitName("player") and arg18 == 1 then 
 				Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HOT_CRIT)
 			end
 	    end,
@@ -830,9 +830,9 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    false,
 	    function()
 	        if arg2 == "SPELL_PERIODIC_HEAL" and arg5 == UnitName("player") then 
-				if arg16 == nil then 
+				if arg18 == nil then 
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HOT_HIT)
-				elseif arg16 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_HOT_CRIT) == false then
+				elseif arg18 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_HOT_CRIT) == false then
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_HOT_HIT)
 				end
 			end
@@ -848,7 +848,7 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    ST_SFX_LVL,
 	    false,
 	    function()
-	        if arg2 == "RANGE_DAMAGE" and arg5 == UnitName("player") and arg19 == 1 then
+	        if arg2 == "RANGE_DAMAGE" and arg5 == UnitName("player") and arg21 == 1 then
 				Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_RANGE_CRIT)
 			end
 	    end,
@@ -863,9 +863,9 @@ function Soundtrack.BattleEvents.Initialize(self)
 	    false,
 	    function()
 	        if arg2 == "RANGE_DAMAGE" and arg5 == UnitName("player") then
-				if arg19 == nil then
+				if arg21 == nil then
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_RANGE_HIT)
-				elseif arg19 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_RANGE_CRIT) == false then
+				elseif arg21 == 1 and SoundtrackBattle_MiscHasTracks(SOUNDTRACK_RANGE_CRIT) == false then
 					Soundtrack_Custom_PlayEvent(ST_MISC, SOUNDTRACK_RANGE_HIT)
 				end
 			end
