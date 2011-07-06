@@ -267,62 +267,76 @@ function Soundtrack.Events.OnStackChanged(forceRestart)
         local eventName = Soundtrack.Events.Stack[validStackLevel].eventName
         local event = Soundtrack.GetEvent(tableName, eventName)
         local offset = Soundtrack.Events.Stack[validStackLevel].offset
-    
+		local currenttrack = Soundtrack.Library.CurrentlyPlayingTrack
+	
         -- Avoid restarting already playing event
         if forceRestart or 
             currentTableName ~= tableName or 
             currentEventName ~= eventName then
 
-            -- We are starting a new track! 
-            -- Remove the playback continuity timers
-            Soundtrack.Timers.Remove("FadeOut")
-            Soundtrack.Timers.Remove("TrackFinished")
-			
-			-- After pause, goes to the next song
-			if Soundtrack.Events.Paused then  -- Edit by Lunaqua
-				offset = 0  -- Use to be 1
-				Soundtrack.Events.Paused = false
+			-- Avoid restarting a song that is in both events
+			local sametrack = false
+			for k,v in ipairs(event.tracks) do 
+				if v == currenttrack then 
+					sametrack = true
+					break;
+				end
 			end
+			if not sametrack or forceRestart then
 			
-			nextTrack = null
-            local res = PlayRandomTrackByTable(tableName, eventName, offset)
-			--local res = PlayTrackByTable(tableName, eventName, offset)
-            if not res then
-                Soundtrack.TraceEvents("Not supposed to play invalid events.")
-            end    
-            
-            currentTableName = tableName
-            currentEventName = eventName
-            
-            -- A track is now playing, register continuity timers
-            if nextTrack then
-                local track = Soundtrack_Tracks[nextTrack]
-                if track then
-                    local length = track.length
-                    if length then 
-                        if not event.continuous then
-							if track.length > 20 then
-								Soundtrack.Timers.AddTimer("FadeOut", length - fadeOutTime, playOnceTrackFinished)
+				-- We are starting a new track! 
+				-- Remove the playback continuity timers
+				Soundtrack.Timers.Remove("FadeOut")
+				Soundtrack.Timers.Remove("TrackFinished")
+				
+				-- After pause, goes to the next song
+				if Soundtrack.Events.Paused then  -- Edit by Lunaqua
+					offset = 0  -- Use to be 1
+					Soundtrack.Events.Paused = false
+				end
+				
+				nextTrack = null
+				local res = PlayRandomTrackByTable(tableName, eventName, offset)
+				--local res = PlayTrackByTable(tableName, eventName, offset)
+				if not res then
+					Soundtrack.TraceEvents("Not supposed to play invalid events.")
+				end    
+				
+				currentTableName = tableName
+				currentEventName = eventName
+				
+				-- A track is now playing, register continuity timers
+				if nextTrack then
+					local track = Soundtrack_Tracks[nextTrack]
+					if track then
+						local length = track.length
+						if length then 
+							if not event.continuous then
+								if track.length > 20 then
+									Soundtrack.Timers.AddTimer("FadeOut", length - fadeOutTime, playOnceTrackFinished)
+								else
+									Soundtrack.Timers.AddTimer("FadeOut", length, playOnceTrackFinished)
+								end
 							else
-								Soundtrack.Timers.AddTimer("FadeOut", length, playOnceTrackFinished)
+								local randomSilence = 0
+								if Soundtrack.Settings.Silence > 0 then
+									randomSilence = random(5, Soundtrack.Settings.Silence)
+								end
+								Soundtrack.Timers.AddTimer("TrackFinished", length + randomSilence, trackFinished)
+								if track.length > 20 then
+									Soundtrack.Timers.AddTimer("FadeOut", length - fadeOutTime, startEmptyTrack)
+								else
+									Soundtrack.Timers.AddTimer("FadeOut", length, startEmptyTrack)
+								end
 							end
-                        else
-                            local randomSilence = 0
-                            if Soundtrack.Settings.Silence > 0 then
-                                randomSilence = random(5, Soundtrack.Settings.Silence)
-                            end
-                            Soundtrack.Timers.AddTimer("TrackFinished", length + randomSilence, trackFinished)
-							if track.length > 20 then
-								Soundtrack.Timers.AddTimer("FadeOut", length - fadeOutTime, startEmptyTrack)
-							else
-								Soundtrack.Timers.AddTimer("FadeOut", length, startEmptyTrack)
-							end
-                        end
-                    end        
-                end
-            end
+						end        
+					end
+				end
+			end	
+			
         end
-    end
+    
+	end
 
 end
 
