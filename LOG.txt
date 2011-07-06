@@ -117,3 +117,8 @@ Updated TOC for 4.2
 Fixed key bindings.
 Fixed issue where music may not playing when entering an instance.
 Fixed events trying to play when the event is already playing.
+
+2.2.1 release
+Updated Custom and Battle events for extra arguments in COMBAT_LOG_EVENT.
+Updated TOC of SoundtrackMusic for 4.2.  To update Soundtrack Music, move SoundtrackMusic.toc to the Addons/SoundtrackMusic folder.
+Fixed issue with tracks restarting when not wanted during zoning.
