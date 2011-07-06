@@ -5,7 +5,7 @@
     Functions that manage misc. and custom events.
 ]]
 
-local arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21
+arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23 = nil
 
 local function debug(msg)
 	Soundtrack.Util.DebugPrint("[Custom]: ".. msg, 0.6, 0.6, 1.0)
@@ -828,7 +828,7 @@ end
 
 -- MiscEvents
 function Soundtrack.CustomEvents.MiscOnEvent(self, event, ...)
-	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21 = select(1, ...)
+	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23 = ...
 	
 	if event == "VARIABLES_LOADED" then	
 		Soundtrack.CustomEvents.MiscInitialize(self)
@@ -914,7 +914,7 @@ function Soundtrack.CustomEvents.MiscOnEvent(self, event, ...)
 end
 -- CustomEvents
 function Soundtrack.CustomEvents.CustomOnEvent(self, event, ...)
-	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21 = select(1, ...)
+	arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23 = ...
 
 	if event == "VARIABLES_LOADED" then	
 		Soundtrack.CustomEvents.CustomInitialize(self)
