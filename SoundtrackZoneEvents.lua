@@ -243,10 +243,8 @@ local function OnZoneChanged()
 				Soundtrack.AddEvent(ST_ZONE, zoneText4, ST_MINIMAP_LVL, true)
 			end
         end
-		if Soundtrack_Events_GetEventAtStackLevel(ST_MINIMAP_LVL) ~= zoneText4 then
-			AssignPriority(ST_ZONE, zoneText4, ST_MINIMAP_LVL)
-			Soundtrack.PlayEvent(ST_ZONE, zoneText4, false);
-		end
+		AssignPriority(ST_ZONE, zoneText4, ST_MINIMAP_LVL)
+		Soundtrack.PlayEvent(ST_ZONE, zoneText4, false);
     else
         Soundtrack.StopEventAtLevel(ST_MINIMAP_LVL);
     end
@@ -258,10 +256,8 @@ local function OnZoneChanged()
 				Soundtrack.AddEvent(ST_ZONE, zoneText3, ST_SUBZONE_LVL, true)
 			end
         end
-		if Soundtrack_Events_GetEventAtStackLevel(ST_SUBZONE_LVL) ~= zoneText3 then
-			AssignPriority(ST_ZONE, zoneText3, ST_SUBZONE_LVL)
-			Soundtrack.PlayEvent(ST_ZONE, zoneText3, false);
-		end
+		AssignPriority(ST_ZONE, zoneText3, ST_SUBZONE_LVL)
+		Soundtrack.PlayEvent(ST_ZONE, zoneText3, false);
     else
         Soundtrack.StopEventAtLevel(ST_SUBZONE_LVL);
     end
@@ -273,10 +269,8 @@ local function OnZoneChanged()
 				Soundtrack.AddEvent(ST_ZONE, zoneText2, ST_ZONE_LVL, true)
 			end
         end
-		if Soundtrack_Events_GetEventAtStackLevel(ST_ZONE_LVL) ~= zoneText2 then
-			AssignPriority(ST_ZONE, zoneText2, ST_ZONE_LVL)
-			Soundtrack.PlayEvent(ST_ZONE, zoneText2, false);
-		end
+		AssignPriority(ST_ZONE, zoneText2, ST_ZONE_LVL)
+		Soundtrack.PlayEvent(ST_ZONE, zoneText2, false);
     else        
         Soundtrack.StopEventAtLevel(ST_ZONE_LVL);
     end
@@ -288,10 +282,8 @@ local function OnZoneChanged()
 				Soundtrack.AddEvent(ST_ZONE, zoneText1, ST_CONTINENT_LVL, true)
 			end
         end
-		if Soundtrack_Events_GetEventAtStackLevel(ST_CONTINENT_LVL) ~= zoneText1 then
-			AssignPriority(ST_ZONE, zoneText1, ST_CONTINENT_LVL)
-			Soundtrack.PlayEvent(ST_ZONE, zoneText1, false);
-		end
+		AssignPriority(ST_ZONE, zoneText1, ST_CONTINENT_LVL)
+		Soundtrack.PlayEvent(ST_ZONE, zoneText1, false);
     else        
         Soundtrack.StopEventAtLevel(ST_CONTINENT_LVL);
     end
@@ -308,6 +300,7 @@ end
 
 local delayTime = 0
 local updateTime = 1
+local zoneType = nil
 	
 function Soundtrack.ZoneEvents.OnUpdate(self)
 	
@@ -316,8 +309,9 @@ function Soundtrack.ZoneEvents.OnUpdate(self)
 	if currentTime >= delayTime then
 		delayTime = currentTime + updateTime
 		
-		local inInstance, instanceType = IsInInstance();
-		if inInstance then
+		local inInstance, newZoneType = IsInInstance();
+		if not newZoneType == zoneType then
+			zoneType = newZoneType
 			OnZoneChanged()
 		end
     
