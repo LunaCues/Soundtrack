@@ -5,8 +5,6 @@
     Functions that manage zone change events.
 ]]
 
-local ST_INSTANCES = "Instances"
-local ST_PVP = "PvP"
 
 Soundtrack.ZoneEvents = 
 {
@@ -22,10 +20,10 @@ local function FindContinentByZone(zoneName)
 	local inInstance, instanceType = IsInInstance();
 	if inInstance then
 		if instanceType == "arena" or instanceType == "pvp" then
-			return ST_PVP, nil;
+			return SOUNDTRACK_PVP, nil;
 		end
 		if instanceType == "party" or instanceType == "raid" then
-			return ST_INSTANCES, nil;
+			return SOUNDTRACK_INSTANCES, nil;
 		end
 	end
 	
@@ -45,7 +43,12 @@ local function FindContinentByZone(zoneName)
 	local continent = continentNames[continentValue]
 	local zone = zoneNames[zoneValue]
 	
+	if continent == nil then 
+		return SOUNDTRACK_UNKNOWN, zone
+	end
+
 	return continent, zone
+
 	
 	--[[
 	/run cv=GetCurrentMapContinent();cn={GetMapContinents()};zv=GetCurrentMapZone();zn={GetMapZones(cv)};print(cn[cv]," ",zn[zv])
@@ -344,8 +347,8 @@ function Soundtrack.ZoneEvents.Initialize()
     
     local tableName = Soundtrack.Events.GetTable(ST_ZONE);
     
-    Soundtrack.AddEvent(ST_ZONE, ST_INSTANCES, ST_CONTINENT_LVL, true);
-	Soundtrack.AddEvent(ST_ZONE, ST_PVP, ST_CONTINENT_LVL, true);
+    Soundtrack.AddEvent(ST_ZONE, SOUNDTRACK_INSTANCES, ST_CONTINENT_LVL, true);
+	Soundtrack.AddEvent(ST_ZONE, SOUNDTRACK_PVP, ST_CONTINENT_LVL, true);
 	Soundtrack.AddEvent(ST_ZONE, "Uncategorized", ST_CONTINENT_LVL, true);
     
     for i,continentName in ipairs(continentNames) do      
