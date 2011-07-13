@@ -290,10 +290,12 @@ function Soundtrack.Events.OnStackChanged(forceRestart)
 				Soundtrack.Timers.Remove("TrackFinished")
 				
 				-- After pause, goes to the next song
+				--[[
 				if Soundtrack.Events.Paused then  -- Edit by Lunaqua
 					offset = 0  -- Use to be 1
 					Soundtrack.Events.Paused = false
 				end
+				--]]
 				
 				nextTrack = null
 				local res = PlayRandomTrackByTable(tableName, eventName, offset)
@@ -507,7 +509,7 @@ function Soundtrack.Events.PlayEvent(tableName, eventName, stackLevel, forceRest
     Soundtrack.TraceEvents("PlayEvent("..tableName..", "..eventName..", "..stackLevel..") "..playOnceText)    
 
     if not offset then 
-        offset = 1 
+        offset = 0
     end
 
     -- Add event on the stack    
@@ -556,8 +558,10 @@ function Soundtrack.Events.PlaybackPlayStop()
     end
     if Soundtrack.Events.Paused and currentEvent ~= SOUNDTRACK_NO_EVENT_PLAYING then
         Soundtrack.TraceEvents("All music unpaused")
-        --Soundtrack.Events.Paused = false  -- Edit by Lunaqua, placed in OnStackChanged()
-        Soundtrack.Events.OnStackChanged(true)
+        --Soundtrack.Events.Paused = false 
+        --Soundtrack.Events.OnStackChanged(true)
+		Soundtrack.Events.Paused = false
+		Soundtrack.Events.RestartLastEvent(0)
     else
         Soundtrack.TraceEvents("All music paused")
         Soundtrack.Events.Paused = true
