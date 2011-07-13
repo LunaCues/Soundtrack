@@ -99,6 +99,11 @@ SOUNDTRACK_ADD_ZONE_TIP = "Adds your current locations to the zone list so that 
 SOUNDTRACK_REMOVE_ZONE = "Remove Zone"
 SOUNDTRACK_REMOVE_ZONE_TIP = "Removes the selected zone."
 
+SOUNDTRACK_INSTANCES = "Instances"
+SOUNDTRACK_PVP = "PvP"
+SOUNDTRACK_UNCATEGORIZED = "Uncategorized"
+SOUNDTRACK_UNKNOWN = "Unknown"
+
 
 -- Dances Tab
 
