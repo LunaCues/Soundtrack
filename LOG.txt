@@ -122,3 +122,7 @@ Fixed events trying to play when the event is already playing.
 Updated Custom and Battle events for extra arguments in COMBAT_LOG_EVENT.
 Updated TOC of SoundtrackMusic for 4.2.  To update Soundtrack Music, move SoundtrackMusic.toc to the Addons/SoundtrackMusic folder.
 Fixed issue with tracks restarting when not wanted during zoning.
+
+2.2.2 release 
+Added catch for zones with unknown continents (i.e. Firelands).
+Added localizations for continents: Instances, PvP, Unknown.
