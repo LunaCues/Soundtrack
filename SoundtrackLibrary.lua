@@ -12,28 +12,48 @@ local function debug(msg)
     Soundtrack.Util.DebugPrint("[Library]: " .. msg, 0.25, 0.25, 1.0)
 end
 
-function Soundtrack.Library.AddTrack(trackName, _length, _title, _artist, _album)
-    Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album }
-    --Soundtrack.SortTracks()
+function Soundtrack.Library.AddTrack(trackName, _length, _title, _artist, _album, _extension)
+	if _extension == nil then
+		Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album }
+	elseif _extension == ".MP3" then
+		Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, mp3 = true }
+	elseif _extension == ".OGG" then
+		Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, ogg = true }
+	elseif _extension == ".WAV" then
+		Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, wav = true }
+	end
 end
 
 function Soundtrack.Library.AddTrackMp3(trackName, _length, _title, _artist, _album)
     Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, mp3 = true }
-    --Soundtrack.SortTracks()
 end
 
 function Soundtrack.Library.AddTrackOgg(trackName, _length, _title, _artist, _album)
     Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, ogg = true }
-    --Soundtrack.SortTracks()
 end
 
-function Soundtrack.Library.AddDefaultTrack(trackName, _length, _title, _artist, _album)             
-    Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, defaultTrack = true }
-    --Soundtrack.SortTracks()
+function Soundtrack.Library.AddDefaultTrack(trackName, _length, _title, _artist, _album)
+	if _extension == nil then
+		Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, defaultTrack = true }
+	elseif _extension == ".MP3" then
+		Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, mp3 = true, defaultTrack = true }
+	elseif _extension == ".OGG" then
+		Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, ogg = true, defaultTrack = true}
+	elseif _extension == ".WAV" then
+		Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, wav = true, defaultTrack = true}
+	end
 end
 
-function Soundtrack_Library_AddProjectTrack(trackName, _length, _title, _artist, _album)
-	Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, projectTrack = true}
+function Soundtrack_Library_AddProjectTrack(trackName, _length, _title, _artist, _album, _extension)
+	if _extension == nil then
+		Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, projectTrack = true }
+	elseif _extension == ".MP3" then
+		Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, mp3 = true, projectTrack = true }
+	elseif _extension == ".OGG" then
+		Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, ogg = true, projectTrack = true}
+	elseif _extension == ".WAV" then
+		Soundtrack_Tracks[trackName] = { length = _length, title = _title, artist = _artist, album = _album, wav = true, projectTrack = true}
+	end
 end
 
 function Soundtrack_Library_AddProjectTrackMp3(trackName, _length, _title, _artist, _album)

@@ -125,7 +125,7 @@
         <Frames>
 
 
-            <StatusBar name="SoundtrackControlFrame_StatusBarEvent" inherits="SoundtrackFrame_StatusBarTemplate" minValue="0" maxValue="8" defaultValue="1" id="1">
+            <StatusBar name="SoundtrackControlFrame_StatusBarEvent" inherits="SoundtrackFrame_StatusBarTemplate" font="Interface\Addons\Soundtrack\Fonts\wqy-zenhei.ttf" minValue="0" maxValue="8" defaultValue="1" id="1">
                 <Anchors>
                     <Anchor point="TOPLEFT" relativePoint="TOPLEFT">
                         <Offset>
@@ -134,7 +134,7 @@
                     </Anchor>
                 </Anchors>
             </StatusBar>
-            <StatusBar name="SoundtrackControlFrame_StatusBarTrack" inherits="SoundtrackFrame_StatusBarTemplate" minValue="0" maxValue="1" defaultValue="23" id="1">
+            <StatusBar name="SoundtrackControlFrame_StatusBarTrack" inherits="SoundtrackFrame_StatusBarTemplate" font="Interface\Addons\Soundtrack\Fonts\wqy-zenhei.ttf" minValue="0" maxValue="1" defaultValue="23" id="1">
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="SoundtrackControlFrame_StatusBarEvent" relativePoint="BOTTOMLEFT">
 						<Offset>
