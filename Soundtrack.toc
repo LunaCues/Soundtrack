@@ -1,4 +1,4 @@
-## Interface: 40200
+## Interface: 40300
 ## Title: Soundtrack
 ## Version: 2.1
 ## Author: Anthony Brien, Katherine Beegle, FluffyBearLina, csciguy
